@@ -21,11 +21,11 @@ Required data for the assessment of the centre of mass have been recorded in the
   ..$ height    : \tab num [1:26] 0 10.2 10.1 10.4 10.4 ...\cr
   ..$ tilt      : \tab num [1:26] 80 80 0 0 0 0 0 0 0 0 ...\cr
   ..$ toBePruned: \tab logi [1:26] FALSE FALSE FALSE FALSE FALSE FALSE ...\cr
-  ..$ biomass   : \tab num [1:26] 1488.2 157.2 43.8 128.8 43.8 ...\cr
- $ bslDensity  : \tab num 530\cr
+  ..$ biomass   : \tab num [1:26] 1741 184 120 247 120 ...\cr
+ $ density  : \tab num 620\cr
  $ allometryFUN:\tab function (x, diameter)  
   ..- attr(*, "source")= chr [1:5] "function(x, diameter) " ...\cr
- $ branchesCM  : \tab num 0.33\cr
+ $ branchesCM  : \tab num 1\cr
     }
 
 }
