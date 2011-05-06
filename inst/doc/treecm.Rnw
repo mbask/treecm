@@ -84,12 +84,15 @@ It is not feasible to weight the branches of a living tree. As a result branch a
 
 When subsampling is not possible one should rely on published allometric equations and feed them to \verb!treecm!. Currently \verb!treecm! ships with two allometric equations:
 \begin{itemize}
-  \item \verb!branchBiomassPine!, tested on stone pine trees (not on branches), 40+ cm diameter \cite{cutini}
-  \item \verb!branchBiomassPinePorte!, tested on maritime pine branches, 10- cm diameter  \cite{porte}
+  \item \verb!branchBiomassPine!, tested on stone pine trees (not on branches), 40+ cm diameter, returns biomass (dry weight) \cite{cutini}
+  \item \verb!branchBiomassPinePorte!, tested on maritime pine branches, 10- cm diameter, returns biomass (dry weight)  \cite{porte}
+  \item \verb!branchBiomassPineAsca!, tested on stone pine branches, 8-16 cm diameter, returns fresh weight
 \end{itemize}
 The proper allometric equation to be used must be fed to \verb!treecm! when importing field data using function \verb!importFieldData!, parameter \verb!branchesAllometryFUN!.
 
 We welcome contributions to increase the available list of allometric equations.
+
+Note that one should pick an allometric equation that yields fresh mass of branches. Function \verb!branchBiomassPineAsca! returns fresh weight values for stone pine branches.
 
 \section{Examples}
 

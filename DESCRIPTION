@@ -5,7 +5,10 @@ Title: Estimating and plotting the centre of mass of a tree.
 Type: Package
 LazyLoad: yes
 Author: Marco Bascietto
-Description: Given a few data about branchiness of a tree the package computes and plots the centre of mass of the tree itself. The centre of mass is a crucial data for arborists in order to consolidate a tree using steel or dynamic cables.
+Description: Given a few data about branchiness of a tree the package
+    computes and plots the centre of mass of the tree itself. The
+    centre of mass is a crucial data for arborists in order to
+    consolidate a tree using steel or dynamic cables.
 Version: 1.0
 Date: 2011-05-06
 Collate: 'treecm.R'
