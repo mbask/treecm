@@ -6,7 +6,7 @@
 \details{\tabular{ll}{
 Package: \tab treecm\cr
 Type: \tab Package\cr
-Version: \tab 0.0.1\cr
+Version: \tab 1.0\cr
 Date: \tab 2011-05-01\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab no\cr
@@ -26,7 +26,7 @@ Field measures to be taken include:
 \item{To be pruned: }{a boolean value, optional, defaults to FALSE}
 }
 Branch biomass is computed by allometric equations relating its dry weight (wood + leaves) to its diameter at point of insertion on the trunk.
-Log biomass is computed by converting its volume to dry weight using wood basal density. Volume is computed using Smalian's formula (see logBiomass description)}
+Log biomass is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see logBiomass description)}
 \seealso{\code{\link{logBiomass}}
 \code{\link{fieldData}}}
 \note{An example \code{.CSV} file is provided to guide through data filling in the field}

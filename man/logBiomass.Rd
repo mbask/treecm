@@ -1,11 +1,11 @@
 \name{logBiomass}
 \alias{logBiomass}
 \title{Estimates the wood biomass of logs and truncated branches by...}
-\usage{logBiomass(x, lowerD, higherD, logLength, basalDensity)
+\usage{logBiomass(x, lowerD, higherD, logLength, density)
 }
 \description{Estimates the wood biomass of logs and truncated branches by
 computing their volume (using Smalian's formula) and converting it
-to dry weight using basal density.
+to fresh weight using wood fresh density.
 Smalian's formula: \eqn{V=\frac{Sb+Sd}{2}l} where \eqn{V} is the log volume, 
 \eqn{Sb} is the aerea of the basal (lower) section, \eqn{Sd} is the 
 area of the higher section and \eqn{l} is the length of the log.}
@@ -16,6 +16,6 @@ area of the higher section and \eqn{l} is the length of the log.}
 \item{lowerD}{The name of the data.frame column holding diameter of the lower section in cm}
 \item{higherD}{The name of the data.frame column holding the diameter of the higher section (usually smaller!) in cm}
 \item{logLength}{The name of the data.frame column holding the length of the log or branch in m}
-\item{basalDensity}{The name of the data.frame column holding the basal Density of the wood, defined as \eqn{D=\frac{V_f}{W_d}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_d} is wood dry weight in kg. Basal density is measured in \eqn{\frac{kg}{m^3}}}
+\item{density}{The name of the data.frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}}
 }
 

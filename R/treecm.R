@@ -15,7 +15,7 @@
 #' \tabular{ll}{
 #' Package: \tab treecm\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.0.1\cr
+#' Version: \tab 1.0\cr
 #' Date: \tab 2011-05-01\cr
 #' License: \tab GPL (>= 2)\cr
 #' LazyLoad: \tab no\cr
@@ -35,7 +35,7 @@
 #'   \item{To be pruned: }{a boolean value, optional, defaults to FALSE}
 #' }
 #' Branch biomass is computed by allometric equations relating its dry weight (wood + leaves) to its diameter at point of insertion on the trunk.
-#' Log biomass is computed by converting its volume to dry weight using wood basal density. Volume is computed using Smalian's formula (see logBiomass description)
+#' Log biomass is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see logBiomass description)
 #' @seealso \code{\link{logBiomass}}
 #' \code{\link{fieldData}}
 #' @note An example \code{.CSV} file is provided to guide through data filling in the field
@@ -170,7 +170,7 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
 
 #' Estimates the wood biomass of logs and truncated branches by
 #' computing their volume (using Smalian's formula) and converting it
-#' to dry weight using basal density.
+#' to fresh weight using wood fresh density.
 #' Smalian's formula: \eqn{V=\frac{Sb+Sd}{2}l} where \eqn{V} is the log volume, 
 #' \eqn{Sb} is the aerea of the basal (lower) section, \eqn{Sd} is the 
 #' area of the higher section and \eqn{l} is the length of the log.
@@ -180,15 +180,15 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
 #' @param lowerD The name of the data.frame column holding diameter of the lower section in cm
 #' @param higherD The name of the data.frame column holding the diameter of the higher section (usually smaller!) in cm
 #' @param logLength The name of the data.frame column holding the length of the log or branch in m
-#' @param basalDensity The name of the data.frame column holding the basal Density of the wood, defined as \eqn{D=\frac{V_f}{W_d}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_d} is wood dry weight in kg. Basal density is measured in \eqn{\frac{kg}{m^3}}
+#' @param density The name of the data.frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}
 #' @references la Marca, O. Elementi di dendrometria, 2004, Patron Editore (Bologna), p. 119
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-logBiomass <- function (x, lowerD, higherD, logLength, basalDensity) {
+logBiomass <- function (x, lowerD, higherD, logLength, density) {
   lowerS   <- pi * (as.real(x[lowerD]) / 200)^2 
   higherS  <- pi * (as.real(x[higherD]) / 200)^2
   l        <- as.real(x[logLength])
   volume   <- (lowerS + higherS) / 2 * l
-  volume * basalDensity
+  volume * density
 }
 
 ## --------------- Math functions ---------------
@@ -246,19 +246,19 @@ plotPolarSegment <- function(a0, d0, a1, d1) {
 #' Imports csv file holding field recorded data, and sets a list holding other key data
 #'
 #' @param fileName Name of csv file holding field data
-#' @param basalDensity Basal Density of wood of the tree
+#' @param dst Fresh density of wood of the tree
 #' @param branchesAllometryFUN the function that should compute branch biomass from its diameter
 #' @param bCM Estimated position of the centre of mass of branches, a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). As a rule of thumb, average live branches, with an average amount of foliage, have CM approx. from 1/3 to 2/3 of their length. bCM = 1.0 (default value)
 #' @seealso \code{\link{getCoordinatesAndMoment}}
 #' @return a list holding the data
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-importFieldData <- function(fileName, basalDensity, branchesAllometryFUN, bCM = 1) {
+importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
   ## il file .csv e deve contenere il nome del ramo come prima colonna
   tree <- read.csv(fileName, row.names = 1)
   list(
     fieldData    = tree, 
-    bslDensity   = basalDensity, 
+    density      = dst, 
     allometryFUN = branchesAllometryFUN,
     branchesCM   = bCM
   )
@@ -326,7 +326,7 @@ treeBiomass <- function(object) {
         lowerD    = "dBase", 
         higherD   = "dTip", 
         logLength = "length",
-        bslDensity
+        density
       )
     )
     
@@ -483,7 +483,7 @@ summary.CM <- function(object, ...) {
   )
 }
 
-#' Returns total biomass of a tree or branch (wood and leaves) in kg given the 
+#' Returns total biomass of a tree or branch (wood and leaves, dry state) in kg given the 
 #' diameter at breast height, using an allometric equation for stone pine
 #'
 #' @references Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. & Amorini, E. 
@@ -492,7 +492,7 @@ summary.CM <- function(object, ...) {
 #'   Tipo B
 #' @param x a data.frame of branches along with their diameters as a column
 #' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
-#' @return the total biomass of the branch of a stone pine (in kg)
+#' @return the total biomass of the branch of a stone pine (in kg, dry state)
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 branchBiomassPine <- function(x, diameter) {
   a <- -198.236
@@ -500,14 +500,14 @@ branchBiomassPine <- function(x, diameter) {
   pureQuadraticEquation(a, b, as.real(x[diameter]))
 }
 
-#' Returns the woody biomass of a branch (no leaves!) in kg given the 
+#' Returns the woody biomass of a branch (dry state, no leaves!) in kg given the 
 #' diameter, using an allometric equation for maritime pine
 #'
 #' @note Important: the allometric equation has been validated for 1-10 cm diameter branches
 #' @references Porté, A.; Trichet, P.; Bert, D. & Loustau, D. Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) Forest Ecology and Management, 2002, 158, 71-83
 #' @param x a data.frame of branches along with their diameters as a column
 #' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
-#' @return the woody biomass of the branch of a maritime pine (in kg)
+#' @return the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 branchBiomassPinePorte <- function(x, diameter) {
   a <- 21.228

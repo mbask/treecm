@@ -69,12 +69,12 @@ Since the package aims to help engineering a consolidation system, the centre of
 The package behaviour can be modified in order to let the position branches and logs centre of mass to get nearer to their base. 
 The relative position of the centre of mass of branches and logs can be set as a real number ranging from 0.01 (base) to 1 (tip, the default behaviour). Setting can be done during import of field data using function \verb!importField! and its parameter \verb!bCM! or by using the setter function \verb!setBranchesCM!.
 
-\subsubsection{The basal density}
-Log mass is estimated by converting its volume (as measured in the field) to dried-state weight. The conversion factor is usually referred to as basal density. Wood basal density is usually quite conservative among tree species. Basal density values are commonly found in published literature. The following table can be a useful resource (basal density in $\frac{kg}{m^3}$):
+\subsubsection{The density}
+Log mass is estimated by converting its volume (as measured in the field) to fresh weight. The conversion factor is usually referred to as density. Wood density is usually quite conservative among individual of the same tree species. Density values are commonly found in published literature. The following table (\cite{nardi}) can be a useful resource (density in $\frac{kg}{m^3}$):
 <<bst>>=
 library(treecm)
-data(bDst)
-print(bDst)
+data(Dst)
+print(Dst)
 @
 
 
@@ -120,12 +120,12 @@ discorso su posizione del cm lungo il ramo
 
 \begin{thebibliography}{100}
 
+\bibitem[Cutini et al., 2009]{cutini} Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. and Amorini, E. (2009) Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma). \emph{Forest@}, 6, 75--84.
+
+\bibitem[Nardi Berti, 1979]{nardi} Nardi Berti, R. (1979) La struttura anatomica del legno ed il riconoscimento dei legnami italiani di pi\`{u} corrente impiego. CNR (Firenze), 155p.
 
 \bibitem[Port\'{e} et al., 2002]{porte} Port\'{e}, A.; Trichet, P.; Bert, D. and Loustau, D. (2002) Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.). \emph{Forest Ecology and Management}, 158, 71--83.
     
-\bibitem[Cutini et al., 2009]{cutini} Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. and Amorini, E. (2009) Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma). \emph{Forest@}, 6, 75--84.
-
-
 \end{thebibliography}
 
 \end{document}
