@@ -1,0 +1,131 @@
+\documentclass{article}
+
+\usepackage{natbib}
+\usepackage{indentfirst}
+\usepackage[applemac]{inputenc}               % for Mac
+
+% \VignetteIndexEntry{Introduction to treecm package}
+% \VignetteDepends{} 
+% \VignetteKeyword{centre of mass} 
+% \VignetteKeyword{barycentre}
+% \VignetteKeyword{tree}
+
+\begin{document}
+
+\title{treecm: an introduction}
+\author{Marco Bascietto}
+\maketitle
+
+\section{Introduction}
+Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the $x$ and $y$ coordinates of the barycentre lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
+
+The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and  the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
+
+Nevertheless, the estimate of barycentre position is useful to assess the effects of different pruning schemes as far as tree balance is concerned.
+
+\section{Data collection}
+Data collection to estimation of the centre of mass is carried out in three steps:
+\begin{enumerate}
+  \item Field measurements
+  \item Visual check for correctness of assumptions
+  \item Collection of correct allometric equation in order to estimate branch and foliage biomass
+\end{enumerate}
+
+\subsection{Field measurements}
+A few field measurements are needed to estimate centre of mass position at the stem level and at the branch level. Field data are easily taken climbing the tree using tree climbing techniques or by hydraulic platforms. A few instruments are needed including:
+\begin{itemize}
+  \item A forestry caliper to measure diameter of logs and branches
+  \item A clinometer, or ipsometer or any other instrument to measure height of branches or logs
+  \item A measuring tape to measure length of branch or log projections on the ground
+\end{itemize}
+
+The stem is ideally sectioned in logs in order to compute their volume and biomass. The measurements to be taken on each log include:
+\begin{itemize}
+  \item Diameter at the base of the log, in cm
+  \item Diameter at the top of the log, in cm
+  \item Length of the log, in m
+  \item Orientation of the log, in case it is not vertical, in degrees from North (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Length of log projection on the ground, from the tree base to the log tip (0 for a vertical stem), in m
+  \item Height above ground of the base of the log, in m
+  \item Log tilt from the horizontal plane (eg a vertical log is tilted by 90$^{\circ}$, an horizontal log is tilted by 0$^{\circ}$), in degrees (optional)
+\end{itemize}
+
+Each branch contributes to the position of the centre of mass by means of their wooden component and their foliage component. Every part of a tree carrying foliage is considered to as a branch. This definition applies to tree tip as well, although some trees may have lost their tip or have it removed during topping operations.
+The measurments to be taken on each branch include:
+\begin{itemize}
+  \item Diameter at the base of the branch, in cm
+  \item Orientation of the branch, in degrees, usually measured with a compass (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Length of branch projection on the ground, from the tree base to the branch tip, in m
+  \item Height above ground of the branch insertion into the stem
+  \item Branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional)
+\end{itemize}
+
+\subsection{Visual check for correctness of assumptions}
+\subsubsection{Relative position of centre of masses of branches and logs}
+The position of the centre of mass of a tree is computed taking into account the centre of mass of each branch and log. Pinpointing the centre of mass along a branch, taking into account branch form factor and the pattern of distribution of leaves biomass along it, would require many more field measures raising the time spent on it and the costs of the sampling.
+
+Since the package aims to help engineering a consolidation system, the centre of mass is by default located at branches or logs tip. This leads to an estimate of the coordinated of tree centre of mass that is further away from the base than the real one. This difference can be regarded as an inherent safety factor.
+
+The package behaviour can be modified in order to let the position branches and logs centre of mass to get nearer to their base. 
+The relative position of the centre of mass of branches and logs can be set as a real number ranging from 0.01 (base) to 1 (tip, the default behaviour). Setting can be done during import of field data using function \verb!importField! and its parameter \verb!bCM! or by using the setter function \verb!setBranchesCM!.
+
+\subsubsection{The basal density}
+Log mass is estimated by converting its volume (as measured in the field) to dried-state weight. The conversion factor is usually referred to as basal density. Wood basal density is usually quite conservative among tree species. Basal density values are commonly found in published literature. The following table can be a useful resource (basal density in $\frac{kg}{m^3}$):
+<<bst>>=
+library(treecm)
+data(bDst)
+print(bDst)
+@
+
+
+
+\subsection{Finding a correct allometric equation in order to estimate branch and foliage biomass}
+It is not feasible to weight the branches of a living tree. As a result branch and foliage biomass is estimated using branch diameter at base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a subsample of branches.
+
+When subsampling is not possible one should rely on published allometric equations and feed them to \verb!treecm!. Currently \verb!treecm! ships with two allometric equations:
+\begin{itemize}
+  \item \verb!branchBiomassPine!, tested on stone pine trees (not on branches), 40+ cm diameter \cite{cutini}
+  \item \verb!branchBiomassPinePorte!, tested on maritime pine branches, 10- cm diameter  \cite{porte}
+\end{itemize}
+The proper allometric equation to be used must be fed to \verb!treecm! when importing field data using function \verb!importFieldData!, parameter \verb!branchesAllometryFUN!.
+
+We welcome contributions to increase the available list of allometric equations.
+
+\section{Examples}
+
+
+<<ex1>>=
+library(treecm)
+data(treeData)
+#treeData <- treeBiomass(treeData)
+vectors  <- treeVectors(treeData)
+CM       <- centreOfMass(vectors)
+summary(CM)
+@
+
+<<ex2, fig=TRUE>>=
+plot.vectors(vectors, 
+  CM = CM,
+  main = "Baricentro con CM alla base dei rami",
+)
+@
+
+
+Ricordarsi di istruire a come fare il file csv
+mettere in biblio repository github
+\\
+caveat
+discorso su posizione del cm lungo il ramo
+
+
+\begin{thebibliography}{100}
+
+
+\bibitem[Port\'{e} et al., 2002]{porte} Port\'{e}, A.; Trichet, P.; Bert, D. and Loustau, D. (2002) Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.). \emph{Forest Ecology and Management}, 158, 71--83.
+    
+\bibitem[Cutini et al., 2009]{cutini} Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. and Amorini, E. (2009) Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma). \emph{Forest@}, 6, 75--84.
+
+
+\end{thebibliography}
+
+\end{document}

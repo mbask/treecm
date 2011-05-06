@@ -27,11 +27,14 @@ Field measures to be taken include:
 }
 Branch biomass is computed by allometric equations relating its dry weight (wood + leaves) to its diameter at point of insertion on the trunk.
 Log biomass is computed by converting its volume to dry weight using wood basal density. Volume is computed using Smalian's formula (see logBiomass description)}
-\seealso{\code{\link{logBiomass}}}
+\seealso{\code{\link{logBiomass}}
+\code{\link{fieldData}}}
+\note{An example \code{.CSV} file is provided to guide through data filling in the field}
 \alias{treecm}
 \docType{package}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
 \keyword{package}
+\references{Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})}
 \examples{data(treeData)
 vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)

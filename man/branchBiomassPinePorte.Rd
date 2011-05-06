@@ -4,7 +4,7 @@
 \usage{branchBiomassPinePorte(x, diameter)
 }
 \description{Returns the woody biomass of a branch (no leaves!) in kg given the 
-diameter at breast height, using an allometric equation for maritime pine}
+diameter, using an allometric equation for maritime pine}
 \note{Important: the allometric equation has been validated for 1-10 cm diameter branches}
 \references{Porté, A.; Trichet, P.; Bert, D. & Loustau, D. Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) Forest Ecology and Management, 2002, 158, 71-83}
 \value{the woody biomass of the branch of a maritime pine (in kg)}

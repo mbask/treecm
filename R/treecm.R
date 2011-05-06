@@ -36,8 +36,9 @@
 #' }
 #' Branch biomass is computed by allometric equations relating its dry weight (wood + leaves) to its diameter at point of insertion on the trunk.
 #' Log biomass is computed by converting its volume to dry weight using wood basal density. Volume is computed using Smalian's formula (see logBiomass description)
-#' @seealso \code{\link{logBiomass}} 
-#' @details An example \code{.CSV} file is provided to guide through data filling
+#' @seealso \code{\link{logBiomass}}
+#' \code{\link{fieldData}}
+#' @note An example \code{.CSV} file is provided to guide through data filling in the field
 #' @title Assessment of x, y, z coordinates of centre of mass of trees
 #' @name treecm-package
 #' @aliases treecm
@@ -51,6 +52,7 @@
 #' CM       <- centreOfMass(vectors)
 #' plot.vectors(vectors, CM = CM, main = "Centre Of Mass", col = "grey30", txtcol = "grey30")
 #' summary(CM)
+#' @references Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})
 NULL
 
 #' Computes the x cartesian coordinate
@@ -119,11 +121,10 @@ toPolar <- function(x, y) {
 #' centre of mass lies on the branches themselves by multiplying them by branchesCM,
 #' a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). 
 #' As a rule of thumb, average live branches, with an average amount of foliage, 
-#' have CM approx. at 1/3 of their length, ie. branchesCM = 0.33. branchesCM is assigned 
-#' during instantiation of a "TreeBiomass" class. 
+#' have CM approx. from 1/3 to 2/3 of their length, ie. branchesCM = 0.33-0.66.
 #' #' x, y, z moments are computed by multiplying the cartesian coordinate by 
 #' branch or log mass.
-#' @note BranchCM is assumed to have same value in branches and logs. This is not the case in real world. As a measure of safety one should use higher values than 1/3, eg 1/2 for branchesCM.
+#' @note BranchCM is assumed to have same value in branches and logs. This is not the case in real world. As a measure of safety one should use higher values than 1/3, eg 1 for branchesCM.
 #' @param object A data.frame holding the appropriate colums
 #' @param angle The name of the data.frame column holding the angle of branch orientation
 #' @param distance The name of the data.frame column holding the length of the 
@@ -175,24 +176,6 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
 #' area of the higher section and \eqn{l} is the length of the log.
 #'
 #' @note Attention: diameters used to compute section areas should be measured under the bark layer! When this is not the case and diameters include bark thickness the log biomass is over-estimated!
-#' If no direct measures of basal density are available one can use mean values found in literature (http://www.ricercaforestale.it/index.php?module=CMpro&func=viewpage&pageid=713)
-#' \tabular{ll}{
-#' Abete rosso\tab  380\cr
-#' Abete bianco\tab 380\cr
-#' Larice\tab       560\cr
-#' Pini montani\tab 470\cr
-#' Pini mediterranei\tab 530\cr
-#' Faggio\tab 610\cr
-#' Cerro\tab 690\cr
-#' Faggio\tab 610\cr
-#' Castagno\tab 490\cr
-#' Aceri\tab 660\cr
-#' Altre querce\tab 650\cr
-#' Cerro\tab 690\cr
-#' Querce sempreverdi\tab 720\cr
-#' Altre latifoglie\tab 530\cr
-#' Eucalitti\tab 540\cr
-#' }
 #' @param x the data.frame holding the measures needed to perform the estimation
 #' @param lowerD The name of the data.frame column holding diameter of the lower section in cm
 #' @param higherD The name of the data.frame column holding the diameter of the higher section (usually smaller!) in cm
@@ -265,12 +248,12 @@ plotPolarSegment <- function(a0, d0, a1, d1) {
 #' @param fileName Name of csv file holding field data
 #' @param basalDensity Basal Density of wood of the tree
 #' @param branchesAllometryFUN the function that should compute branch biomass from its diameter
-#' @param bCM Estimated position of the centre of mass of branches, a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). As a rule of thumb, average live branches, with an average amount of foliage, have CM approx. at 1/3 of their length, ie. branchesCM = 0.33 (default value)
+#' @param bCM Estimated position of the centre of mass of branches, a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). As a rule of thumb, average live branches, with an average amount of foliage, have CM approx. from 1/3 to 2/3 of their length. bCM = 1.0 (default value)
 #' @seealso \code{\link{getCoordinatesAndMoment}}
 #' @return a list holding the data
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-importFieldData <- function(fileName, basalDensity, branchesAllometryFUN, bCM = 0.33) {
+importFieldData <- function(fileName, basalDensity, branchesAllometryFUN, bCM = 1) {
   ## il file .csv e deve contenere il nome del ramo come prima colonna
   tree <- read.csv(fileName, row.names = 1)
   list(
@@ -493,7 +476,7 @@ summary.CM <- function(object, ...) {
   )
 
   polar <- toPolar(object["x"], object["y"])
-  cat("Polar (angle/°, distance/m, height/m):", 
+  cat("Polar (angle/degrees, distance/m, height/m):", 
     polar[1], ",", 
     sprintf("%.2f", polar[2]), ",", 
     sprintf("%.2f", object["z"]), "\n"
@@ -518,7 +501,7 @@ branchBiomassPine <- function(x, diameter) {
 }
 
 #' Returns the woody biomass of a branch (no leaves!) in kg given the 
-#' diameter at breast height, using an allometric equation for maritime pine
+#' diameter, using an allometric equation for maritime pine
 #'
 #' @note Important: the allometric equation has been validated for 1-10 cm diameter branches
 #' @references Porté, A.; Trichet, P.; Bert, D. & Loustau, D. Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) Forest Ecology and Management, 2002, 158, 71-83
@@ -530,5 +513,20 @@ branchBiomassPinePorte <- function(x, diameter) {
   a <- 21.228
   b <- 2.818
   powerEquation(a, b, as.real(x[diameter])) / 1000
+}
+
+#' Returns the fresh biomass of a branch in kg given the 
+#' diameter, using an allometric equation for stone pine branches
+#'
+#' @note Important: the allometric equation has been validated for 8-16 cm diameter branches
+#' @references Data collected by A. Ascarelli, non linear regression by M. Bascietto
+#' @param x a data.frame of branches along with their diameters as a column
+#' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
+#' @return the fresh biomass of the branch of a stone pine (in kg)
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+branchBiomassPineAsca <- function(x, diameter) {
+  a <- 0.7201
+  b <- 1.8882
+  powerEquation(a, b, as.real(x[diameter]))
 }
 
