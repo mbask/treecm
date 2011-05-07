@@ -16,7 +16,7 @@ centre of mass lies on the branches themselves by multiplying them by branchesCM
 a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). 
 As a rule of thumb, average live branches, with an average amount of foliage, 
 have CM approx. from 1/3 to 2/3 of their length, ie. branchesCM = 0.33-0.66.
-#' x, y, z moments are computed by multiplying the cartesian coordinate by 
+x, y, z moments are computed by multiplying the cartesian coordinate by 
 branch or log mass.}
 \note{BranchCM is assumed to have same value in branches and logs. This is not the case in real world. As a measure of safety one should use higher values than 1/3, eg 1 for branchesCM.}
 \value{a vector holding 5 reals:

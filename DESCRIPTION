@@ -4,7 +4,7 @@ License: GPL-2
 Title: Estimating and plotting the centre of mass of a tree.
 Type: Package
 LazyLoad: yes
-Author: Marco Bascietto
+Author: Marco Bascietto <marco.bascietto@ibaf.cnr.it>
 Description: Given a few data about branchiness of a tree the package
     computes and plots the centre of mass of the tree itself. The
     centre of mass is a crucial data for arborists in order to
