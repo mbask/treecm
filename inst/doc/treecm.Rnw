@@ -136,7 +136,7 @@ plot.vectors(vectors,
 
 In a cartesian coordinate system whose origin lies at tree base, the masses of logs branches and branches are plotted as vectors pointing inwards, towards the ground. Each circle represent a branch or log mass. Circle radius is proportional to branch or log mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow exemplifies the direction the tree will follow should it break from its base.
 
-If we measured the polar coordinates of the building(s) around the tree we could plot them alongside the tree using the \verb!plotPolarSegment! function:
+If we measured the polar coordinates of the building(s) around the tree we would have plot them alongside the tree using the \verb!plotPolarSegment! function:
 
 <<ex3, fig=TRUE>>=
 plot.vectors(vectors, 
@@ -150,6 +150,36 @@ plotPolarSegment(210, 10.6, 140, 14.4)
 
 \subsection{Snow load}
 
+Snow may increase crown load substantially, sometimes breaking entire branches. As a side effect, snow-loaded crowns may alter tree centre of mass by moving it upwards and, in asymmetric crowns, towards the part of crown under heavier load.
+
+Let's model a snow load that doubles branches weight:
+
+<<exSnow>>=
+rows <- substr(row.names(treeData$fieldData),1,1)
+treeData$fieldData <- within(
+  treeData$fieldData,
+  biomass[rows != "L"] <- biomass[rows != "L"] * 2
+)
+rm(rows)
+@
+
+Let's recaltulate the vectors under snow load and plot the results:
+
+<<exSnow2, fig=TRUE>>=
+vectors  <- treeVectors(treeData)
+CM       <- centreOfMass(vectors)
+summary(CM)
+plot.vectors(vectors, 
+  CM = CM,
+  main = "A stone pine centre of mass",
+  sub  = "under heavy snow load",
+  xlim = c(-8,10),
+  ylim = c(-12,4)
+)
+plotPolarSegment(210, 10.6, 140, 14.4)
+@
+
+Tree centre of mass has clearly shifted upwards and towards the house...
 
 menzionare come usare importfield?
 Ricordarsi di istruire a come fare il file csv
