@@ -16,7 +16,7 @@ A data frame with 39 observations on the following variable.
 }
 \details{Density is measured at humidity level 12\%, ie it is not a real measure on fresh wood. Actual fresh values are usually greater than those reported in this data set. As a result the dataset is provided only as a reference, please be cautioned about using these values.
 }
-\source{Nardi Berti, R. (1979) La struttura anatomica del legno ed il riconoscimento dei legnami italiani di più corrente impiego. CNR (Firenze), 155p.
+\source{Nardi Berti, R. (1979) La struttura anatomica del legno ed il riconoscimento dei legnami italiani di pi\`{u} corrente impiego. CNR (Firenze), 155p.
 }
 \examples{
 data(Dst)

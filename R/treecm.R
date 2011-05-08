@@ -460,7 +460,6 @@ plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
 #'
 #' Prints in a human-readable format the polar and cartesian coordinates of tree CM
 #'
-#' @method summary cm
 #' @param object An object of class CM
 #' @param ...    Additional arguments affecting the summary produced
 #' @return       \code{NULL}
@@ -488,7 +487,7 @@ summary.CM <- function(object, ...) {
 #'
 #' @references Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. & Amorini, E. 
 #'   Effetti della struttura del popolamento sui modelli di stima del volume e 
-#'   della biomassa epigea (Pineta di Castelfusano - Roma) Forest@@, 2009, 6, 75-84 
+#'   della biomassa epigea (Pineta di Castelfusano - Roma) Forest@@, 2009, 6, 75--84 
 #'   Tipo B
 #' @param x a data.frame of branches along with their diameters as a column
 #' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
@@ -504,7 +503,7 @@ branchBiomassPine <- function(x, diameter) {
 #' diameter, using an allometric equation for maritime pine
 #'
 #' @note Important: the allometric equation has been validated for 1-10 cm diameter branches
-#' @references Porté, A.; Trichet, P.; Bert, D. & Loustau, D. Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) Forest Ecology and Management, 2002, 158, 71-83
+#' @references Port\'{e}, A.; Trichet, P.; Bert, D. & Loustau, D. Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) Forest Ecology and Management, 2002, 158, 71--83
 #' @param x a data.frame of branches along with their diameters as a column
 #' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
 #' @return the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)

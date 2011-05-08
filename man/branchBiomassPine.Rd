@@ -7,7 +7,7 @@
 diameter at breast height, using an allometric equation for stone pine}
 \references{Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. & Amorini, E. 
 Effetti della struttura del popolamento sui modelli di stima del volume e 
-della biomassa epigea (Pineta di Castelfusano - Roma) Forest@, 2009, 6, 75-84 
+della biomassa epigea (Pineta di Castelfusano - Roma) Forest@, 2009, 6, 75--84 
 Tipo B}
 \value{the total biomass of the branch of a stone pine (in kg, dry state)}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}

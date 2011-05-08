@@ -127,7 +127,7 @@ summary(CM)
 <<ex2, fig=TRUE>>=
 plot.vectors(vectors, 
   CM = CM,
-  main = "Baricentro con CM alla base dei rami",
+  main = "A stone pine centre of mass",
 )
 @
 

@@ -1,7 +1,7 @@
 \name{summary.CM}
 \alias{summary.CM}
 \title{Summary of Centre of Mass data...}
-\usage{\method{summary}{cm}(object, ...)
+\usage{summary.CM(object, ...)
 }
 \description{Summary of Centre of Mass data}
 \details{Prints in a human-readable format the polar and cartesian coordinates of tree CM}
