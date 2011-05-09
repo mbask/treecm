@@ -3,6 +3,7 @@
 \usepackage{natbib}
 \usepackage{indentfirst}
 \usepackage[applemac]{inputenc}               % for Mac
+
 \usepackage{hyperref}
 
 % \VignetteIndexEntry{Introduction to treecm package}
@@ -21,7 +22,7 @@
 
 \subsection{Plot centre of mass}
 
-We'll make use of the data set bundled in the package to plot a basic view of masses:
+We will make use of the data set bundled in the package to plot a basic view of masses of branches and logs of a stone pine sampled by the author:
 <<ex1>>=
 library(treecm)
 data(treeData)
@@ -79,7 +80,7 @@ Snow may increase crown load substantially, sometimes breaking entire branches. 
 Let's model a snow load that doubles branches weight:
 
 <<exSnow>>=
-rows <- substr(row.names(treeData$fieldData),1,1)
+rows <- substr(row.names(treeData$fieldData), 1, 1)
 treeData$fieldData <- within(
   treeData$fieldData,
   biomass[rows != "L"] <- biomass[rows != "L"] * 2
@@ -111,11 +112,11 @@ Winds may increase load on some sectors of the crown and decrease it in other se
 <<exWind>>=
 data(treeData)
 
-rows <- substr(row.names(treeData$fieldData),1,1)
+rows <- substr(row.names(treeData$fieldData), 1, 1)
 treeData$fieldData <- within(
   treeData$fieldData, {
-  biomass[((dir > 270 | dir < 90) & rows != "L")]   <- biomass[((dir > 270 | dir < 90) & rows != "L")] / 2
-  biomass[((dir >= 90 | dir <= 180) & rows != "L")] <- biomass[((dir >= 90 | dir <= 180) & rows != "L")] * 2  
+  biomass[((dir >= 270 | dir < 90) & rows != "L")] <- biomass[((dir >= 270 | dir < 90) & rows != "L")] / 2
+  biomass[((dir >= 90 | dir < 270) & rows != "L")] <- biomass[((dir >= 90 | dir < 270) & rows != "L")] * 2  
 })
 rm(rows)
 
@@ -224,7 +225,7 @@ print(Dst)
 \subsection{Finding a correct allometric equation in order to estimate branch and foliage biomass}
 It is not feasible to weight the branches of a living tree. As a result branch and foliage biomass is estimated using branch diameter at base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a subsample of branches.
 
-When subsampling is not possible one should rely on published allometric equations and feed them to \verb!treecm!. Currently \verb!treecm! ships with two allometric equations:
+When subsampling is not possible one should rely on published allometric equations and feed them to \verb!treecm!. Currently \verb!treecm! ships with three allometric equations:
 \begin{itemize}
   \item \verb!branchBiomassPine!, tested on stone pine trees (not on branches), 40+ cm diameter, returns biomass (dry weight), \cite{cutini}
   \item \verb!branchBiomassPinePorte!, tested on maritime pine branches, 10- cm diameter, returns biomass (dry weight), \cite{porte}
@@ -242,17 +243,17 @@ Note that one should pick an allometric equation that yields fresh mass of branc
 A sample CSV data file is provided in the \verb!data! directory. Function \verb!importFieldData! loads and stores CSV files and along with needed data.
 CSV files are made up of 9 columns. The first row has to hold column headers. Headers are case sensitive. Each row holds individual log or branch data. Headers include:
 \begin{enumerate}
-  \item code a simple code assigned to each log or branch (usually L$x$ for logs, B$x$ for branches)
-  \item dir orientation, ie: compass bearing in degrees
-  \item dBase diameter of log or branch basal section, in cm
-  \item dTip diameter of log or branch tip (always 0 for branches), in cm
-  \item length log length (leave it empty in case of branches), in m
-  \item tipD distance of the tip of the log or branch to tree base (different from branch length when tree stem is not vertical)
-  \item height height of log basal section of height of branch insertion on stem
-  \item tilt log or branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, only useful to estimate $z$ coordinate of centre of mass) 
-  \item toBePruned boolean to simulate branch pruning
+  \item \textbf{code} a simple code assigned to each log or branch (usually L$x$ for logs, B$x$ for branches)
+  \item \textbf{dir} orientation, ie: compass bearing in degrees
+  \item \textbf{dBase} diameter of log or branch basal section, in cm
+  \item \textbf{dTip} diameter of log or branch tip (always 0 for branches), in cm
+  \item \textbf{length} log length (leave it empty in case of branches), in m
+  \item \textbf{tipD} distance of the tip of the log or branch to tree base (different from branch length when tree stem is not vertical)
+  \item \textbf{height} height of log basal section of height of branch insertion on stem
+  \item \textbf{tilt} log or branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, only useful to estimate $z$ coordinate of centre of mass) 
+  \item \textbf{toBePruned} boolean to simulate branch pruning
 \end{enumerate}
-There are a few simple rules to be followed in order to layout a correct CSV file, plese refer to page \pageref{sec:rules}
+There are a few simple rules to be followed in order to layout a correct CSV file, please refer to page \pageref{sec:rules}
 
 
 \section{Contribute!}
