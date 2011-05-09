@@ -171,8 +171,7 @@ CM       <- centreOfMass(vectors)
 summary(CM)
 plot.vectors(vectors, 
   CM = CM,
-  main = "A stone pine centre of mass",
-  sub  = "under heavy snow load",
+  main = "A stone pine centre of mass under 2x snow load",
   xlim = c(-8,10),
   ylim = c(-12,4)
 )

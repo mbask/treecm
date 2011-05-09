@@ -10,5 +10,5 @@ Description: Given a few data about branchiness of a tree the package
     centre of mass is a crucial data for arborists in order to
     consolidate a tree using steel or dynamic cables.
 Version: 1.0
-Date: 2011-05-06
+Date: 2011-05-10
 Collate: 'treecm.R'
