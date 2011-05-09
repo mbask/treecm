@@ -1,9 +1,9 @@
 \documentclass{article}
 
 \usepackage{natbib}
-
 \usepackage{indentfirst}
 \usepackage[applemac]{inputenc}               % for Mac
+\usepackage{hyperref}
 
 % \VignetteIndexEntry{Introduction to treecm package}
 % \VignetteDepends{} 
@@ -17,7 +17,148 @@
 \author{Marco Bascietto}
 \maketitle
 
-\section{Introduction}
+\section{Examples}
+
+\subsection{Plot centre of mass}
+
+We'll make use of the data set bundled in the package to plot a basic view of masses:
+<<ex1>>=
+library(treecm)
+data(treeData)
+print(treeData)
+@
+
+This data set has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizonatal plane). The stem has been sectioned in two logs (\verb!L1! and \verb!L2!), and a final branch (\verb!C!). The crown was made up of 23 branches (\verb!B1!-\verb!B23!), all of them horizontal (ie tilted 0$^{\circ}$). The package recognizes rows as branches because their diameter at tip is 0.
+
+\label{sec:rules}
+
+Please notice that some rules have to be followed in order to record sound data in the field:
+\begin{itemize}
+  \item only the length of \verb!C! branch has been recorded as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than one should record branch length and its angle from the horizonatl plane (\verb!tilt!)
+  \item the diameter of the tip of \verb!L1! is equal to the diameter of the base of \verb!L2!. \verb!L2! tip diameter is, in turn, equal to \verb!C! base diameter. Height figures must match as well as diameter measures
+  \item the distance of the tip of the branch (\verb!tipD!) is not the length of the branch but the distance between tree base (the origin of the cartesian plot) and branch tip
+\end{itemize}
+
+Let's get going and compute the centre of mass of this pine:
+
+<<ex11>>=
+vectors  <- treeVectors(treeData)
+CM       <- centreOfMass(vectors)
+summary(CM)
+@
+
+The core of the package is the \verb!summary! method for CM object. The centre of mass for this stone pine lies 2.88 metres South-West of tree base (226$^{\circ}$ from magnetic North), 7.70 metres above ground. Cartesian coordinates are provided as well, though not so usefull as polar ones.
+
+A simple visualization of tree centre of mass and its logs and branches is achieved simply by:
+
+<<ex2, fig=TRUE>>=
+plot.vectors(vectors, 
+  CM = CM,
+  main = "A stone pine centre of mass"
+)
+@
+
+In a cartesian coordinate system whose origin lies at tree base, the masses of logs branches and branches are plotted as vectors pointing inwards, towards the ground. Each circle represent a branch or log mass. Circle radius is proportional to branch or log mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow exemplifies the direction the tree will follow should it break from its base.
+
+If we measured the polar coordinates of the building(s) around the tree we would have plot them alongside the tree using the \verb!plotPolarSegment! function:
+
+<<ex3, fig=TRUE>>=
+plot.vectors(vectors, 
+  CM = CM,
+  main = "A stone pine centre of mass",
+  xlim = c(-8,10),
+  ylim = c(-12,4)
+)
+plotPolarSegment(210, 10.6, 140, 14.4)
+@
+
+\subsection{Snow load}
+
+Snow may increase crown load substantially, sometimes breaking entire branches. As a side effect, snow-loaded crowns may alter tree centre of mass by moving it upwards and, in asymmetric crowns, towards the part of crown under heavier load.
+
+Let's model a snow load that doubles branches weight:
+
+<<exSnow>>=
+rows <- substr(row.names(treeData$fieldData),1,1)
+treeData$fieldData <- within(
+  treeData$fieldData,
+  biomass[rows != "L"] <- biomass[rows != "L"] * 2
+)
+rm(rows)
+@
+
+Let's recaltulate the vectors under snow load and plot the results:
+
+<<exSnow2, fig=TRUE>>=
+vectors  <- treeVectors(treeData)
+CM       <- centreOfMass(vectors)
+summary(CM)
+plot.vectors(vectors, 
+  CM = CM,
+  main = "A stone pine centre of mass under 2x snow load",
+  xlim = c(-8,10),
+  ylim = c(-12,4)
+)
+plotPolarSegment(210, 10.6, 140, 14.4)
+@
+
+Tree centre of mass has clearly shifted upwards and towards the house...
+
+\subsection{Wind load}
+
+Winds may increase load on some sectors of the crown and decrease it in other sectors. We would like to model the effect of a prevailing Southbound wind that halves branches mass in the northern sector and doubles it in the southern sector.
+
+<<exWind>>=
+data(treeData)
+
+rows <- substr(row.names(treeData$fieldData),1,1)
+treeData$fieldData <- within(
+  treeData$fieldData, {
+  biomass[((dir > 270 | dir < 90) & rows != "L")]   <- biomass[((dir > 270 | dir < 90) & rows != "L")] / 2
+  biomass[((dir >= 90 | dir <= 180) & rows != "L")] <- biomass[((dir >= 90 | dir <= 180) & rows != "L")] * 2  
+})
+rm(rows)
+
+vectors  <- treeVectors(treeData)
+CM       <- centreOfMass(vectors)
+summary(CM)
+@
+
+Under a heavy Southbound wind the CM of the tree will move considerably towards South and 1.2 metres farther away from tree base. Although too simplicistic a model the results lead to the conclusion that dynamic forces in prevailing wind conditions should be taken into account when assessing tree stability.
+
+\subsection{Effect of pruning}
+
+As far as static forces are concerned, in an effort to move centre of mass toward tree base, we could prune a few heavy branches. Let's have a look how CM would move if we cut B2 and B4. We will make use of function \verb!switchBranchPruningStatus!:
+
+<<exPruning, fig=TRUE>>=
+library(treecm)
+data(treeData)
+vectors  <- treeVectors(treeData)
+CM       <- centreOfMass(vectors)
+
+op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
+
+plot.vectors(vectors, 
+  CM = CM,
+  main = "Centre of mass of a stone pine"
+)
+
+treeData <- switchBranchPruningStatus(treeData, c(4, 6))
+vectors  <- treeVectors(treeData)
+CM       <- centreOfMass(vectors)
+plot.vectors(vectors, 
+  CM = CM,
+  main = "Centre of mass of a stone pine, B2 and B4 removed"
+)
+
+par(op)
+rm(op)
+@
+
+CM has actually moved 0.5 metres towards tree base, and farther away from the house. As a matter of facts, branch pruning has not been a reasonable action towards a safer tree. 
+
+
+\section{The problem}
 Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the $x$ and $y$ coordinates of the barycentre lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
 
 The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and  the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
@@ -95,102 +236,31 @@ We welcome contributions to increase the available list of allometric equations.
 
 Note that one should pick an allometric equation that yields fresh mass of branches in order to get results as closer as possible to the real tree centre of mass. Function \verb!branchBiomassPineAsca! returns fresh weight values for stone pine branches.
 
-\section{Examples}
 
-\subsection{Plot centre of mass}
+\section{Correct layout of CSV file}
 
-We'll make use of the data set bundled in the package to plot a basic view of masses:
-<<ex1>>=
-library(treecm)
-data(treeData)
-print(treeData)
-@
+A sample CSV data file is provided in the \verb!data! directory. Function \verb!importFieldData! loads and stores CSV files and along with needed data.
+CSV files are made up of 9 columns. The first row has to hold column headers. Headers are case sensitive. Each row holds individual log or branch data. Headers include:
+\begin{enumerate}
+  \item code a simple code assigned to each log or branch (usually \emph{Lx} for logs, \emph{Bx} for branches)
+  \item dir orientation, ie: compass bearing in degrees
+  \item dBase diameter of log or branch basal section, in cm
+  \item dTip diameter of log or branch tip (always 0 for branches), in cm
+  \item length log length (leave it empty in case of branches), in m
+  \item tipD distance of the tip of the log or branch to tree base (different from branch length when tree stem is not vertical)
+  \item height height of log basal section of height of branch insertion on stem
+  \item tilt log or branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, only useful to estimate $z$ coordinate of centre of mass) 
+  \item toBePruned boolean to simulate branch pruning
+\end{enumerate}
+There are a few simple rules to be followed in order to layout a correct CSV file, plese refer to page \pageref{sec:rules}
 
-This data set has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizonatal plane). The stem has been sectioned in two logs (\verb!L1! and \verb!L2!), and a final branch (\verb!C!). The crown was made up of 23 branches (\verb!B1!-\verb!B23!), all of them horizontal (ie tilted 0$^{\circ}$). The package recognizes rows as branches because their diameter at tip is 0.
-
-Please notice that some rules have to be followed in order to record sound data in the field:
-\begin{itemize}
-  \item only the length of \verb!C! branch has been recorded as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than one should record branch length and its angle from the horizonatl plane (\verb!tilt!)
-  \item the diameter of the tip of \verb!L1! is equal to the diameter of the base of \verb!L2!. \verb!L2! tip diameter is, in turn, equal to \verb!C! base diameter. Height figures must match as well as diameter measures
-  \item the distance of the tip of the branch (\verb!tipD!) is not the length of the branch but the distance between tree base (the origin of the cartesian plot) and branch tip
-\end{itemize}
-
-Let's get going and compute the centre of mass of this pine:
-
-<<ex11>>=
-vectors  <- treeVectors(treeData)
-CM       <- centreOfMass(vectors)
-summary(CM)
-@
-
-The core of the package is the \verb!summary! method for CM object. The centre of mass for this stone pine lies 2.88 metres South-West of tree base (226$^{\circ}$ from magnetic North), 7.70 metres above ground. Cartesian coordinates are provided as well, though not so usefull as polar ones.
-
-A simple visualization of tree centre of mass and its logs and branches is achieved simply by:
-
-<<ex2, fig=TRUE>>=
-plot.vectors(vectors, 
-  CM = CM,
-  main = "A stone pine centre of mass"
-)
-@
-
-In a cartesian coordinate system whose origin lies at tree base, the masses of logs branches and branches are plotted as vectors pointing inwards, towards the ground. Each circle represent a branch or log mass. Circle radius is proportional to branch or log mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow exemplifies the direction the tree will follow should it break from its base.
-
-If we measured the polar coordinates of the building(s) around the tree we would have plot them alongside the tree using the \verb!plotPolarSegment! function:
-
-<<ex3, fig=TRUE>>=
-plot.vectors(vectors, 
-  CM = CM,
-  main = "A stone pine centre of mass",
-  xlim = c(-8,10),
-  ylim = c(-12,4)
-)
-plotPolarSegment(210, 10.6, 140, 14.4)
-@
-
-\subsection{Snow load}
-
-Snow may increase crown load substantially, sometimes breaking entire branches. As a side effect, snow-loaded crowns may alter tree centre of mass by moving it upwards and, in asymmetric crowns, towards the part of crown under heavier load.
-
-Let's model a snow load that doubles branches weight:
-
-<<exSnow>>=
-rows <- substr(row.names(treeData$fieldData),1,1)
-treeData$fieldData <- within(
-  treeData$fieldData,
-  biomass[rows != "L"] <- biomass[rows != "L"] * 2
-)
-rm(rows)
-@
-
-Let's recaltulate the vectors under snow load and plot the results:
-
-<<exSnow2, fig=TRUE>>=
-vectors  <- treeVectors(treeData)
-CM       <- centreOfMass(vectors)
-summary(CM)
-plot.vectors(vectors, 
-  CM = CM,
-  main = "A stone pine centre of mass under 2x snow load",
-  xlim = c(-8,10),
-  ylim = c(-12,4)
-)
-plotPolarSegment(210, 10.6, 140, 14.4)
-@
-
-Tree centre of mass has clearly shifted upwards and towards the house...
-
-menzionare come usare importfield?
-Ricordarsi di istruire a come fare il file csv
-mettere in biblio repository github
-\\
-caveat
-discorso su posizione del cm lungo il ramo
 
 \section{Contribute!}
-\verb!treecm! is an ongoing project. Many areas need to be expanded including:
+\verb!treecm! is an ongoing project hosted on GitHub (\url{https://github.com/mbask/treecm}). Many areas need to be expanded including:
 \begin{itemize}
-  \item branch biomass estimation; allometric equations are used to estimate fresh branch and foliage biomass. So far only branch biomass for stone pine and maritime pine have been developed or integrated into the software from published data. We need to expand further the number of species represented, particularly for those species common in urban area such as cedars, magnolias, oaks.
+  \item branch biomass estimation; allometric equations are used to estimate fresh branch and foliage biomass. So far only branch biomass for stone pine and maritime pine have been developed or integrated into the software from published data. We need to expand further the number of species represented, particularly for those species common in urban area such as cedars, magnolias, oaks
+  \item The package does not estimate the position of the centre of mass of tree branches. This position may vary according to foliage mass and its distribution along the branchs, branch tapering, quantity of water in leaves (ie: shaded or lit leaves) \emph{etc}. The position must be fed to the package during data loading, as the variable \verb!branchesCM!. Although going for the safe road, setting a branch centre of mass position on its tip may not be sufficiently precise should one assess wood quality as a function of load balance. Work is under way in order to to model branch load balance
+  \item As far as postion of centre of mass il logs, the package does not tell branches and logs apart. The position of CM in logs follows branches CM position settings, though not realistic.
 \end{itemize}
 
 \begin{thebibliography}{100}
