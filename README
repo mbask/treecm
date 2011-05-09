@@ -1,6 +1,6 @@
 An R package to compute and plot the centre of mass of the tree itself. 
 
-Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the $x$ and $y$ coordinates of the barycentre lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
+Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the x and y coordinates of the barycentre lie inside the pi * r^2 surface where r is the radius of tree base.
 
 The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and  the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
 

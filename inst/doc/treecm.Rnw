@@ -242,7 +242,7 @@ Note that one should pick an allometric equation that yields fresh mass of branc
 A sample CSV data file is provided in the \verb!data! directory. Function \verb!importFieldData! loads and stores CSV files and along with needed data.
 CSV files are made up of 9 columns. The first row has to hold column headers. Headers are case sensitive. Each row holds individual log or branch data. Headers include:
 \begin{enumerate}
-  \item code a simple code assigned to each log or branch (usually \emph{Lx} for logs, \emph{Bx} for branches)
+  \item code a simple code assigned to each log or branch (usually L$x$ for logs, B$x$ for branches)
   \item dir orientation, ie: compass bearing in degrees
   \item dBase diameter of log or branch basal section, in cm
   \item dTip diameter of log or branch tip (always 0 for branches), in cm
