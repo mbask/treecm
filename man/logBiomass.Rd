@@ -10,7 +10,7 @@ Smalian's formula: \eqn{V=\frac{Sb+Sd}{2}l} where \eqn{V} is the log volume,
 \eqn{Sb} is the aerea of the basal (lower) section, \eqn{Sd} is the 
 area of the higher section and \eqn{l} is the length of the log.}
 \note{Attention: diameters used to compute section areas should be measured under the bark layer! When this is not the case and diameters include bark thickness the log biomass is over-estimated!}
-\references{la Marca, O. Elementi di dendrometria, 2004, Patron Editore (Bologna), p. 119}
+\references{la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
 \arguments{\item{x}{the data.frame holding the measures needed to perform the estimation}
 \item{lowerD}{The name of the data.frame column holding diameter of the lower section in cm}

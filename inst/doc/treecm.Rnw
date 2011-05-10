@@ -266,11 +266,11 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 
 \begin{thebibliography}{100}
 
-\bibitem[Cutini et al., 2009]{cutini} Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. and Amorini, E. (2009) Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma). \emph{Forest@}, 6, 75--84.
+\bibitem[Cutini et al., 2009]{cutini} Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@@}, \textbf{6}, 75--84
 
-\bibitem[Nardi Berti, 1979]{nardi} Nardi Berti, R. (1979) La struttura anatomica del legno ed il riconoscimento dei legnami italiani di pi\`{u} corrente impiego. CNR (Firenze), 155p.
+\bibitem[Nardi Berti, 1979]{nardi} Nardi Berti, R. 1979 \emph{La struttura anatomica del legno ed il riconoscimento dei legnami italiani di pi\`{u} corrente impiego}. CNR (Firenze), 155p.
 
-\bibitem[Port\'{e} et al., 2002]{porte} Port\'{e}, A.; Trichet, P.; Bert, D. and Loustau, D. (2002) Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.). \emph{Forest Ecology and Management}, 158, 71--83.
+\bibitem[Port\'{e} et al., 2002]{porte} Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \textbf{158}, 71--83
     
 \end{thebibliography}
 

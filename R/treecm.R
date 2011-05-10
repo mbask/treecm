@@ -10,63 +10,61 @@
 # roxygenize('treecm', roxygen.dir='treecm', copy.package=FALSE, unlink.target=FALSE, use.Rd2=TRUE)
 ###############################################################################
 
-#' Assessment of x, y, z coordinates of centre of mass of trees
+#' @title Assessment of x, y, z coordinates of centre of mass of trees
 #'
-#' \tabular{ll}{
-#' Package: \tab treecm\cr
-#' Type: \tab Package\cr
-#' Version: \tab 1.0\cr
-#' Date: \tab 2011-05-01\cr
-#' License: \tab GPL (>= 2)\cr
-#' LazyLoad: \tab no\cr
-#' }
-#'
-#' Given a few data about branchiness of a tree the package computes and plots the centre of mass of the tree itself.
+#' @description Given a few data about branchiness of a tree the package computes and plots the centre of mass of the tree itself.
 #' The centre of mass is a crucial data for arborists in order to consolidate a tree using steel or dynamic cables.
-#' Field measures to be taken include:
+#' The tree stem is ideally sectioned in logs. The weight of tree components is assessed based on
 #' \itemize{
-#'   \item{Diameter at base: }{diameter at insertion point on the trunk, for branches, diameter of the lower section for logs, mandatory}
-#'   \item{Diameter at top: }{0 for branches, diameter of the higher section for logs, optional, defaults to 0}
-#'   \item{Distance: }{Length of branch or log projection on the ground, starting from tree base to tip of branch or log, mandatory}
-#'   \item{Length: }{Length of logs (no use for branches), mandatory}
-#'   \item{Height: }{height of branch insertion on the trunk or height of lower section of the log, to be used to compute z coordinate of CM, optional, defaults to NA}
-#'   \item{Direction: }{mean angle of orientation of the branch or log measured from the base of the tree (usually with magnetic north as reference, measured clockwise), mandatory}
-#'   \item{Tilt: }{mean branch or log tilt from the horizontal plane (eg a vertical branch is 90 degrees, an horizontal branch is 0 degrees), to be used to compute z coordinate of CM, optional, defaults to 0. Note however that the tree tip should be considered as a branch, not a log, in order to account for foliage biomass. In this case tilt value should be recorded otherwise it would default to 0, ie an horizontal branch} 
-#'   \item{To be pruned: }{a boolean value, optional, defaults to FALSE}
+#'   \item the sum of volume of stem logs
+#'   \item the sum of branches biomass
 #' }
-#' Branch biomass is computed by allometric equations relating its dry weight (wood + leaves) to its diameter at point of insertion on the trunk.
-#' Log biomass is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see logBiomass description)
+#' Field measures to be taken on logs and branches include:
+#' \itemize{
+#'   \item{\bold{Diameter at base}: diameter at insertion point on the trunk, for branches, diameter of the lower section for logs, mandatory}
+#'   \item{\bold{Diameter at top}: 0 for branches, diameter of the higher section for logs, optional, defaults to 0}
+#'   \item{\bold{Distance}: Length of branch or log projection on the ground, starting from tree base to tip of branch or log, mandatory}
+#'   \item{\bold{Length}: Length of logs (no use for branches), mandatory}
+#'   \item{\bold{Height}: height of branch insertion on the trunk or height of lower section of the log, to be used to compute z coordinate of CM, optional, defaults to NA}
+#'   \item{\bold{Direction}: mean angle of orientation of the branch or log measured from the base of the tree (usually with magnetic north as reference, measured clockwise), mandatory}
+#'   \item{\bold{Tilt}: mean branch or log tilt from the horizontal plane (eg a vertical branch is 90 degrees, an horizontal branch is 0 degrees), to be used to compute z coordinate of CM, optional, defaults to 0. Note however that the tree tip should be considered as a branch, not a log, in order to account for foliage biomass. In this case tilt value should be recorded otherwise it would default to 0, ie an horizontal branch} 
+#'   \item{\bold{To be pruned}: a boolean value, optional, defaults to FALSE}
+#' }
+#'
+#' @note Branch biomass is computed by allometric equations relating its dry weight (wood + leaves) to its diameter at point of insertion on the stem. Log biomass is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see \code{\link{logBiomass}} description).
+#' A sample \code{.CSV} file is provided to guide through data filling in the field
 #' @seealso \code{\link{logBiomass}}
 #' \code{\link{fieldData}}
-#' @note An example \code{.CSV} file is provided to guide through data filling in the field
-#' @title Assessment of x, y, z coordinates of centre of mass of trees
 #' @name treecm-package
 #' @aliases treecm
 #' @docType package
-#' @title Tree Centre of Mass for R
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 #' @keywords package
 #' @examples
 #' data(treeData)
 #' vectors  <- treeVectors(treeData)
 #' CM       <- centreOfMass(vectors)
-#' plot.vectors(vectors, CM = CM, main = "Centre Of Mass", col = "grey30", txtcol = "grey30")
+#' plot.vectors(vectors, 
+#'   CM = CM, 
+#'   main = "Centre Of Mass", 
+#'   col = "grey30", 
+#'   txtcol = "grey30")
 #' summary(CM)
 #' @references Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})
 NULL
 
-#' Computes the x cartesian coordinate
+#' @title Computes the x cartesian coordinate
 #'
-#' Computes the x cartesian coordinate from a set of polar coordinates
+#' @description Computes the \eqn{x} cartesian coordinate from a set of polar coordinates
 #'
 #' @param angle The angle in degree (measured clockwise from the North or from 
 #' any other relevant direction defined in the field)
 #' @param distance The distance
-#' @return The x coordinate (a real number) measured in the same unit as the distance parameter
+#' @return The \eqn{x} coordinate expressed in the same unit as the distance parameter
 #'
-#' @note Attention: the function assumes the angle is measured clockwise whereas
+#' @note The function assumes the angle is measured clockwise whereas
 #' trigonometric functions require a conventional counterclockwise 
-#' measured angle. Thus the function computes x coordinate as the sine of 
+#' measured angle. Thus the function computes \eqn{x} coordinate as the sine of 
 #' the angle, enabling a correct representation of them on a cartesian plot.
 #'
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
@@ -75,18 +73,19 @@ toCartesianX <- function(angle, distance) {
   sin(angleRad) * distance
 }
 
-#' Computes the y cartesian coordinate
+#' @title Computes the y cartesian coordinate
 #'
-#' Computes the y cartesian coordinate from a set of polar coordinates
-#' @note Attention: the function assumes the angle is measured clockwise whereas
+#' @description Computes the \eqn{y} cartesian coordinate from a set of polar coordinates
+#'
+#' @note The function assumes the angle is measured clockwise whereas
 #' trigonometric functions require a conventional counterclockwise 
-#' measured angle. Thus the function computes x coordinate as the cosine of 
+#' measured angle. Thus the function computes \eqn{y} coordinate as the cosine of 
 #' the angle, enabling a correct representation of them on a cartesian plot.
 #'
 #' @param angle The angle in degree (measured clockwise from the North or from 
 #' any other relevant direction defined in the field)
 #' @param distance The distance
-#' @return The y coordinate (a real number) measured in the same unit as the distance parameter
+#' @return The \eqn{y} coordinate expressed in the same unit as the distance parameter
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 toCartesianY <- function(angle, distance) {
   angleRad <- angle * pi / 180
@@ -181,7 +180,7 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
 #' @param higherD The name of the data.frame column holding the diameter of the higher section (usually smaller!) in cm
 #' @param logLength The name of the data.frame column holding the length of the log or branch in m
 #' @param density The name of the data.frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}
-#' @references la Marca, O. Elementi di dendrometria, 2004, Patron Editore (Bologna), p. 119
+#' @references la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 logBiomass <- function (x, lowerD, higherD, logLength, density) {
   lowerS   <- pi * (as.real(x[lowerD]) / 200)^2 
@@ -485,9 +484,7 @@ summary.CM <- function(object, ...) {
 #' Returns total biomass of a tree or branch (wood and leaves, dry state) in kg given the 
 #' diameter at breast height, using an allometric equation for stone pine
 #'
-#' @references Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. & Amorini, E. 
-#'   Effetti della struttura del popolamento sui modelli di stima del volume e 
-#'   della biomassa epigea (Pineta di Castelfusano - Roma) Forest@@, 2009, 6, 75--84 
+#' @references Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@@}, \bold{6}, 75--84 
 #'   Tipo B
 #' @param x a data.frame of branches along with their diameters as a column
 #' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
@@ -503,7 +500,7 @@ branchBiomassPine <- function(x, diameter) {
 #' diameter, using an allometric equation for maritime pine
 #'
 #' @note Important: the allometric equation has been validated for 1-10 cm diameter branches
-#' @references Port\'{e}, A.; Trichet, P.; Bert, D. & Loustau, D. Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) Forest Ecology and Management, 2002, 158, 71--83
+#' @references Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \bold{158}, 71--83
 #' @param x a data.frame of branches along with their diameters as a column
 #' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
 #' @return the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)

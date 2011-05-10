@@ -5,9 +5,7 @@
 }
 \description{Returns total biomass of a tree or branch (wood and leaves, dry state) in kg given the 
 diameter at breast height, using an allometric equation for stone pine}
-\references{Cutini, A.; Hajny, M.; Gugliotta, O.; Manetti, M. & Amorini, E. 
-Effetti della struttura del popolamento sui modelli di stima del volume e 
-della biomassa epigea (Pineta di Castelfusano - Roma) Forest@, 2009, 6, 75--84 
+\references{Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@}, \bold{6}, 75--84 
 Tipo B}
 \value{the total biomass of the branch of a stone pine (in kg, dry state)}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
