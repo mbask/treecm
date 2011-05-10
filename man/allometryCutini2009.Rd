@@ -5,7 +5,8 @@
 }
 \description{Returns total biomass of a stone pine tree (wood and leaves, dry state) in kg given the 
 diameter at breast height, using an allometric equation}
-\note{Use this function at you own risk, it has been validated for trees (ie: >40 cm diameters). The allometric equation takes the form of a pure quadratic equation}
+\note{Use this function at you own risk, it has been validated for trees (ie: >40 cm diameters).}
+\note{The allometric equation takes the form of a pure quadratic equation}
 \seealso{\code{\link{pureQuadraticEquation}}}
 \references{Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@}, \bold{6}, 75--84 
 Tipo B}

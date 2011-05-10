@@ -21,11 +21,11 @@
 #' }
 #' Field measures to be taken on logs and branches include:
 #' \itemize{
-#'   \item{\bold{Diameter at base}: diameter at insertion point on the trunk, for branches, diameter of the lower section for logs, mandatory}
+#'   \item{\bold{Diameter at base}: diameter at insertion point on the stem, for branches, diameter of the lower section for logs, mandatory}
 #'   \item{\bold{Diameter at top}: 0 for branches, diameter of the higher section for logs, optional, defaults to 0}
 #'   \item{\bold{Distance}: Length of branch or log projection on the ground, starting from tree base to tip of branch or log, mandatory}
 #'   \item{\bold{Length}: Length of logs (no use for branches), mandatory}
-#'   \item{\bold{Height}: height of branch insertion on the trunk or height of lower section of the log, to be used to compute z coordinate of CM, optional, defaults to NA}
+#'   \item{\bold{Height}: height of branch insertion on the stem or height of lower section of the log, to be used to compute z coordinate of CM, optional, defaults to NA}
 #'   \item{\bold{Direction}: mean angle of orientation of the branch or log measured from the base of the tree (usually with magnetic north as reference, measured clockwise), mandatory}
 #'   \item{\bold{Tilt}: mean branch or log tilt from the horizontal plane (eg a vertical branch is 90 degrees, an horizontal branch is 0 degrees), to be used to compute z coordinate of CM, optional, defaults to 0. Note however that the tree tip should be considered as a branch, not a log, in order to account for foliage biomass. In this case tilt value should be recorded otherwise it would default to 0, ie an horizontal branch} 
 #'   \item{\bold{To be pruned}: a boolean value, optional, defaults to FALSE}
@@ -106,43 +106,46 @@ toPolar <- function(x, y) {
   c(as.integer(a), d)
 }
 
-# -------------moment
-#' Computes the cartesian coordinates of centre of mass of branches and logs
+
+#' @title Returns the coordinates of centre of mass of branches and logs
 #'
-#' Computes the cartesian coordinates of centre of mass of branches and 
-#' logs along with their x, y, z moments
-#' The x and y coordinates are computed from the polar coordinates (angle and distance, 
+#' @description Computes the cartesian coordinates of centre of mass of branches and 
+#' logs along with their \eqn{x}, \eqn{y}, \eqn{z} moments
+#'
+#' The \eqn{x} and \eqn{y} coordinates are computed from the polar coordinates (angle and distance, 
 #' defined as the length of its projection on ground), measured in the field. 
-#' The z coordinate is computed by adding the height of branch insertion on the trunk 
+#' The \eqn{z} coordinate is computed by adding the height of branch insertion on the stem 
 #' (measured in the field) to the height of the branch (calculated through its 
-#' mean inclination, in case it was measured in the filed).
-#' The x, y, z coordinates are corrected to take into account where the actual
+#' mean tilt, in case it was measured in the filed).
+#' The \eqn{x}, \eqn{y}, \eqn{z} coordinates are corrected to take into account where the actual
 #' centre of mass lies on the branches themselves by multiplying them by branchesCM,
 #' a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). 
 #' As a rule of thumb, average live branches, with an average amount of foliage, 
-#' have CM approx. from 1/3 to 2/3 of their length, ie. branchesCM = 0.33-0.66.
-#' x, y, z moments are computed by multiplying the cartesian coordinate by 
+#' have CM approx. from \eqn{1/3} to \eqn{2/3} of their length, ie. branchesCM = 0.33-0.66.
+#' \eqn{x}, \eqn{y}, \eqn{z} moments are computed by multiplying the cartesian coordinate by 
 #' branch or log mass.
-#' @note BranchCM is assumed to have same value in branches and logs. This is not the case in real world. As a measure of safety one should use higher values than 1/3, eg 1 for branchesCM.
-#' @param object A data.frame holding the appropriate colums
-#' @param angle The name of the data.frame column holding the angle of branch orientation
-#' @param distance The name of the data.frame column holding the length of the 
+#'
+#' @param object A data frame holding the appropriate colums
+#' @param angle The name of the data frame column holding the angle of branch orientation
+#' @param distance The name of the data frame column holding the length of the 
 #' branch projection on the ground
-#' @param height The name of the data.frame column holding the height of branch
-#' insertion on the trunk or the height of log lower section
-#' @param incl The name of the data.frame column holding the inclination of
+#' @param height The name of the data frame column holding the height of branch
+#' insertion on the stem or the height of log lower section
+#' @param incl The name of the data frame column holding the inclination of
 #' the branch or log in degrees
-#' @param mass The name of the data.frame column holding the mass of the branch or log
+#' @param mass The name of the data frame column holding the mass of the branch or log
 #' @param branchesCM a real number varying from 0.01 to 1 proportional to the centre of
 #' mass position along the branch (0.01 branch base, 1 branch tip)
 #' @return a vector holding 5 reals:
 #' \itemize{
-#'  \item{the x coordinate of branch CM}
-#'  \item{the y coordinate of branch CM}
-#'  \item{the x moment of the branch}
-#'  \item{the y moment of the branch}
-#'  \item{the z moment of the branch}}
-#' @note z coordinate of CM is not returned because it would be useless in a 2D plot. It is computed using mz, which is, as a matter of facts, returned
+#'  \item{the \eqn{x} coordinate of branch CM}
+#'  \item{the \eqn{y} coordinate of branch CM}
+#'  \item{the \eqn{x} moment of the branch}
+#'  \item{the \eqn{y} moment of the branch}
+#'  \item{the \eqn{z} moment of the branch}}
+#' @note BranchCM is assumed to have same value in branches and logs. This is not the case in the real world. As a measure of safety one should use higher values than \eqn{1/3}, eg 1 for branchesCM.
+#'
+#' @note \eqn{z} coordinate of CM is not returned because it would be useless in a 2D plot. It is computed using \eqn{mz}, which is, as a matter of facts, returned
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass, branchesCM) {
   ## get variables
@@ -175,11 +178,11 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
 #' area of the higher section and \eqn{l} is the length of the log.
 #'
 #' @note Attention: diameters used to compute section areas should be measured under the bark layer! When this is not the case and diameters include bark thickness the log biomass is over-estimated!
-#' @param x the data.frame holding the measures needed to perform the estimation
-#' @param lowerD The name of the data.frame column holding diameter of the lower section in cm
-#' @param higherD The name of the data.frame column holding the diameter of the higher section (usually smaller!) in cm
-#' @param logLength The name of the data.frame column holding the length of the log or branch in m
-#' @param density The name of the data.frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}
+#' @param x the data frame holding the measures needed to perform the estimation
+#' @param lowerD The name of the data frame column holding diameter of the lower section in cm
+#' @param higherD The name of the data frame column holding the diameter of the higher section (usually smaller!) in cm
+#' @param logLength The name of the data frame column holding the length of the log or branch in m
+#' @param density The name of the data frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}
 #' @references la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 logBiomass <- function (x, lowerD, higherD, logLength, density) {
@@ -284,7 +287,7 @@ setBranchesCM <- function(object, value) {
 
 #' Sets pruning status of a branch
 #'
-#' Switches pruning status of a record in the raw data.frame from field measures
+#' Switches pruning status of a record in the raw data frame from field measures
 #' Method "calcVectors" must be invoked to take changes into effect
 #'
 #' @param object the list holding tree data
@@ -301,7 +304,7 @@ switchBranchPruningStatus <- function(object, value) {
 
 #' Computes masses of branches and logs
 #'
-#' Computes branches biomass using an allometric function provided in \code{allometryFUN} and logs weight using Smalian's formula. Branches are telled apart from logs in the raw data.frame (\code{fieldData}) because their final diameter is 0 (ie they have a tip) whereas logs have a final diameter > 0.
+#' Computes branches biomass using an allometric function provided in \code{allometryFUN} and logs weight using Smalian's formula. Branches are telled apart from logs in the raw data frame (\code{fieldData}) because their final diameter is 0 (ie they have a tip) whereas logs have a final diameter > 0.
 #'
 #' @param object a list holding tree data
 #' @seealso \code{\link{logBiomass}}
@@ -316,7 +319,7 @@ treeBiomass <- function(object) {
   })
   
   object <- within(object, {
-    ## gets trunk and cut branches (ie. diameter at tip > 0) biomass, by converting its fresh volume to dry weight
+    ## gets stem and cut branches (ie. diameter at tip > 0) biomass, by converting its fresh volume to dry weight
     fieldData$biomass[(fieldData$dTip > 0)] <- as.vector(
       apply(
         fieldData[(fieldData$dTip > 0),], 
@@ -345,7 +348,7 @@ treeBiomass <- function(object) {
 
 #' Computes cartesian coordinates and moments of branches and logs 
 #'
-#' A data.frame is populated width branch and log masses, along with x, y cartesian coordinates and x, y, and z moments.
+#' A data frame is populated width branch and log masses, along with x, y cartesian coordinates and x, y, and z moments.
 #' z coordinates and moments are calculated only if branches height from the ground (and inclination) have been recorded in the field.
 #'
 #' @param object an object of class vectors 
@@ -354,7 +357,7 @@ treeBiomass <- function(object) {
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 treeVectors <- function(object) {
 
-  ## vectors data.frame is populated
+  ## vectors data frame is populated
   vectors <- subset(object$fieldData, select = c(dir, tipD, biomass, height, tilt, toBePruned))
 
   ## computes cartesian coordinates of branch tip and its x, y and z moments are added to vectors slot
@@ -485,7 +488,8 @@ summary.CM <- function(object, ...) {
 #' @description Returns total biomass of a stone pine tree (wood and leaves, dry state) in kg given the 
 #' diameter at breast height, using an allometric equation
 #'
-#' @note Use this function at you own risk, it has been validated for trees (ie: >40 cm diameters). The allometric equation takes the form of a pure quadratic equation
+#' @note Use this function at you own risk, it has been validated for trees (ie: >40 cm diameters). 
+#' @note The allometric equation takes the form of a pure quadratic equation
 #' @seealso \code{\link{pureQuadraticEquation}}
 #' @references Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@@}, \bold{6}, 75--84 
 #'   Tipo B
@@ -504,7 +508,8 @@ allometryCutini2009 <- function(x, diameter) {
 #' @description Returns the woody biomass of a maritime pine branch (dry state, no leaves!) in kg given the 
 #' diameter, using an allometric equation
 #'
-#' @note The allometric equation has been validated for <10 cm diameter branches, extrapolation on larger branches my yield unreasonable results. The allometric equation takes the form of a power equation
+#' @note The allometric equation has been validated for <10 cm diameter branches, extrapolation on larger branches my yield unreasonable results.
+#' @note The allometric equation takes the form of a power equation
 #' @seealso \code{\link{powerEquation}}
 #' @references Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \bold{158}, 71--83
 #' @param x a data frame holding diameters of branches
@@ -522,7 +527,8 @@ allometryPorte2002 <- function(x, diameter) {
 #' @description Returns the fresh biomass of a stone pine branch in kg given the 
 #' diameter, using an allometric equation
 #'
-#' @note The allometric equation has been validated for 8-16 cm diameter branches. The allometric equation takes the form of a power equation
+#' @note The allometric equation has been validated for 8-16 cm diameter branches. 
+#' @note The allometric equation takes the form of a power equation
 #' @seealso \code{\link{powerEquation}}
 #' @references Data collected by A. Ascarelli, non linear regression by M. Bascietto
 #' @param x a data frame holding diameters of branches

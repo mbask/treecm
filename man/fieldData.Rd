@@ -5,7 +5,7 @@
 Raw CSV file of field recorded values for a stone pine tree
 }
 \description{
-Required data for the assessment of the centre of mass have been recorded in the field for a stone pine (\emph{Pinus pinea} L.). This is an example of csv file that should be fed to treecm to assess tree centre of mass.
+Required data for the assessment of the centre of mass have been recorded in the field for a stone pine (\emph{Pinus pinea} L.). This is an example of csv file that should be fed to \code{\link{treeBiomass}} to assess tree centre of mass.
 }
 \usage{data(fieldData)}
 \format{

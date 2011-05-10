@@ -12,10 +12,10 @@ area of the higher section and \eqn{l} is the length of the log.}
 \note{Attention: diameters used to compute section areas should be measured under the bark layer! When this is not the case and diameters include bark thickness the log biomass is over-estimated!}
 \references{la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
-\arguments{\item{x}{the data.frame holding the measures needed to perform the estimation}
-\item{lowerD}{The name of the data.frame column holding diameter of the lower section in cm}
-\item{higherD}{The name of the data.frame column holding the diameter of the higher section (usually smaller!) in cm}
-\item{logLength}{The name of the data.frame column holding the length of the log or branch in m}
-\item{density}{The name of the data.frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}}
+\arguments{\item{x}{the data frame holding the measures needed to perform the estimation}
+\item{lowerD}{The name of the data frame column holding diameter of the lower section in cm}
+\item{higherD}{The name of the data frame column holding the diameter of the higher section (usually smaller!) in cm}
+\item{logLength}{The name of the data frame column holding the length of the log or branch in m}
+\item{density}{The name of the data frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}}
 }
 

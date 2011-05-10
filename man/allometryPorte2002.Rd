@@ -5,7 +5,8 @@
 }
 \description{Returns the woody biomass of a maritime pine branch (dry state, no leaves!) in kg given the 
 diameter, using an allometric equation}
-\note{The allometric equation has been validated for <10 cm diameter branches, extrapolation on larger branches my yield unreasonable results. The allometric equation takes the form of a power equation}
+\note{The allometric equation has been validated for <10 cm diameter branches, extrapolation on larger branches my yield unreasonable results.}
+\note{The allometric equation takes the form of a power equation}
 \seealso{\code{\link{powerEquation}}}
 \references{Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \bold{158}, 71--83}
 \value{the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)}
