@@ -45,10 +45,10 @@
 #' vectors  <- treeVectors(treeData)
 #' CM       <- centreOfMass(vectors)
 #' plot.vectors(vectors, 
-#'   CM = CM, 
-#'   main = "Centre Of Mass", 
-#'   col = "grey30", 
-#'   txtcol = "grey30")
+#'    CM = CM, 
+#'    main = "Centre Of Mass", 
+#'    col = "grey30", 
+#'    txtcol = "grey30")
 #' summary(CM)
 #' @references Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})
 NULL
@@ -378,14 +378,13 @@ treeVectors <- function(object) {
   return(vectors)
 }
 
-#' Computes the centre of mass of the tree
+#' @title Computes the centre of mass of the tree
 #'
-#'  The \eqn{x} coordinate of the centre of mass is defined as \eqn{\frac{\sum(m_ix_i)}{\sum(m_i)}} where \eqn{m_i} is the biomass of the \eqn{i^{th}} branch and \eqn{x_i} is the \eqn{x} coordinate of the \eqn{i^{th}} branch. \eqn{y} coordinate is similarly computed.
-#' The centre of mass computation excludes branches to be pruned 
+#' @description The \eqn{x} coordinate of the centre of mass is defined as \eqn{\frac{\sum(m_ix_i)}{\sum(m_i)}} where \eqn{m_i} is the biomass of the \eqn{i^{th}} branch and \eqn{x_i} is the \eqn{x} coordinate of the \eqn{i^{th}} branch. \eqn{y} and \eqn{z} coordinates are similarly computed.
+#' The centre of mass computation excludes branches to be pruned (ie: those whose \code{toBePruned} value is set to \code{TRUE}).
 #'
-#' @param object A data.frame of class CM
-#' @param ...    Arguments to be passed to plot.default
-#' @return A vector holding x, y, z coordinates of the centre of mass
+#' @param object A data frame of class \code{vectors}
+#' @return A vector holding \eqn{x}, \eqn{y}, \eqn{z} coordinates of the centre of mass
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 centreOfMass <- function(object) {
@@ -481,46 +480,56 @@ summary.CM <- function(object, ...) {
   )
 }
 
-#' Returns total biomass of a tree or branch (wood and leaves, dry state) in kg given the 
-#' diameter at breast height, using an allometric equation for stone pine
+#' @title Returns the biomass of a stone pine tree
 #'
+#' @description Returns total biomass of a stone pine tree (wood and leaves, dry state) in kg given the 
+#' diameter at breast height, using an allometric equation
+#'
+#' @note Use this function at you own risk, it has been validated for trees (ie: >40 cm diameters). The allometric equation takes the form of a pure quadratic equation
+#' @seealso \code{\link{pureQuadraticEquation}}
 #' @references Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@@}, \bold{6}, 75--84 
 #'   Tipo B
-#' @param x a data.frame of branches along with their diameters as a column
-#' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
+#' @param x a data frame holding diameters of branches
+#' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the total biomass of the branch of a stone pine (in kg, dry state)
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-branchBiomassPine <- function(x, diameter) {
+allometryCutini2009 <- function(x, diameter) {
   a <- -198.236
   b <- 0.620
   pureQuadraticEquation(a, b, as.real(x[diameter]))
 }
 
-#' Returns the woody biomass of a branch (dry state, no leaves!) in kg given the 
-#' diameter, using an allometric equation for maritime pine
+#' @title Returns the biomass of a maritime pine branch
 #'
-#' @note Important: the allometric equation has been validated for 1-10 cm diameter branches
+#' @description Returns the woody biomass of a maritime pine branch (dry state, no leaves!) in kg given the 
+#' diameter, using an allometric equation
+#'
+#' @note The allometric equation has been validated for <10 cm diameter branches, extrapolation on larger branches my yield unreasonable results. The allometric equation takes the form of a power equation
+#' @seealso \code{\link{powerEquation}}
 #' @references Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \bold{158}, 71--83
-#' @param x a data.frame of branches along with their diameters as a column
-#' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
+#' @param x a data frame holding diameters of branches
+#' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-branchBiomassPinePorte <- function(x, diameter) {
+allometryPorte2002 <- function(x, diameter) {
   a <- 21.228
   b <- 2.818
   powerEquation(a, b, as.real(x[diameter])) / 1000
 }
 
-#' Returns the fresh biomass of a branch in kg given the 
-#' diameter, using an allometric equation for stone pine branches
+#' @title Returns the fresh weight of a stone pine branch
 #'
-#' @note Important: the allometric equation has been validated for 8-16 cm diameter branches
+#' @description Returns the fresh biomass of a stone pine branch in kg given the 
+#' diameter, using an allometric equation
+#'
+#' @note The allometric equation has been validated for 8-16 cm diameter branches. The allometric equation takes the form of a power equation
+#' @seealso \code{\link{powerEquation}}
 #' @references Data collected by A. Ascarelli, non linear regression by M. Bascietto
-#' @param x a data.frame of branches along with their diameters as a column
-#' @param diameter the name (a character) of the column holding diameter of the x data.frame, diameters should be in cm 
+#' @param x a data frame holding diameters of branches
+#' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the fresh biomass of the branch of a stone pine (in kg)
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-branchBiomassPineAsca <- function(x, diameter) {
+allometryAsca2011 <- function(x, diameter) {
   a <- 0.7201
   b <- 1.8882
   powerEquation(a, b, as.real(x[diameter]))
