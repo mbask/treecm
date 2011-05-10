@@ -1,14 +1,14 @@
 \name{pureQuadraticEquation}
 \alias{pureQuadraticEquation}
-\title{Applies the pure quadratic equation Y = a + bX^2...}
+\title{Returns the result of a pure quadratic equation}
 \usage{pureQuadraticEquation(a, b, x)
 }
-\description{Applies the pure quadratic equation \eqn{Y = a + bX^2}
+\description{Returns the result of the pure quadratic equation \eqn{Y = a + bX^2}
 given \eqn{a}, \eqn{b} and \eqn{X}}
-\value{the dependent variable (y)}
+\value{the dependent variable (\eqn{Y})}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
-\arguments{\item{a}{the parameter a (a real number) in the pure quadratic equation}
-\item{b}{the parameter b (a real number) in the pure quadratic equation}
-\item{x}{the dependent variable (a real number)}
+\arguments{\item{a}{the parameter \eqn{a} in the pure quadratic equation}
+\item{b}{the parameter \eqn{a} in the pure quadratic equation}
+\item{x}{the dependent variable}
 }
 

@@ -11,7 +11,7 @@ the angle, enabling a correct representation of them on a cartesian plot.}
 \value{The \eqn{y} coordinate expressed in the same unit as the distance parameter}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
 \arguments{\item{angle}{The angle in degree (measured clockwise from the North or from 
-any other relevant direction defined in the field)}
+any other relevant bearing system defined in the field)}
 \item{distance}{The distance}
 }
 

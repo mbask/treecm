@@ -57,16 +57,15 @@ NULL
 #'
 #' @description Computes the \eqn{x} cartesian coordinate from a set of polar coordinates
 #'
-#' @param angle The angle in degree (measured clockwise from the North or from 
-#' any other relevant direction defined in the field)
+#' @param angle The angle in degrees (measured clockwise from the North or  
+#' any other relevant bearing system defined in the field)
 #' @param distance The distance
-#' @return The \eqn{x} coordinate expressed in the same unit as the distance parameter
+#' @return The \eqn{x} coordinate expressed in the same unit as the distance argument
 #'
 #' @note The function assumes the angle is measured clockwise whereas
 #' trigonometric functions require a conventional counterclockwise 
 #' measured angle. Thus the function computes \eqn{x} coordinate as the sine of 
 #' the angle, enabling a correct representation of them on a cartesian plot.
-#'
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 toCartesianX <- function(angle, distance) {
   angleRad <- angle * pi / 180
@@ -83,7 +82,7 @@ toCartesianX <- function(angle, distance) {
 #' the angle, enabling a correct representation of them on a cartesian plot.
 #'
 #' @param angle The angle in degree (measured clockwise from the North or from 
-#' any other relevant direction defined in the field)
+#' any other relevant bearing system defined in the field)
 #' @param distance The distance
 #' @return The \eqn{y} coordinate expressed in the same unit as the distance parameter
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
@@ -92,13 +91,13 @@ toCartesianY <- function(angle, distance) {
   cos(angleRad) * distance
 }
 
-#' Converts cartesian (x, y) into polar (angle, distance) coordinates
+#' @title Converts cartesian (x, y) into polar (angle, distance) coordinates
 #'
-#' Converts cartesian coordinates (x, y) into polar (angle, distance) ones, assuming (0, 0) as origin of axes
+#' @description Converts cartesian coordinates (\eqn{x}, \eqn{y}) into polar (angle, distance) ones, assuming (0, 0) as origin of axes and, incidentally, the position of tree base
 #'
-#' @param x abscissa coordinate
-#' @param y ordinate coordinate
-#' @return A vector holding angle in degrees (integer) and distance (real) in the same unit as x and y
+#' @param x Abscissa coordinate
+#' @param y Ordinate coordinate
+#' @return A vector holding angle in degrees and distance in the same unit as \eqn{x} and \eqn{y}
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 toPolar <- function(x, y) {
   d <- sqrt(x^2 + y^2)
@@ -170,14 +169,17 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
   c(x, y, mx, my, mz)
 }
 
-#' Estimates the wood biomass of logs and truncated branches by
+#' @title Estimates the wood biomass of logs and truncated branches
+#'
+#' @description Estimates the wood biomass of logs and truncated branches by
 #' computing their volume (using Smalian's formula) and converting it
 #' to fresh weight using wood fresh density.
+#'
 #' Smalian's formula: \eqn{V=\frac{Sb+Sd}{2}l} where \eqn{V} is the log volume, 
 #' \eqn{Sb} is the aerea of the basal (lower) section, \eqn{Sd} is the 
 #' area of the higher section and \eqn{l} is the length of the log.
 #'
-#' @note Attention: diameters used to compute section areas should be measured under the bark layer! When this is not the case and diameters include bark thickness the log biomass is over-estimated!
+#' @note Diameters used to compute section areas should be measured under the bark layer! When this is not the case (scarcely ever!) and diameters include bark thickness the log biomass is somewhat over-estimated!
 #' @param x the data frame holding the measures needed to perform the estimation
 #' @param lowerD The name of the data frame column holding diameter of the lower section in cm
 #' @param higherD The name of the data frame column holding the diameter of the higher section (usually smaller!) in cm
@@ -193,36 +195,37 @@ logBiomass <- function (x, lowerD, higherD, logLength, density) {
   volume * density
 }
 
-## --------------- Math functions ---------------
-##
-
-#' Applies the pure quadratic equation \eqn{Y = a + bX^2}
+#' @title Returns the result of a pure quadratic equation
+#'
+#' @description Returns the result of the pure quadratic equation \eqn{Y = a + bX^2}
 #' given \eqn{a}, \eqn{b} and \eqn{X}
 #'
-#' @param a the parameter a (a real number) in the pure quadratic equation
-#' @param b the parameter b (a real number) in the pure quadratic equation
-#' @param x the dependent variable (a real number)
-#' @return the dependent variable (y)
+#' @param a the parameter \eqn{a} in the pure quadratic equation
+#' @param b the parameter \eqn{a} in the pure quadratic equation
+#' @param x the dependent variable
+#' @return the dependent variable (\eqn{Y})
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 pureQuadraticEquation <- function(a, b, x) {
   a + b * x^2
 }
 
-#' Applies the exponential equation \eqn{Y = a * X^b}
+#' @title Returns the result of an exponential equation
+#'
+#' @description Returns the result of the exponential equation \eqn{Y = a * X^b}
 #' given \eqn{a}, \eqn{b} and \eqn{X}
 #'
-#' @param a the parameter a (a real number) in the exponential equation
-#' @param b the parameter b (a real number) in the exponential equation
-#' @param x the dependent variable (a real number)
-#' @return the dependent variable (y)
+#' @param a the parameter \eqn{a} in the exponential equation
+#' @param b the parameter \eqn{b} in the exponential equation
+#' @param x the independent variable
+#' @return the dependent variable (\eqn{Y})
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 powerEquation <- function(a, b, x) {
   a * x^b
 }
 
-#' Plots a segment
+#' @title Plots a segment
 #'
-#' Plots a segmente given two set of polar coordinates (angle, distance
+#' @description Plots a segmente given two set of polar coordinates (angle, distance
 #' from tree base), may be used to represent buildings close to the tree on the CM plot
 #' 
 #' @param a0 angle of first set of coordinates
@@ -243,16 +246,16 @@ plotPolarSegment <- function(a0, d0, a1, d1) {
   segments(x0, y0, x1, y1)
 }
 
-#' Imports field data from csv file
+#' @title Imports field data from csv file
 #'
-#' Imports csv file holding field recorded data, and sets a list holding other key data
+#' @description Imports \code{csv} file holding field recorded data returning a list holding field and other key data provided as arguments
 #'
 #' @param fileName Name of csv file holding field data
 #' @param dst Fresh density of wood of the tree
 #' @param branchesAllometryFUN the function that should compute branch biomass from its diameter
-#' @param bCM Estimated position of the centre of mass of branches, a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). As a rule of thumb, average live branches, with an average amount of foliage, have CM approx. from 1/3 to 2/3 of their length. bCM = 1.0 (default value)
+#' @param bCM Estimated position of the centre of mass of branches, a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). As a rule of thumb, average live branches, with an average amount of foliage, have CM approx. from \eqn{1/3} to \eqn{2/3} of their length. bCM = 1.0 (default value)
 #' @seealso \code{\link{getCoordinatesAndMoment}}
-#' @return a list holding the data
+#' @return a list of 4 elements: field data, wood fresh density, allometryF function and branches CM
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
@@ -269,12 +272,14 @@ importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
 
 
 
-#' Stores branches CM
+#' @title Stores branches CM in an object
 #'
-#' Method "calcVectors" must be invoked to take changes into effect
+#' @description Stores branches CM in the object provided as an argument. branchesCM has to be in the range 0.01 - 1
 #'
-#' @param object the list holding tree data
-#' @param value the new branches CM (0.01 to 1)
+#' @note Method \code{\link{treeVectors}} must be invoked to take changes into effect
+#'
+#' @param object the object of class \code{treeData}
+#' @param value the new branch CM
 #' @return the updated list
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
@@ -285,14 +290,20 @@ setBranchesCM <- function(object, value) {
 }
 
 
-#' Sets pruning status of a branch
+#' @title Sets pruning status of a branch
 #'
-#' Switches pruning status of a record in the raw data frame from field measures
-#' Method "calcVectors" must be invoked to take changes into effect
+#' @description Switches pruning status of a record in the raw data frame from field measures
 #'
-#' @param object the list holding tree data
-#' @param value number of row or vector of numbers of rows to be switched
+#' @note Method \code{\link{treeVectors}} must be invoked to take changes into effect
+#'
+#' @param object the object of class \code{treeData}
+#' @param value number of row or vector of numbers of rows to have pruning status switched
 #' @return the updated list
+#' @examples
+#' data(treeData)
+#' treeData <- switchBranchPruningStatus(treeData, c(7, 11, 13, 15, 17, 23, 19, 22, 18, 25, 8, 10))
+#' CM       <- centreOfMass(treeVectors(treeData))
+#' summary(CM)
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 switchBranchPruningStatus <- function(object, value) {
@@ -302,11 +313,14 @@ switchBranchPruningStatus <- function(object, value) {
 }
 
 
-#' Computes masses of branches and logs
+#' @title Computes masses of branches and logs
 #'
-#' Computes branches biomass using an allometric function provided in \code{allometryFUN} and logs weight using Smalian's formula. Branches are telled apart from logs in the raw data frame (\code{fieldData}) because their final diameter is 0 (ie they have a tip) whereas logs have a final diameter > 0.
+#' @description Computes branches biomass using an allometric function provided in \code{object$allometryFUN} and logs weight using Smalian's formula.
 #'
-#' @param object a list holding tree data
+#' Branches are telled apart from logs in the raw data frame (\code{object$fieldData}) because their final diameter is 0 (ie they have a tip) whereas logs have a final diameter > 0.
+#'
+#' @param object an object of \code{treeData} class
+#' @return an object of \code{treeData} class
 #' @seealso \code{\link{logBiomass}}
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
@@ -346,12 +360,12 @@ treeBiomass <- function(object) {
 }
 
 
-#' Computes cartesian coordinates and moments of branches and logs 
+#' @title Computes cartesian coordinates and moments of branches and logs 
 #'
-#' A data frame is populated width branch and log masses, along with x, y cartesian coordinates and x, y, and z moments.
-#' z coordinates and moments are calculated only if branches height from the ground (and inclination) have been recorded in the field.
+#' @description A data frame is populated with branch and log masses, along with \eqn{x}, \eqn{y} cartesian coordinates and \eqn{x}, \eqn{y}, and \eqn{z} moments.
+#' \eqn{z} coordinates and moments are calculated only if branches height from the ground (and tilt) have been measured in the field.
 #'
-#' @param object an object of class vectors 
+#' @param object an object of class \code{vectors} 
 #' @seealso \code{\link{getCoordinatesAndMoment}}
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
@@ -406,14 +420,16 @@ centreOfMass <- function(object) {
   return(M)
 }
 
-#' Plots branches and logs CM and tree CM
+#' @title Plots branches, logs, and tree CM
 #'
-#' The 2d plot represents branch, log and tree CM as vectors pointing inwards. CMs vector radii are proportional to CM magnitude. Tree CM is connected to tree base by an arrow showing the direction the tree would take in case of it falling down. z coordinate of tree CM is printed alongside its vector (if branch height have been recorded in the field).
+#' @description Plots branches, logs, and tree CM
+#'
+#' The 2d plot represents branch, log and tree CM as vectors pointing inwards. CMs vector radii are proportional to CM magnitude. Tree CM is connected to tree base by an arrow showing the direction the tree would take in case of it falling down. \eqn{z} coordinate of tree CM is printed alongside its vector (if branch height has been recorded in the field).
 #' Branches to be pruned are not shown on graph.
 #'
-#' @param x      vectors list
+#' @param x      vectors object
 #' @param y      unused
-#' @param CM     Centre of mass list
+#' @param CM     Centre of mass object
 #' @param txtcol Colour of text labels, defaults to "grey80"
 #' @param ...    Arguments to be passed to plot.default
 #' @return \code{NULL}
@@ -457,12 +473,12 @@ plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
 }
 
 
-#' Summary of Centre of Mass data
+#' @title Summary of Centre of Mass data
 #'
-#' Prints in a human-readable format the polar and cartesian coordinates of tree CM
+#' @description Prints in a human-readable format the polar and cartesian coordinates of tree CM
 #'
-#' @param object An object of class CM
-#' @param ...    Additional arguments affecting the summary produced
+#' @param object An object of class \code{CM}
+#' @param ...    Additional arguments, not used
 #' @return       \code{NULL}
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
