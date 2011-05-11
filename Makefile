@@ -20,17 +20,15 @@ help:
 	@echo " docs Invoke roxygen to generate Rd files in a seperate"
 	@echo " directory"
 	@echo " vignette Build a copy of the package vignette"
+	@echo " cleanvignette Build the vignette and remove tmp files (.aux, .log etc.)"
 	@echo " build Invoke docs and then create a package"
 	@echo " check Invoke build and then check the package"
 	@echo " install Invoke build and then install the result"
-	@echo " test Install a new copy of the package and run it "
-	@echo " through the testsuite"
-	@echo " valgrind Run package testsuite through the Valgrind debugger"
-	@echo " to check for memory leaks"
+	@echo " clean Remove tmp files (.aux, .log etc.)"
 	@echo ""
 	@echo "Packaging Tasks"
 	@echo "---------------"
-	@echo " release Populate a release branch"
+	@echo " release Cleans and builds package"
 	@echo ""
 	@echo "Using R in: $(RBIN)"
 	@echo "Set the RBIN environment variable to change this."
@@ -49,10 +47,6 @@ docs:
 	cp ../DocFiles.$(PKGNAME)/*.Rd man/
 	cd ..;\
 	"$(RBIN)/R" --no-restore --slave -e "library(roxygen); roxygenize('$(PKGSRC)', '$(PKGSRC)', use.Rd2=TRUE, overwrite=TRUE, unlink.target=FALSE, copy.package=FALSE)"
-	# Cripple the new folder so you don't get confused and start doing
-	# development in there.
-	#cd ../$(PKGSRC).build;\
-	rm Makefile
 
 
 vignette:
@@ -60,11 +54,9 @@ vignette:
 	"$(RBIN)/R" CMD Sweave $(PKGNAME).Rnw;\
 	R CMD pdflatex $(PKGNAME).tex
 
-
 build: docs
 	cd ..;\
 	"$(RBIN)/R" CMD build --no-vignettes $(PKGSRC)
-
 
 install: build
 	cd ..;\
@@ -74,17 +66,17 @@ check: build
 	cd ..;\
 	"$(RBIN)/R" CMD check --no-tests $(PKGNAME)_$(PKGVERS).tar.gz
 
-valgrind: install
-	cd tests;\
-	"$(RBIN)/R" -d "valgrind --tool=memcheck --leak-check=full --dsymutil=yes" --vanilla < unit_tests.R --args $(gc_torture) $(test_tags)
+clean:
+	find . -type f -iname "*.aux"  -exec rm {} \; 
+	find ./inst/doc -type f -iname "*-*"  -exec rm {} \; 
+	find . -type f -iname "*.tex"  -exec rm {} \; 
+	find . -type f -iname "*.log"  -exec rm {} \; 
+	find . -type f -iname "*.out"  -exec rm {} \; 
+	find . -type f -iname "Rplots.pdf" -exec rm {} \;
+
+cleanvignette: vignette clean
 
 #------------------------------------------------------------------------------
 # Packaging Tasks
 #------------------------------------------------------------------------------
-release:
-	cd ..;\
-	"$(RBIN)/R" --vanilla --slave -e "library(roxygen); roxygenize('$(PKGSRC)','$(PKGSRC)', copy.package=FALSE, use.Rd2=TRUE, overwrite=TRUE)"
-	./updateVersion.sh
-	cd inst/doc;\
-	"$(RBIN)/R" CMD Sweave $(PKGNAME).Rnw;\
-	R CMD pdflatex $(PKGNAME).tex
+release: clean check
