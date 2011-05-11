@@ -2,7 +2,6 @@
 
 \usepackage{natbib}
 \usepackage{indentfirst}
-\usepackage[applemac]{inputenc}               % for Mac
 
 \usepackage{hyperref}
 
