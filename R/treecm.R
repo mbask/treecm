@@ -26,7 +26,7 @@
 #'   \item{\bold{Distance}: Length of branch or log projection on the ground, starting from tree base to tip of branch or log, mandatory}
 #'   \item{\bold{Length}: Length of logs (no use for branches), mandatory}
 #'   \item{\bold{Height}: height of branch insertion on the stem or height of lower section of the log, to be used to compute z coordinate of CM, optional, defaults to NA}
-#'   \item{\bold{Direction}: mean angle of orientation of the branch or log measured from the base of the tree (usually with magnetic north as reference, measured clockwise), mandatory}
+#'   \item{\bold{Azimuth}: mean angle of orientation of the branch or log measured from the base of the tree (usually with magnetic north as reference, measured clockwise), mandatory}
 #'   \item{\bold{Tilt}: mean branch or log tilt from the horizontal plane (eg a vertical branch is 90 degrees, an horizontal branch is 0 degrees), to be used to compute z coordinate of CM, optional, defaults to 0. Note however that the tree tip should be considered as a branch, not a log, in order to account for foliage biomass. In this case tilt value should be recorded otherwise it would default to 0, ie an horizontal branch} 
 #'   \item{\bold{To be pruned}: a boolean value, optional, defaults to FALSE}
 #' }
@@ -328,8 +328,8 @@ treeBiomass <- function(object) {
   
   object$fieldData <- within(object$fieldData, {
     dTip[is.na(dTip)] <- 0
-    tilt  [is.na(tilt)]   <- 0
-    toBePruned    [is.na(toBePruned)]     <- FALSE
+    tilt[is.na(tilt)] <- 0
+    toBePruned[is.na(toBePruned)] <- FALSE
   })
   
   object <- within(object, {
@@ -372,7 +372,7 @@ treeBiomass <- function(object) {
 treeVectors <- function(object) {
 
   ## vectors data frame is populated
-  vectors <- subset(object$fieldData, select = c(dir, tipD, biomass, height, tilt, toBePruned))
+  vectors <- subset(object$fieldData, select = c(azimuth, tipD, biomass, height, tilt, toBePruned))
 
   ## computes cartesian coordinates of branch tip and its x, y and z moments are added to vectors slot
   vectors <- cbind(vectors, 
@@ -381,7 +381,7 @@ treeVectors <- function(object) {
         vectors, 
         1, 
         getCoordinatesAndMoment, 
-        angle      = "dir", 
+        angle      = "azimuth", 
         distance   = "tipD", 
         height     = "height",
         incl       = "tilt",
@@ -390,7 +390,7 @@ treeVectors <- function(object) {
       )
     )
   )
-  colnames(vectors) <- c("Direction", "Distance", "Biomass", "Height", "Tilt", "toBePruned", "x", "y", "mx", "my", "mz")
+  colnames(vectors) <- c("Azimuth", "Distance", "Biomass", "Height", "Tilt", "toBePruned", "x", "y", "mx", "my", "mz")
   class(vectors) <- c("vector", class(vectors))
   return(vectors)
 }

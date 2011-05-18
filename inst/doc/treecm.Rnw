@@ -66,8 +66,8 @@ If we measured the polar coordinates of the building(s) around the tree we would
 plot.vectors(vectors, 
   CM = CM,
   main = "A stone pine centre of mass",
-  xlim = c(-8,10),
-  ylim = c(-12,4)
+  xlim = c(-8, 10),
+  ylim = c(-12, 4)
 )
 plotPolarSegment(210, 10.6, 140, 14.4)
 @
@@ -114,8 +114,8 @@ data(treeData)
 rows <- substr(row.names(treeData$fieldData), 1, 1)
 treeData$fieldData <- within(
   treeData$fieldData, {
-  biomass[((dir >= 270 | dir < 90) & rows != "L")] <- biomass[((dir >= 270 | dir < 90) & rows != "L")] / 2
-  biomass[((dir >= 90 | dir < 270) & rows != "L")] <- biomass[((dir >= 90 | dir < 270) & rows != "L")] * 2  
+  biomass[((azimuth >= 270 | azimuth < 90) & rows != "L")] <- biomass[((azimuth >= 270 | azimuth < 90) & rows != "L")] / 2
+  biomass[((azimuth >= 90 | azimuth < 270) & rows != "L")] <- biomass[((azimuth >= 90 | azimuth < 270) & rows != "L")] * 2  
 })
 rm(rows)
 
@@ -186,17 +186,17 @@ The stem is ideally sectioned in logs in order to compute their volume and bioma
   \item Diameter at the base of the log, in cm
   \item Diameter at the top of the log, in cm
   \item Length of the log, in m
-  \item Orientation of the log, in case it is not vertical, in degrees from North (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Azimuth of the log, in case it is not vertical, in degrees from North (O$^{\circ}$ North, 180$^{\circ}$ South)
   \item Length of log projection on the ground, from the tree base to the log tip (0 for a vertical stem), in m
   \item Height above ground of the base of the log, in m
   \item Log tilt from the horizontal plane (eg a vertical log is tilted by 90$^{\circ}$, an horizontal log is tilted by 0$^{\circ}$), in degrees (optional)
 \end{itemize}
 
 Each branch contributes to the position of the centre of mass by means of their wooden component and their foliage component. Every part of a tree carrying foliage is considered to as a branch. This definition applies to tree tip as well, although some trees may have lost their tip or have it removed during topping operations.
-The measurments to be taken on each branch include:
+The measurements to be taken on each branch include:
 \begin{itemize}
   \item Diameter at the base of the branch, in cm
-  \item Orientation of the branch, in degrees, usually measured with a compass (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Azimuth of the branch, in degrees, usually measured with a compass (O$^{\circ}$ North, 180$^{\circ}$ South)
   \item Length of branch projection on the ground, from the tree base to the branch tip, in m
   \item Height above ground of the branch insertion into the stem
   \item Branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional)
@@ -243,7 +243,7 @@ A sample CSV data file is provided in the \verb!data! directory. Function \verb!
 CSV files are made up of 9 columns. The first row has to hold column headers. Headers are case sensitive. Each row holds individual log or branch data. Headers include:
 \begin{enumerate}
   \item \textbf{code} a simple code assigned to each log or branch (usually L$x$ for logs, B$x$ for branches)
-  \item \textbf{dir} orientation, ie: compass bearing in degrees
+  \item \textbf{azimuth} orientation, ie: compass bearing in degrees
   \item \textbf{dBase} diameter of log or branch basal section, in cm
   \item \textbf{dTip} diameter of log or branch tip (always 0 for branches), in cm
   \item \textbf{length} log length (leave it empty in case of branches), in m
