@@ -1,1 +1,4 @@
-1.01 fieldData column dir renamed to azimuth
+1.02
+New feature Coefficient of slenderness for branches is computed and plotted. CoS is defined as L/D according to Mattheck, C. and Breloer, H. CoS is corrected to take into account the deviation from the verticality
+1.01 
+fieldData column dir renamed to azimuth

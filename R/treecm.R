@@ -201,7 +201,8 @@ logBiomass <- function(x, lowerD, higherD, logLength, density) {
 #'
 #' @note The coefficient takes into account branch angle: 
 #' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos(a))}, 
-#' where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical). 
+#' where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical),
+#' \eqn{L} is branch length in m, \eqn{D} is branch diameter in cm
 #' Vertical branches have \eqn{SL = SL_c}
 #'
 #' @param x the data frame holding the measures needed to perform the computation
@@ -432,6 +433,7 @@ treeVectors <- function(object) {
 #' @return an object of class \code{SC}
 #' @references Mattheck, C. and Breloer, H. \emph{La stabilit\`{a} degli alberi} 1993, Il Verde Editoriale (Milano), 281 pp
 #' @export
+#' @seealso \code{\link{branchSC}}
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 treeSC <- function(treeObject, vectorObject) {
   SC <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
@@ -482,6 +484,12 @@ centreOfMass <- function(object) {
 #' @return \code{NULL}
 #' @method plot vectors
 #' @export
+#' @example
+#' data(treeData)
+#' treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
+#' vectors<-treeVectors(treeData)
+#' SC<-treeSC(treeData,vectors)
+#' plot.SC(SC, txtcol = "black")
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
   treeVectors <- subset(x, !toBePruned)
