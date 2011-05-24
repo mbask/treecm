@@ -76,15 +76,15 @@ plotPolarSegment(210, 10.6, 140, 14.4)
 
 Snow may increase crown load substantially, sometimes breaking entire branches. As a side effect, snow-loaded crowns may alter tree centre of mass by moving it upwards and, in asymmetric crowns, towards the part of crown under heavier load.
 
-Let's model a snow load that doubles branches weight:
+Let's model a snow load that doubles the biomass of branches higher than 12 m:
 
 <<exSnow>>=
 rows <- substr(row.names(treeData$fieldData), 1, 1)
-treeData$fieldData <- within(
-  treeData$fieldData,
-  biomass[rows != "L"] <- biomass[rows != "L"] * 2
-)
-rm(rows)
+q1 <- subset(treeData$fieldData, subset=(height < 12 | rows == "L"))
+q2 <- subset(treeData$fieldData, subset=(height > 12 & rows != "L"))
+q2$biomass <- q2$biomass * 2
+treeData$fieldData <- rbind(q1, q2)
+rm(list = c("q1", "q2", "rows"))
 @
 
 Let's recaltulate the vectors under snow load and plot the results:
@@ -157,6 +157,15 @@ rm(op)
 
 CM has actually moved 0.5 metres towards tree base, and farther away from the house. As a matter of facts, branch pruning has not been a reasonable action towards a safer tree. 
 
+\subsection{Slenderness coefficient}
+
+<<exSC, fig=TRUE>>=
+data(treeData)
+treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
+vectors<-treeVectors(treeData)
+SC<-treeSC(treeData,vectors)
+plot.SC(SC, txtcol = "black")
+@
 
 \section{The problem}
 Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the $x$ and $y$ coordinates of the barycentre lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
