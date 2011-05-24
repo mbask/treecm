@@ -187,12 +187,34 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
 #' @param density The name of the data frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}
 #' @references la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-logBiomass <- function (x, lowerD, higherD, logLength, density) {
+logBiomass <- function(x, lowerD, higherD, logLength, density) {
   lowerS   <- pi * (as.real(x[lowerD]) / 200)^2 
   higherS  <- pi * (as.real(x[higherD]) / 200)^2
   l        <- as.real(x[logLength])
   volume   <- (lowerS + higherS) / 2 * l
   volume * density
+}
+
+#' @title Compute the slenderness coefficient
+#'
+#' @description Slenderness coefficient is an important index of stability of trees and branches
+#'
+#' @note The coefficient takes into account branch angle: 
+#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos(a))}, 
+#' where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical). 
+#' Vertical branches have \eqn{SL = SL_c}
+#'
+#' @param x the data frame holding the measures needed to perform the computation
+#' @param diameter The name of the data frame column holding diameter of the branch
+#' @param length The name of the data frame column holding length of the branch
+#' @param tilt The name of the data frame column holding tilt of the branch
+#' @return Slenderness coefficient
+#' @references Mattheck, C. and Breloer, H. \emph{La stabilit\`{a} degli alberi} 1993, Il Verde Editoriale (Milano), 281 pp
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+branchSC <- function(x, diameter, length, tilt) {
+  tiltRad <- as.real(x[tilt]) * pi / 180
+  SC <- as.real(x[length]) / as.real(x[diameter]) * 100
+  round(SC * ( 1 + cos(tiltRad)), digits = 0)
 }
 
 #' @title Returns the result of a pure quadratic equation
@@ -365,7 +387,8 @@ treeBiomass <- function(object) {
 #' @description A data frame is populated with branch and log masses, along with \eqn{x}, \eqn{y} cartesian coordinates and \eqn{x}, \eqn{y}, and \eqn{z} moments.
 #' \eqn{z} coordinates and moments are calculated only if branches height from the ground (and tilt) have been measured in the field.
 #'
-#' @param object an object of class \code{vectors} 
+#' @param object an object of \code{treeData} class
+#' @return an object of class \code{vectors} 
 #' @seealso \code{\link{getCoordinatesAndMoment}}
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
@@ -393,6 +416,30 @@ treeVectors <- function(object) {
   colnames(vectors) <- c("Azimuth", "Distance", "Biomass", "Height", "Tilt", "toBePruned", "x", "y", "mx", "my", "mz")
   class(vectors) <- c("vector", class(vectors))
   return(vectors)
+}
+
+#' @title Computes slenderness coefficient for tree branches
+#'
+#' @description Slenderness coefficient is an important index of stability of trees and branches
+#'
+#' @note The coefficient takes into account branch angle: 
+#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos(a))}, 
+#' where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical). 
+#' Vertical branches have \eqn{SL = SL_c}
+#'
+#' @param treeObject an object of \code{treeData} class
+#' @param vectorObject an object of \code{vectors} class
+#' @return an object of class \code{SC}
+#' @references Mattheck, C. and Breloer, H. \emph{La stabilit\`{a} degli alberi} 1993, Il Verde Editoriale (Milano), 281 pp
+#' @export
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+treeSC <- function(treeObject, vectorObject) {
+  SC <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
+  SC <- cbind(SC, vectorObject$Azimuth)
+  SC <- cbind(SC, apply(SC, 1, branchSC, diameter = "dBase", length   = "length", tilt     = "tilt"))
+  colnames(SC) <- c("diameter", "length", "tilt", "azimuth", "SC")
+  class(SC) <- c("SC", class(SC))
+  return(SC)
 }
 
 #' @title Computes the centre of mass of the tree
@@ -472,6 +519,48 @@ plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
 #    points(tmpVector[s, "1"], tmpVector[s, "2"], pch = 13)
 }
 
+#' @title Plots slenderness coefficient of branches
+#'
+#' @description Plots the branches as arrows whose length is proportional to their slenderness coefficient
+#'
+#' @note Two circles (or ellipses according to x and y scales) are drawn to encompass 
+#' the 30 and 50 values for coefficient of slenderness. Branches with 50+ values for the coefficient of 
+#' slenderness are considered dangerous. Please note that Mattheck coefficient is corrected to account 
+#' for branch tilt (the more it deviates from the verticality the higher its coefficient) 
+#'
+#' @param x      SC object
+#' @param y      unused
+#' @param txtcol Colour of text labels, defaults to "grey80"
+#' @param ...    Arguments to be passed to plot.default
+#' @return \code{NULL}
+#' @method plot SC
+#' @seealso \code{\link{treeSC}}
+#' @export
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
+
+  Circle <- function(t, a) {
+    a * cos(t) + 1i * a * sin(t)
+  }
+
+  x2 <- toCartesianX(x$azimuth, x$SC)
+  y2 <- toCartesianY(x$azimuth, x$SC)
+  
+  plot(x2, y2, type="n", ...)
+  
+  # print vector labels
+  chw <- par()$cxy[1] 
+  text(x2 - chw, y2 - chw, labels = row.names(x), adj = 0, cex = 0.8, col = txtcol) 
+
+  arrows(0, 0, x2, y2)
+
+  t <- seq(0, 2 * pi, by=0.01)
+  center <- 0 + 0i
+  radius <- 20
+  lines(center + Circle(t, radius), col = "green", lwd = 3)
+  radius <- 50
+  lines(center + Circle(t, radius), col = "red", lwd = 3)
+}
 
 #' @title Summary of Centre of Mass data
 #'

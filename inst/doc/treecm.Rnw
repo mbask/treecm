@@ -34,9 +34,9 @@ This data set has been collected for a 17.1 metres tall stone pine whose stem wa
 
 Please notice that some rules have to be followed in order to record sound data in the field:
 \begin{itemize}
-  \item only the length of \verb!C! branch has been recorded as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than one should record branch length and its angle from the horizonatl plane (\verb!tilt!)
   \item the diameter of the tip of \verb!L1! is equal to the diameter of the base of \verb!L2!. \verb!L2! tip diameter is, in turn, equal to \verb!C! base diameter. Height figures must match as well as diameter measures
   \item the distance of the tip of the branch (\verb!tipD!) is not the length of the branch but the distance between tree base (the origin of the cartesian plot) and branch tip
+  \item note that only the \verb!length! of \verb!C! branch has been recorded as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than one should record branch length and its angle from the horizonatl plane (\verb!tilt!). Otherwise branch \verb!length! is not needed.
 \end{itemize}
 
 Let's get going and compute the centre of mass of this pine:
