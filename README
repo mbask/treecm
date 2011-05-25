@@ -5,3 +5,5 @@ Estimating the coordinates of the centre of mass (barycentre) of a tree is cruci
 The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and  the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
 
 Nevertheless, the estimate of barycentre position is useful to assess the effects of different pruning schemes as far as tree balance is concerned.
+
+A simple plot of coefficient of slenderness of branches is also provided. Too thin/long branches and trees (i.e. whose SC > 50) are considered risky in the Visual Tree Assessment protocol. The plot aids in pointing out which branches exceed the SC50 rule and need to be pruned.
