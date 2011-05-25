@@ -159,13 +159,34 @@ CM has actually moved 0.5 metres towards tree base, and farther away from the ho
 
 \subsection{Slenderness coefficient}
 
+The slenderness coefficient of a tree is defined as $SC = \frac{h}{d}$ where $h$ is the height of the tree trunk, and $d$ is the diameter of the tree \cite{Matth}. The SC is a measure of tree stability and is extensively used in tree stability measures carried out by Visual Tree Assessment (VTA). SC in the range [30..50] are considered optimal, whereas SC greater than 50 lead to consider the tree at risk of BUCKLING due to its excessive slenderness.
+The author has applied the same concept to tree branches as well. As the branch starts to deviate from the verticality (as most of the branches do) the arm of the moment gets longer, reaching a maximum limit in horizontal branches. The longer the arm, the higher the stress on the branch. In order to estimate the added stress imposed by branch angle we improved Mattheck's formula by adding a component proportional to branch tilt angle: $SC_c = \frac{h}{d} \cdot (1 + cos \beta)$
+
+where $\beta$ is branch tilt angle (i.e. $90^{\circ}$ for a vertical branch, $0^{\circ}$ for an horizontal branch).
+When \verb!treeData! object is filled with branches length (not the length of thei projection on the ground, from the tree base to their tip) than $SC_c$ can be computed and plotted:
+
 <<exSC, fig=TRUE>>=
 data(treeData)
+# assign length to branches
 treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
-vectors<-treeVectors(treeData)
-SC<-treeSC(treeData,vectors)
-plot.SC(SC, txtcol = "black")
+vectors <-treeVectors(treeData)
+CM      <- centreOfMass(vectors)
+SC      <- treeSC(treeData,vectors)
+
+op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
+
+plot.vectors(vectors, 
+  CM = CM,
+  main = "Centre of mass of a stone pine"
+)
+
+plot.SC(SC, txtcol = "black", main = "Branches coefficient of slenderness", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
+
+par(op)
+rm(op)
 @
+
+The 2D plot charts branches azimuth as arrows whose length is $SC_c$. The longer the arrows the more slender the branch. Arrows pointing inside the red circle are considered to be stable, whereas longer arrows are considered as risky ($SC_c > 50$). The plot may be a visual clue on the process of branch pruning selection. 
 
 \section{The problem}
 Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the $x$ and $y$ coordinates of the barycentre lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
@@ -279,6 +300,8 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 \bibitem[Nardi Berti, 1979]{nardi} Nardi Berti, R. 1979 \emph{La struttura anatomica del legno ed il riconoscimento dei legnami italiani di pi\`{u} corrente impiego}. CNR (Firenze), 155p.
 
 \bibitem[Port\'{e} et al., 2002]{porte} Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \textbf{158}, 71--83
+
+\bibitem[Mattheck et al., 1993]{Matth} Mattheck, C. and Breloer, H., 1993, \emph{La stabilit\`{a} degli alberi}. Il Verde Editoriale (Milano), 281p.
     
 \end{thebibliography}
 

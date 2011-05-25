@@ -5,8 +5,8 @@
 }
 \description{Slenderness coefficient is an important index of stability of trees and branches}
 \note{The coefficient takes into account branch angle: 
-\eqn{SL_c=\frac{L}{D} \cdot (1 + cos(a))}, 
-where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical),
+\eqn{SL_c=\frac{L}{D} \cdot (1 + cos \beta)}, 
+where \eqn{\beta} is the branch angle (0 degrees = horizontal, 90 degrees vertical),
 \eqn{L} is branch length in m, \eqn{D} is branch diameter in cm
 Vertical branches have \eqn{SL = SL_c}}
 \value{Slenderness coefficient}
