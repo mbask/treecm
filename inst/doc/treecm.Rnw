@@ -301,7 +301,7 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 
 \bibitem[Port\'{e} et al., 2002]{porte} Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \textbf{158}, 71--83
 
-\bibitem[Mattheck et al., 1993]{Matth} Mattheck, C. and Breloer, H., 1993, \emph{La stabilit\`{a} degli alberi}. Il Verde Editoriale (Milano), 281p.
+\bibitem[Mattheck et al., 1995]{Matth} Mattheck, C. and Breloer, H., 1995, \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)}. HMSO (London).
     
 \end{thebibliography}
 
