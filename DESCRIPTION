@@ -8,7 +8,9 @@ Author: Marco Bascietto <marco.bascietto@ibaf.cnr.it>
 Description: Given a few data about branchiness of a tree the package
     computes and plots the centre of mass of the tree itself. The
     centre of mass is a crucial data for arborists in order to
-    consolidate a tree using steel or dynamic cables.
+    consolidate a tree using steel or dynamic cables. Coefficient of
+    slenderness of branches may also be assessed and plot in order to
+    aid the pruning selection process
 Version: 1.02
-Date: 2011-05-18
+Date: 2011-05-25
 Collate: 'treecm.R'

@@ -20,7 +20,8 @@ Field measures to be taken on logs and branches include:
 \item{\bold{Tilt}: mean branch or log tilt from the horizontal plane (eg a vertical branch is 90 degrees, an horizontal branch is 0 degrees), to be used to compute z coordinate of CM, optional, defaults to 0. Note however that the tree tip should be considered as a branch, not a log, in order to account for foliage biomass. In this case tilt value should be recorded otherwise it would default to 0, ie an horizontal branch} 
 \item{\bold{To be pruned}: a boolean value, optional, defaults to FALSE}
 }}
-\note{Branch biomass is computed by allometric equations relating its dry weight (wood + leaves) to its diameter at point of insertion on the stem. Log biomass is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see \code{\link{logBiomass}} description).
+\details{In order to help the arborist in the pruning selection process a simple plot of branch coefficient of slenderness is implemented.}
+\note{Branch biomass is computed by allometric equations relating its weight (wood + leaves) to its diameter at point of insertion on the stem. Log biomass is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see \code{\link{logBiomass}} description).
 A sample \code{.CSV} file is provided to guide through data filling in the field}
 \seealso{\code{\link{logBiomass}}
 \code{\link{fieldData}}}
