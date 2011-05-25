@@ -554,7 +554,7 @@ plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
   x2 <- toCartesianX(x$azimuth, x$SC)
   y2 <- toCartesianY(x$azimuth, x$SC)
   
-  plot(x2, y2, type="n", ...)
+  plot(x2, y2, type="n", asp = 1, ...)
   
   # print vector labels
   chw <- par()$cxy[1] 
