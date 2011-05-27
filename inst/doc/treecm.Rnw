@@ -160,13 +160,13 @@ CM has actually moved 0.5 metres towards tree base, and farther away from the ho
 \subsection{Slenderness coefficient}
 
 The slenderness coefficient of a tree is defined as $SC = \frac{h}{d}$ where $h$ is the height of the tree trunk, and $d$ is the diameter of the tree \cite{Matth}. The SC is a measure of tree stability and is extensively used in tree stability measures carried out by Visual Tree Assessment (VTA). SC in the range [30..50] are considered optimal, whereas SC greater than 50 lead to consider the tree at risk of breaking due to its excessive slenderness.
-The author has applied the same concept to tree branches as well. As the branch starts to deviate from the verticality (as most of the branches do) the arm of the moment gets longer, reaching a maximum limit in horizontal branches. The longer the arm, the higher the stress on the branch. In order to estimate the added stress imposed by branch angle we improved Mattheck's formula by adding a component proportional to branch tilt angle: $SC_c = \frac{h}{d} \cdot (1 + cos \beta)$
+The author has applied the same concept to tree branches as well. As the branch starts to deviate from the verticality (as most of the branches do) the arm of the moment gets longer, reaching a maximum limit in horizontal branches. The longer the arm, the higher the stress on the branch. In order to estimate the added stress imposed by branch angle we improved Mattheck's formula by adding a component proportional to branch tilt angle: $SC_c = \frac{h}{d} \cdot (1 + cos \alpha)$
 
-where $\beta$ is branch tilt angle (i.e. $90^{\circ}$ for a vertical branch, $0^{\circ}$ for an horizontal branch).
+where $\alpha$ is branch tilt angle (i.e. $90^{\circ}$ for a vertical branch, $0^{\circ}$ for an horizontal branch).
 When \verb!treeData! object is filled with branches length (not the length of thei projection on the ground, from the tree base to their tip) than $SC_c$ can be computed and plotted:
 
 <<exSC, fig=TRUE>>=
-data(treeData)
+#data(treeData)
 # assign length to branches
 treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
 vectors <-treeVectors(treeData)

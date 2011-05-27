@@ -201,8 +201,8 @@ logBiomass <- function(x, lowerD, higherD, logLength, density) {
 #' @description Slenderness coefficient is an important index of stability of trees and branches
 #'
 #' @note The coefficient takes into account branch angle: 
-#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos \beta)}, 
-#' where \eqn{\beta} is the branch angle (0 degrees = horizontal, 90 degrees vertical),
+#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos \alpha)}, 
+#' where \eqn{\alpha} is the branch angle (0 degrees = horizontal, 90 degrees vertical),
 #' \eqn{L} is branch length in m, \eqn{D} is branch diameter in cm
 #' Vertical branches have \eqn{SL = SL_c}
 #'
@@ -485,12 +485,6 @@ centreOfMass <- function(object) {
 #' @return \code{NULL}
 #' @method plot vectors
 #' @export
-#' @example
-#' data(treeData)
-#' treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
-#' vectors<-treeVectors(treeData)
-#' SC<-treeSC(treeData,vectors)
-#' plot.SC(SC, txtcol = "black")
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
   treeVectors <- subset(x, !toBePruned)

@@ -9,7 +9,7 @@
 where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical). 
 Vertical branches have \eqn{SL = SL_c}}
 \value{an object of class \code{SC}}
-\references{Mattheck, C. and Breloer, H. \emph{La stabilit\`{a} degli alberi} 1993, Il Verde Editoriale (Milano), 281 pp}
+\references{Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)}
 \seealso{\code{\link{branchSC}}}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
 \arguments{\item{treeObject}{an object of \code{treeData} class}
