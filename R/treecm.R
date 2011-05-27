@@ -545,17 +545,18 @@ plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
   Circle <- function(t, a) {
     a * cos(t) + 1i * a * sin(t)
   }
+  
+  safe   <- subset(x, SC <= 50, select = c(azimuth, SC))
+  unsafe <- subset(x, SC > 50,  select = c(azimuth, SC))
 
   x2 <- toCartesianX(x$azimuth, x$SC)
   y2 <- toCartesianY(x$azimuth, x$SC)
-  
   plot(x2, y2, type="n", asp = 1, ...)
-  
-  # print vector labels
   chw <- par()$cxy[1] 
   text(x2 - chw, y2 - chw, labels = row.names(x), adj = 0, cex = 0.8, col = txtcol) 
 
-  arrows(0, 0, x2, y2)
+  arrows(0, 0, toCartesianX(safe$azimuth, safe$SC),   toCartesianY(safe$azimuth, safe$SC),   col = "green")
+  arrows(0, 0, toCartesianX(unsafe$azimuth, unsafe$SC), toCartesianY(unsafe$azimuth, unsafe$SC), col = "red")
 
   t <- seq(0, 2 * pi, by=0.01)
   center <- 0 + 0i

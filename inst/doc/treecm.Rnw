@@ -166,7 +166,7 @@ where $\alpha$ is branch tilt angle (i.e. $90^{\circ}$ for a vertical branch, $0
 When \verb!treeData! object is filled with branches length (not the length of thei projection on the ground, from the tree base to their tip) than $SC_c$ can be computed and plotted:
 
 <<exSC, fig=TRUE>>=
-#data(treeData)
+data(treeData)
 # assign length to branches
 treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
 vectors <-treeVectors(treeData)
