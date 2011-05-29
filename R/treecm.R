@@ -54,10 +54,105 @@
 #' @references Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})
 NULL
 
-toCartesianX <- function(angle, distance) {
-  angleRad <- angle * pi / 180
-  sin(angleRad) * distance
+#' @title Compute the slenderness coefficient
+#'
+#' @description Slenderness coefficient is an important index of stability of trees and branches
+#'
+#' @note The coefficient takes into account branch angle: 
+#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos \alpha)}, 
+#' where \eqn{\alpha} is the branch angle (0 degrees = horizontal, 90 degrees vertical),
+#' \eqn{L} is branch length in m, \eqn{D} is branch diameter in cm
+#' Vertical branches have \eqn{SL = SL_c}
+#'
+#' @param x the data frame holding the measures needed to perform the computation
+#' @param diameter The name of the data frame column holding diameter of the branch
+#' @param length The name of the data frame column holding length of the branch
+#' @param tilt The name of the data frame column holding tilt of the branch
+#' @return Slenderness coefficient
+#' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+branchSC <- function(x, diameter, length, tilt) {
+  tiltRad <- as.real(x[tilt]) * pi / 180
+  SC <- as.real(x[length]) / as.real(x[diameter]) * 100
+  round(SC * ( 1 + cos(tiltRad)), digits = 0)
 }
+
+#' @title Computes slenderness coefficient for tree branches
+#'
+#' @description Slenderness coefficient is an important index of stability of trees and branches
+#'
+#' @note The coefficient takes into account branch angle: 
+#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos(a))}, 
+#' where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical). 
+#' Vertical branches have \eqn{SL = SL_c}
+#'
+#' @param treeObject an object of \code{treeData} class
+#' @param vectorObject an object of \code{vectors} class
+#' @return an object of class \code{SC}
+#' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
+#' @export
+#' @seealso \code{\link{branchSC}}
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+treeSC <- function(treeObject, vectorObject) {
+  SC <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
+  SC <- cbind(SC, vectorObject$Azimuth)
+  SC <- cbind(SC, apply(SC, 1, branchSC, diameter = "dBase", length   = "length", tilt     = "tilt"))
+  colnames(SC) <- c("diameter", "length", "tilt", "azimuth", "SC")
+  class(SC) <- c("SC", class(SC))
+  return(SC)
+}
+
+
+#' @title Plots slenderness coefficient of branches
+#'
+#' @description Plots the branches as arrows whose length is proportional to their slenderness coefficient.
+#' A red circle holds ``safe'' branches (\eqn{SC_c<50}).
+#'
+#' @note Two circles (or ellipses according to x and y scales) are drawn to encompass 
+#' the 30 and 50 values for coefficient of slenderness. Branches with 50+ values for the coefficient of 
+#' slenderness are considered dangerous. Please note that Mattheck coefficient is corrected to account 
+#' for branch tilt (the more it deviates from the verticality the higher its coefficient) 
+#'
+#' @param x      SC object
+#' @param y      unused
+#' @param txtcol Colour of text labels, defaults to "grey80"
+#' @param ...    Arguments to be passed to plot.default
+#' @return \code{NULL}
+#' @method plot SC
+#' @seealso \code{\link{treeSC}}
+#' @export
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
+
+  Circle <- function(t, a) {
+    a * cos(t) + 1i * a * sin(t)
+  }
+  
+  xy <- toCartesianXY(x$azimuth, x$SC)
+  xyL <- length(xy)
+  xyCoord <- data.frame(cbind(xy[1:(xyL/2)], xy[((xyL/2)+1):xyL]))
+  colnames(xyCoord) <- c("x", "y")
+  
+  plot(xyCoord, type="n", asp = 1, ...)
+  chw <- par()$cxy[1] 
+  text(xyCoord$x - chw, xyCoord$y - chw, labels = row.names(x), adj = 0, cex = 0.8, col = txtcol) 
+
+  xyCoord <- cbind(xyCoord, x$SC)
+  colnames(xyCoord) <- c("x", "y", "SC")
+  safe   <- subset(xyCoord, SC <= 50, select = c(x, y))
+  unsafe <- subset(xyCoord, SC > 50,  select = c(x, y))
+
+  arrows(0, 0, safe$x, safe$y, col = "green")
+  arrows(0, 0, unsafe$x, unsafe$y, col = "red")
+
+  t <- seq(0, 2 * pi, by=0.01)
+  center <- 0 + 0i
+  #radius <- 20
+  #lines(center + Circle(t, radius), col = "green", lwd = 3)
+  radius <- 50
+  lines(center + Circle(t, radius), col = "red", lwd = 3)
+}
+
 
 #' @title Computes the x,y cartesian coordinates
 #'
@@ -181,29 +276,6 @@ logBiomass <- function(x, lowerD, higherD, logLength, density) {
   l        <- as.real(x[logLength])
   volume   <- (lowerS + higherS) / 2 * l
   volume * density
-}
-
-#' @title Compute the slenderness coefficient
-#'
-#' @description Slenderness coefficient is an important index of stability of trees and branches
-#'
-#' @note The coefficient takes into account branch angle: 
-#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos \alpha)}, 
-#' where \eqn{\alpha} is the branch angle (0 degrees = horizontal, 90 degrees vertical),
-#' \eqn{L} is branch length in m, \eqn{D} is branch diameter in cm
-#' Vertical branches have \eqn{SL = SL_c}
-#'
-#' @param x the data frame holding the measures needed to perform the computation
-#' @param diameter The name of the data frame column holding diameter of the branch
-#' @param length The name of the data frame column holding length of the branch
-#' @param tilt The name of the data frame column holding tilt of the branch
-#' @return Slenderness coefficient
-#' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-branchSC <- function(x, diameter, length, tilt) {
-  tiltRad <- as.real(x[tilt]) * pi / 180
-  SC <- as.real(x[length]) / as.real(x[diameter]) * 100
-  round(SC * ( 1 + cos(tiltRad)), digits = 0)
 }
 
 #' @title Returns the result of a pure quadratic equation
@@ -404,31 +476,6 @@ treeVectors <- function(object) {
   return(vectors)
 }
 
-#' @title Computes slenderness coefficient for tree branches
-#'
-#' @description Slenderness coefficient is an important index of stability of trees and branches
-#'
-#' @note The coefficient takes into account branch angle: 
-#' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos(a))}, 
-#' where \eqn{a} is the branch angle (0 degrees = horizontal, 90 degrees vertical). 
-#' Vertical branches have \eqn{SL = SL_c}
-#'
-#' @param treeObject an object of \code{treeData} class
-#' @param vectorObject an object of \code{vectors} class
-#' @return an object of class \code{SC}
-#' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
-#' @export
-#' @seealso \code{\link{branchSC}}
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-treeSC <- function(treeObject, vectorObject) {
-  SC <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
-  SC <- cbind(SC, vectorObject$Azimuth)
-  SC <- cbind(SC, apply(SC, 1, branchSC, diameter = "dBase", length   = "length", tilt     = "tilt"))
-  colnames(SC) <- c("diameter", "length", "tilt", "azimuth", "SC")
-  class(SC) <- c("SC", class(SC))
-  return(SC)
-}
-
 #' @title Computes the centre of mass of the tree
 #'
 #' @description The \eqn{x} coordinate of the centre of mass is defined as \eqn{\frac{\sum(m_ix_i)}{\sum(m_i)}} where \eqn{m_i} is the biomass of the \eqn{i^{th}} branch and \eqn{x_i} is the \eqn{x} coordinate of the \eqn{i^{th}} branch. \eqn{y} and \eqn{z} coordinates are similarly computed.
@@ -504,56 +551,6 @@ plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
 #    s <- seq(nrow(tmpVector))
 #    arrows(0, 0, tmpVector[s, "1"], tmpVector[s, "2"])
 #    points(tmpVector[s, "1"], tmpVector[s, "2"], pch = 13)
-}
-
-#' @title Plots slenderness coefficient of branches
-#'
-#' @description Plots the branches as arrows whose length is proportional to their slenderness coefficient.
-#' A red circle holds ``safe'' branches (\eqn{SC_c<50}).
-#'
-#' @note Two circles (or ellipses according to x and y scales) are drawn to encompass 
-#' the 30 and 50 values for coefficient of slenderness. Branches with 50+ values for the coefficient of 
-#' slenderness are considered dangerous. Please note that Mattheck coefficient is corrected to account 
-#' for branch tilt (the more it deviates from the verticality the higher its coefficient) 
-#'
-#' @param x      SC object
-#' @param y      unused
-#' @param txtcol Colour of text labels, defaults to "grey80"
-#' @param ...    Arguments to be passed to plot.default
-#' @return \code{NULL}
-#' @method plot SC
-#' @seealso \code{\link{treeSC}}
-#' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
-
-  Circle <- function(t, a) {
-    a * cos(t) + 1i * a * sin(t)
-  }
-  
-  xy <- toCartesianXY(x$azimuth, x$SC)
-  xyL <- length(xy)
-  xyCoord <- data.frame(cbind(xy[1:(xyL/2)], xy[((xyL/2)+1):xyL]))
-  colnames(xyCoord) <- c("x", "y")
-  
-  plot(xyCoord, type="n", asp = 1, ...)
-  chw <- par()$cxy[1] 
-  text(xyCoord$x - chw, xyCoord$y - chw, labels = row.names(x), adj = 0, cex = 0.8, col = txtcol) 
-
-  xyCoord <- cbind(xyCoord, x$SC)
-  colnames(xyCoord) <- c("x", "y", "SC")
-  safe   <- subset(xyCoord, SC <= 50, select = c(x, y))
-  unsafe <- subset(xyCoord, SC > 50,  select = c(x, y))
-
-  arrows(0, 0, safe$x, safe$y, col = "green")
-  arrows(0, 0, unsafe$x, unsafe$y, col = "red")
-
-  t <- seq(0, 2 * pi, by=0.01)
-  center <- 0 + 0i
-  #radius <- 20
-  #lines(center + Circle(t, radius), col = "green", lwd = 3)
-  radius <- 50
-  lines(center + Circle(t, radius), col = "red", lwd = 3)
 }
 
 #' @title Summary of Centre of Mass data
