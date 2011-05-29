@@ -12,5 +12,6 @@ Description: Given a few data about branchiness of a tree the package
     slenderness of branches may also be assessed and plot in order to
     aid the pruning selection process
 Version: 1.02
+URL: https://github.com/mbask/treecm
 Date: 2011-05-25
 Collate: 'treecm.R'
