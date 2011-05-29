@@ -592,6 +592,7 @@ summary.CM <- function(object, ...) {
 #' @seealso \code{\link{pureQuadraticEquation}}
 #' @references Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@@}, \bold{6}, 75--84 
 #'   Tipo B
+#' @export
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the total biomass of the branch of a stone pine (in kg, dry state)
@@ -611,6 +612,7 @@ allometryCutini2009 <- function(x, diameter) {
 #' @note The allometric equation takes the form of a power equation
 #' @seealso \code{\link{powerEquation}}
 #' @references Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \bold{158}, 71--83
+#' @export
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)
@@ -630,6 +632,7 @@ allometryPorte2002 <- function(x, diameter) {
 #' @note The allometric equation takes the form of a power equation
 #' @seealso \code{\link{powerEquation}}
 #' @references Data collected by A. Ascarelli, non linear regression by M. Bascietto
+#' @export
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the fresh biomass of the branch of a stone pine (in kg)
