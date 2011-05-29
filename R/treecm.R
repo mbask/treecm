@@ -54,43 +54,31 @@
 #' @references Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})
 NULL
 
-#' @title Computes the x cartesian coordinate
-#'
-#' @description Computes the \eqn{x} cartesian coordinate from a set of polar coordinates
-#'
-#' @param angle The angle in degrees (measured clockwise from the North or  
-#' any other relevant bearing system defined in the field)
-#' @param distance The distance
-#' @return The \eqn{x} coordinate expressed in the same unit as the distance argument
-#'
-#' @note The function assumes the angle is measured clockwise whereas
-#' trigonometric functions require a conventional counterclockwise 
-#' measured angle. Thus the function computes \eqn{x} coordinate as the sine of 
-#' the angle, enabling a correct representation of them on a cartesian plot.
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 toCartesianX <- function(angle, distance) {
   angleRad <- angle * pi / 180
   sin(angleRad) * distance
 }
 
-#' @title Computes the y cartesian coordinate
+#' @title Computes the x,y cartesian coordinates
 #'
-#' @description Computes the \eqn{y} cartesian coordinate from a set of polar coordinates
+#' @description Computes the \eqn{x} and \eqn{y} cartesian coordinates from a set of polar coordinates
+#'
+#' @param angle The angle in degrees (measured clockwise from the North or  
+#' any other relevant bearing system defined in the field)
+#' @param distance The distance
+#' @return A vector holding the \eqn{x} and \eqn{y} coordinats expressed in the same unit as the distance argument
 #'
 #' @note The function assumes the angle is measured clockwise whereas
 #' trigonometric functions require a conventional counterclockwise 
-#' measured angle. Thus the function computes \eqn{y} coordinate as the cosine of 
+#' measured angle. Thus the function computes \eqn{x} coordinate as the sine of 
+#' the angle, and the \eqn{y} coordinate as the cosine of 
 #' the angle, enabling a correct representation of them on a cartesian plot.
-#'
-#' @param angle The angle in degree (measured clockwise from the North or from 
-#' any other relevant bearing system defined in the field)
-#' @param distance The distance
-#' @return The \eqn{y} coordinate expressed in the same unit as the distance parameter
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-toCartesianY <- function(angle, distance) {
+toCartesianXY <- function(angle, distance) {
   angleRad <- angle * pi / 180
-  cos(angleRad) * distance
+  c(sin(angleRad) * distance, cos(angleRad) * distance)
 }
+
 
 #' @title Converts cartesian (x, y) into polar (angle, distance) coordinates
 #'
@@ -160,14 +148,13 @@ getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass
   h  <- distance * sin(inclRad) * branchesCM
   ## computes cartesian coordinates of centre of mass of branches and their moments (mx, my, mz).
   ## When branchesCM = 1 x and y are coordinates of branch tip
-  x   <- toCartesianX(angle, (distance * branchesCM))
-  y   <- toCartesianY(angle, (distance * branchesCM))
+  xy  <- toCartesianXY(angle, (distance * branchesCM))
   z   <- as.real(object[height]) + h
 
-  mx  <- mass * x
-  my  <- mass * y
+  mx  <- mass * xy[1]
+  my  <- mass * xy[2]
   mz  <- mass * z
-  c(x, y, mx, my, mz)
+  c(xy, mx, my, mz)
 }
 
 #' @title Estimates the wood biomass of logs and truncated branches
@@ -260,14 +247,11 @@ powerEquation <- function(a, b, x) {
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plotPolarSegment <- function(a0, d0, a1, d1) {
-  x0 <- toCartesianX(a0, d0)
-  y0 <- toCartesianY(a0, d0)
-  x1 <- toCartesianX(a1, d1)
-  y1 <- toCartesianY(a1, d1)
-  
-  points(x0, y0)
-  points(x1, y1)
-  segments(x0, y0, x1, y1)
+  xy0 <- toCartesianXY(a0, d0)
+  xy1 <- toCartesianXY(a1, d1)
+  points(xy0[1], xy0[2])
+  points(xy1[1], xy1[2])
+  segments(xy0[1], xy0[2], xy1[1], xy1[2])
 }
 
 #' @title Imports field data from csv file
@@ -524,7 +508,8 @@ plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
 
 #' @title Plots slenderness coefficient of branches
 #'
-#' @description Plots the branches as arrows whose length is proportional to their slenderness coefficient
+#' @description Plots the branches as arrows whose length is proportional to their slenderness coefficient.
+#' A red circle holds ``safe'' branches (\eqn{SC_c<50}).
 #'
 #' @note Two circles (or ellipses according to x and y scales) are drawn to encompass 
 #' the 30 and 50 values for coefficient of slenderness. Branches with 50+ values for the coefficient of 
@@ -546,22 +531,27 @@ plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
     a * cos(t) + 1i * a * sin(t)
   }
   
-  safe   <- subset(x, SC <= 50, select = c(azimuth, SC))
-  unsafe <- subset(x, SC > 50,  select = c(azimuth, SC))
-
-  x2 <- toCartesianX(x$azimuth, x$SC)
-  y2 <- toCartesianY(x$azimuth, x$SC)
-  plot(x2, y2, type="n", asp = 1, ...)
+  xy <- toCartesianXY(x$azimuth, x$SC)
+  xyL <- length(xy)
+  xyCoord <- data.frame(cbind(xy[1:(xyL/2)], xy[((xyL/2)+1):xyL]))
+  colnames(xyCoord) <- c("x", "y")
+  
+  plot(xyCoord, type="n", asp = 1, ...)
   chw <- par()$cxy[1] 
-  text(x2 - chw, y2 - chw, labels = row.names(x), adj = 0, cex = 0.8, col = txtcol) 
+  text(xyCoord$x - chw, xyCoord$y - chw, labels = row.names(x), adj = 0, cex = 0.8, col = txtcol) 
 
-  arrows(0, 0, toCartesianX(safe$azimuth, safe$SC),   toCartesianY(safe$azimuth, safe$SC),   col = "green")
-  arrows(0, 0, toCartesianX(unsafe$azimuth, unsafe$SC), toCartesianY(unsafe$azimuth, unsafe$SC), col = "red")
+  xyCoord <- cbind(xyCoord, x$SC)
+  colnames(xyCoord) <- c("x", "y", "SC")
+  safe   <- subset(xyCoord, SC <= 50, select = c(x, y))
+  unsafe <- subset(xyCoord, SC > 50,  select = c(x, y))
+
+  arrows(0, 0, safe$x, safe$y, col = "green")
+  arrows(0, 0, unsafe$x, unsafe$y, col = "red")
 
   t <- seq(0, 2 * pi, by=0.01)
   center <- 0 + 0i
-  radius <- 20
-  lines(center + Circle(t, radius), col = "green", lwd = 3)
+  #radius <- 20
+  #lines(center + Circle(t, radius), col = "green", lwd = 3)
   radius <- 50
   lines(center + Circle(t, radius), col = "red", lwd = 3)
 }

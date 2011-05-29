@@ -3,7 +3,8 @@
 \title{Plots slenderness coefficient of branches}
 \usage{\method{plot}{SC}(x, y, txtcol="grey80", ...)
 }
-\description{Plots the branches as arrows whose length is proportional to their slenderness coefficient}
+\description{Plots the branches as arrows whose length is proportional to their slenderness coefficient.
+A red circle holds ``safe'' branches (\eqn{SC_c<50}).}
 \note{Two circles (or ellipses according to x and y scales) are drawn to encompass 
 the 30 and 50 values for coefficient of slenderness. Branches with 50+ values for the coefficient of 
 slenderness are considered dangerous. Please note that Mattheck coefficient is corrected to account 
