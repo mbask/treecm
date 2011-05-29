@@ -115,14 +115,13 @@ treeSC <- function(treeObject, vectorObject) {
 #'
 #' @param x      SC object
 #' @param y      unused
-#' @param txtcol Colour of text labels, defaults to "grey80"
 #' @param ...    Arguments to be passed to plot.default
 #' @return \code{NULL}
 #' @method plot SC
 #' @seealso \code{\link{treeSC}}
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
+plot.SC <- function(x, y = NULL, ...) {
 
   Circle <- function(t, a) {
     a * cos(t) + 1i * a * sin(t)
@@ -132,10 +131,10 @@ plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
   xyL <- length(xy)
   xyCoord <- data.frame(cbind(xy[1:(xyL/2)], xy[((xyL/2)+1):xyL]))
   colnames(xyCoord) <- c("x", "y")
+  rownames(xyCoord) <- rownames(x)
   
   plot(xyCoord, type="n", asp = 1, ...)
   chw <- par()$cxy[1] 
-  text(xyCoord$x - chw, xyCoord$y - chw, labels = row.names(x), adj = 0, cex = 0.8, col = txtcol) 
 
   xyCoord <- cbind(xyCoord, x$SC)
   colnames(xyCoord) <- c("x", "y", "SC")
@@ -145,10 +144,11 @@ plot.SC <- function(x, y = NULL, txtcol = "grey80", ...) {
   arrows(0, 0, safe$x, safe$y, col = "green")
   arrows(0, 0, unsafe$x, unsafe$y, col = "red")
 
+  text(safe$x - chw, safe$y - chw, labels = row.names(safe), adj = 0, cex = 0.8, col = "green") 
+  text(unsafe$x - chw, unsafe$y - chw, labels = row.names(unsafe), adj = 0, cex = 0.8, col = "red") 
+
   t <- seq(0, 2 * pi, by=0.01)
   center <- 0 + 0i
-  #radius <- 20
-  #lines(center + Circle(t, radius), col = "green", lwd = 3)
   radius <- 50
   lines(center + Circle(t, radius), col = "red", lwd = 3)
 }

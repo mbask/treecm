@@ -170,20 +170,8 @@ data(treeData)
 # assign length to branches
 treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
 vectors <-treeVectors(treeData)
-CM      <- centreOfMass(vectors)
 SC      <- treeSC(treeData,vectors)
-
-op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
-
-plot.vectors(vectors, 
-  CM = CM,
-  main = "Centre of mass of a stone pine"
-)
-
-plot.SC(SC, txtcol = "black", main = "Branches coefficient of slenderness", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
-
-par(op)
-rm(op)
+plot.SC(SC, main = "Branches coefficient of slenderness", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
 @
 
 The 2D plot charts branches azimuth as arrows whose length is $SC_c$. The longer the arrows the more slender the branch. Arrows pointing inside the red circle are considered to be stable, whereas longer arrows are considered as risky ($SC_c > 50$). The plot may be a visual clue on the process of branch pruning selection. 

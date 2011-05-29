@@ -1,7 +1,7 @@
 \name{plot.SC}
 \alias{plot.SC}
 \title{Plots slenderness coefficient of branches}
-\usage{\method{plot}{SC}(x, y, txtcol="grey80", ...)
+\usage{\method{plot}{SC}(x, y, ...)
 }
 \description{Plots the branches as arrows whose length is proportional to their slenderness coefficient.
 A red circle holds ``safe'' branches (\eqn{SC_c<50}).}
@@ -14,7 +14,6 @@ for branch tilt (the more it deviates from the verticality the higher its coeffi
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
 \arguments{\item{x}{SC object}
 \item{y}{unused}
-\item{txtcol}{Colour of text labels, defaults to "grey80"}
 \item{...}{Arguments to be passed to plot.default}
 }
 
