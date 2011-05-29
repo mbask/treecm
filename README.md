@@ -24,3 +24,5 @@ To get started, try:
 	  CM = CM,
 	  main = "A stone pine centre of mass"
 	)
+
+<img src="https://github.com/mbask/treecm/blob/master/paper/treecm-ex2.png" alt="A centre of mass plot" title="Plot of CM" />
