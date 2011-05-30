@@ -1,6 +1,6 @@
-#' @title Compute the slenderness coefficient
+#' @title Compute the slenderness ratio
 #'
-#' @description Slenderness coefficient is an important index of stability of trees and branches
+#' @description slenderness ratio is an important index of stability of trees and branches
 #'
 #' @note The coefficient takes into account branch angle: 
 #' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos \alpha)}, 
@@ -12,18 +12,18 @@
 #' @param diameter The name of the data frame column holding diameter of the branch
 #' @param length The name of the data frame column holding length of the branch
 #' @param tilt The name of the data frame column holding tilt of the branch
-#' @return Slenderness coefficient
+#' @return slenderness ratio
 #' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-branchSC <- function(x, diameter, length, tilt) {
+branchSR <- function(x, diameter, length, tilt) {
   tiltRad <- as.real(x[tilt]) * pi / 180
-  SC <- as.real(x[length]) / as.real(x[diameter]) * 100
-  round(SC * ( 1 + cos(tiltRad)), digits = 0)
+  SR <- as.real(x[length]) / as.real(x[diameter]) * 100
+  round(SR * ( 1 + cos(tiltRad)), digits = 0)
 }
 
-#' @title Computes slenderness coefficient for tree branches
+#' @title Computes slenderness ratio for tree branches
 #'
-#' @description Slenderness coefficient is an important index of stability of trees and branches
+#' @description slenderness ratio is an important index of stability of trees and branches
 #'
 #' @note The coefficient takes into account branch angle: 
 #' \eqn{SL_c=\frac{L}{D} \cdot (1 + cos(a))}, 
@@ -32,47 +32,47 @@ branchSC <- function(x, diameter, length, tilt) {
 #'
 #' @param treeObject an object of \code{treeData} class
 #' @param vectorObject an object of \code{vectors} class
-#' @return an object of class \code{SC}
+#' @return an object of class \code{SR}
 #' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
 #' @export
-#' @seealso \code{\link{branchSC}}
+#' @seealso \code{\link{branchSR}}
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-treeSC <- function(treeObject, vectorObject) {
-  SC <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
-  SC <- cbind(SC, vectorObject$Azimuth)
-  SC <- cbind(SC, apply(SC, 1, branchSC, diameter = "dBase", length   = "length", tilt     = "tilt"))
-  colnames(SC) <- c("diameter", "length", "tilt", "azimuth", "SC")
-  class(SC) <- c("SC", class(SC))
-  return(SC)
+treeSR <- function(treeObject, vectorObject) {
+  SR <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
+  SR <- cbind(SR, vectorObject$Azimuth)
+  SR <- cbind(SR, apply(SR, 1, branchSR, diameter = "dBase", length   = "length", tilt     = "tilt"))
+  colnames(SR) <- c("diameter", "length", "tilt", "azimuth", "SR")
+  class(SR) <- c("SR", class(SR))
+  return(SR)
 }
 
 
-#' @title Plots slenderness coefficient of branches
+#' @title Plots slenderness ratio of branches
 #'
-#' @description Plots the branches as arrows whose length is proportional to their slenderness coefficient.
-#' A red circle holds ``safe'' branches (\eqn{SC_c<SC_{70}}).
+#' @description Plots the branches as arrows whose length is proportional to their slenderness ratio.
+#' A red circle holds ``safe'' branches (\eqn{SR_c \leq 70}).
 #'
-#' @note A circleis drawn to encompass 
-#' the 70- values for coefficient of slenderness. Branches with 70+ values for the coefficient of 
-#' slenderness are considered dangerous. Please note that Mattheck coefficient is corrected to account 
+#' @note A circle is drawn to encompass 
+#' the 70- values for slenderness ratio. Branches with 70+ values for the slenderness
+#' ratio are considered dangerous. Please note that Mattheck coefficient is corrected to account 
 #' for branch tilt (the more it deviates from the verticality the higher its coefficient) 
 #'
-#' @param x      SC object
+#' @param x      SR object
 #' @param y      unused
-#' @param safeSC SC threshold, risky branches are red-coloured
+#' @param safeSR SR threshold, risky branches are red-coloured
 #' @param ...    Arguments to be passed to plot.default
 #' @return \code{NULL}
-#' @method plot SC
-#' @seealso \code{\link{treeSC}}
+#' @method plot SR
+#' @seealso \code{\link{treeSR}}
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-plot.SC <- function(x, y = NULL, safeSC = 70, ...) {
+plot.SR <- function(x, y = NULL, safeSR = 70, ...) {
 
   Circle <- function(t, a) {
     a * cos(t) + 1i * a * sin(t)
   }
   
-  xy <- toCartesianXY(x$azimuth, x$SC)
+  xy <- toCartesianXY(x$azimuth, x$SR)
   xyL <- length(xy)
   xyCoord <- data.frame(cbind(xy[1:(xyL/2)], xy[((xyL/2)+1):xyL]))
   colnames(xyCoord) <- c("x", "y")
@@ -81,10 +81,10 @@ plot.SC <- function(x, y = NULL, safeSC = 70, ...) {
   plot(xyCoord, type="n", asp = 1, ...)
   chw <- par()$cxy[1] 
 
-  xyCoord <- cbind(xyCoord, x$SC)
-  colnames(xyCoord) <- c("x", "y", "SC")
-  safe   <- subset(xyCoord, SC <= safeSC, select = c(x, y))
-  unsafe <- subset(xyCoord, SC > safeSC,  select = c(x, y))
+  xyCoord <- cbind(xyCoord, x$SR)
+  colnames(xyCoord) <- c("x", "y", "SR")
+  safe   <- subset(xyCoord, SR <= safeSR, select = c(x, y))
+  unsafe <- subset(xyCoord, SR > safeSR,  select = c(x, y))
 
   arrows(0, 0, safe$x, safe$y, col = "green")
   arrows(0, 0, unsafe$x, unsafe$y, col = "red")
@@ -94,5 +94,5 @@ plot.SC <- function(x, y = NULL, safeSC = 70, ...) {
 
   t <- seq(0, 2 * pi, by=0.01)
   center <- 0 + 0i
-  lines(center + Circle(t, safeSC), col = "red", lwd = 2)
+  lines(center + Circle(t, safeSR), col = "red", lwd = 2)
 }
