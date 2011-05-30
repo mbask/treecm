@@ -55,8 +55,10 @@ vignette:
 	R CMD pdflatex $(PKGNAME).tex
 
 build: docs
+	mv paper/ ../
 	cd ..;\
 	"$(RBIN)/R" CMD build --no-vignettes $(PKGSRC)
+	mv ../paper/ .
 
 install: build
 	cd ..;\
