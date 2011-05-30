@@ -39,4 +39,4 @@ To get started, try:
 	SR      <- treeSR(treeData,vectors)
 	plot.SR(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
 
-	<img src="https://github.com/mbask/treecm/raw/master/paper/treecm-exSR.png" alt="A slenderness ratio plot" title="Plot of SR" />
+<img src="https://github.com/mbask/treecm/raw/master/paper/treecm-exSR.png" alt="A slenderness ratio plot" title="Plot of SR" />
