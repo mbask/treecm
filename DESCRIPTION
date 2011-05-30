@@ -1,10 +1,11 @@
 Package: treecm
-Maintainer: Marco Bascietto <marco.bascietto@ibaf.cnr.it>
 License: GPL-2
+Maintainer: Marco Bascietto <marco.bascietto@ibaf.cnr.it>
 Title: Estimating and plotting the centre of mass of a tree.
 Type: Package
 LazyLoad: yes
-Author: Marco Bascietto <marco.bascietto@ibaf.cnr.it>
+Author: Marco Bascietto <marco.bascietto@ibaf.cnr.it> Bruno De Cinti
+    <bruno.decinti@ibaf.cnr.it>
 Description: Given a few data about branchiness of a tree the package
     computes and plots the centre of mass of the tree itself. The
     centre of mass is a crucial data for arborists in order to
@@ -13,6 +14,6 @@ Description: Given a few data about branchiness of a tree the package
     aid the pruning selection process
 Version: 1.02
 URL: https://github.com/mbask/treecm
-Date: 2011-05-25
+Date: 2011-05-30
 Collate: 'biomass.R' 'CM.R' 'math.R' 'moment.R' 'SC.R' 'treecm.R'
     'vectors.R'
