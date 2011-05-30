@@ -8,10 +8,11 @@ The more distant the centre of mass from tree base the higher the constrains the
 
 Nevertheless, the estimate of barycentre position is useful to assess the effects of different pruning schemes as far as tree balance is concerned.
 
-## Coefficient of slenderness
-A simple plot of coefficient of slenderness of branches is also provided. Too thin/long branches and logs (i.e. whose CoS > 50) are considered risky in the Visual Tree Assessment protocol. The plot aids in pointing out which branches exceed the CoS50 rule and need to be pruned.
+## Slenderness ratio
+A simple plot of slenderness ratio of branches is also provided. Too thin/long branches and logs (i.e. whose SRc > 70) are considered risky in the Visual Tree Assessment protocol, where SRc is the authors attempt to apply Mattheck's tree slenderness ratio to branches (details in the package vignette). The plot aids in pointing out which branches exceed the SRc70 rule and need to be pruned.
 
 ## Get started 
+### Centre of mass
 
 To get started, try:
 
@@ -26,3 +27,16 @@ To get started, try:
 	)
 
 <img src="https://github.com/mbask/treecm/raw/master/paper/treecm-ex2.png" alt="A centre of mass plot" title="Plot of CM" />
+
+### Slenderness ratio
+
+To get started, try:
+
+	data(treeData)
+	# assign length to branches
+	treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
+	vectors <-treeVectors(treeData)
+	SR      <- treeSR(treeData,vectors)
+	plot.SR(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
+
+	<img src="https://github.com/mbask/treecm/raw/master/paper/treecm-exSR.png" alt="A slenderness ratio plot" title="Plot of SR" />
