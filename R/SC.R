@@ -50,22 +50,23 @@ treeSC <- function(treeObject, vectorObject) {
 #' @title Plots slenderness coefficient of branches
 #'
 #' @description Plots the branches as arrows whose length is proportional to their slenderness coefficient.
-#' A red circle holds ``safe'' branches (\eqn{SC_c<50}).
+#' A red circle holds ``safe'' branches (\eqn{SC_c<SC_{70}}).
 #'
-#' @note Two circles (or ellipses according to x and y scales) are drawn to encompass 
-#' the 30 and 50 values for coefficient of slenderness. Branches with 50+ values for the coefficient of 
+#' @note A circleis drawn to encompass 
+#' the 70- values for coefficient of slenderness. Branches with 70+ values for the coefficient of 
 #' slenderness are considered dangerous. Please note that Mattheck coefficient is corrected to account 
 #' for branch tilt (the more it deviates from the verticality the higher its coefficient) 
 #'
 #' @param x      SC object
 #' @param y      unused
+#' @param safeSC SC threshold, risky branches are red-coloured
 #' @param ...    Arguments to be passed to plot.default
 #' @return \code{NULL}
 #' @method plot SC
 #' @seealso \code{\link{treeSC}}
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-plot.SC <- function(x, y = NULL, ...) {
+plot.SC <- function(x, y = NULL, safeSC = 70, ...) {
 
   Circle <- function(t, a) {
     a * cos(t) + 1i * a * sin(t)
@@ -82,8 +83,8 @@ plot.SC <- function(x, y = NULL, ...) {
 
   xyCoord <- cbind(xyCoord, x$SC)
   colnames(xyCoord) <- c("x", "y", "SC")
-  safe   <- subset(xyCoord, SC <= 50, select = c(x, y))
-  unsafe <- subset(xyCoord, SC > 50,  select = c(x, y))
+  safe   <- subset(xyCoord, SC <= safeSC, select = c(x, y))
+  unsafe <- subset(xyCoord, SC > safeSC,  select = c(x, y))
 
   arrows(0, 0, safe$x, safe$y, col = "green")
   arrows(0, 0, unsafe$x, unsafe$y, col = "red")
@@ -93,6 +94,5 @@ plot.SC <- function(x, y = NULL, ...) {
 
   t <- seq(0, 2 * pi, by=0.01)
   center <- 0 + 0i
-  radius <- 50
-  lines(center + Circle(t, radius), col = "red", lwd = 3)
+  lines(center + Circle(t, safeSC), col = "red", lwd = 2)
 }
