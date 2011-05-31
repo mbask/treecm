@@ -41,13 +41,16 @@ help:
 deps:
 	"$(RBIN)/R" --vanilla --slave -e "install.packages(c('roxygen'))"
 
+cleanman:
+	mv man/Dst.Rd ./
+	mv man/fieldData.Rd ./
+	mv man/treeData.Rd ./
+	rm man/*
+	mv *.Rd man/
 
-docs:
-	rm man/*;\
-	cp ../../Baricentro/DocFiles.$(PKGNAME)/*.Rd man/
+docs: cleanman
 	cd ..;\
 	"$(RBIN)/R" --no-restore --slave -e "library(roxygen); roxygenize('$(PKGSRC)', '$(PKGSRC)', use.Rd2=TRUE, overwrite=TRUE, unlink.target=FALSE, copy.package=FALSE)"
-
 
 vignette:
 	cd inst/doc;\

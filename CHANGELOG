@@ -1,4 +1,4 @@
-1.02
+1.0.2
 New feature: slenderness ratio for branches is computed and plotted. Tree SR is defined as L/D according to Mattheck, C. and Breloer, H. Banches SR is corrected to take into account branch deviation from the verticality.
 Minor tweaks and speed improvements
 Fixed bug that prevented data import
