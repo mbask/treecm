@@ -172,7 +172,7 @@ When \verb!treeData! object is filled with branches length (not the length of th
 data(treeData)
 # assign length to branches
 treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
-vectors <-treeVectors(treeData)
+vectors <- treeVectors(treeData)
 SR      <- treeSR(treeData,vectors)
 plot.SR(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
 @
