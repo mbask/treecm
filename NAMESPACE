@@ -1,6 +1,7 @@
 export(allometryCutini2009)
 export(allometryPorte2002)
 export(allometryAsca2011)
+export(allometryABDC)
 export(treeBiomass)
 export(centreOfMass)
 export(summary.CM)
