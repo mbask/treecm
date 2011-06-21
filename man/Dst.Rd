@@ -9,9 +9,11 @@ Wood density is used to convert wood volume measures in the field to their fresh
 }
 \usage{data(Dst)}
 \format{
-A data frame with 161 observations on the following variable.
-\describe{
-  \item{\code{density}}{a numeric vector}
+  A data frame with 170 observations on the following 3 variables.
+  \describe{
+    \item{\code{species}}{a character vector}
+    \item{\code{group}}{a factor with levels \code{conifer} \code{dicot}}
+    \item{\code{density}}{a numeric vector}
   }
 }
 \details{Density is measured at humidity level 50\%, very close to mean living tree wood humidity. The dataset is provided as a reference only, please be cautioned about using these values on your samples.
