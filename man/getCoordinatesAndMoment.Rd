@@ -14,9 +14,9 @@ The \eqn{x}, \eqn{y}, \eqn{z} coordinates are corrected to take into account whe
 centre of mass lies on the branches themselves by multiplying them by branchesCM,
 a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). 
 As a rule of thumb, average live branches, with an average amount of foliage, 
-have CM approx. from \eqn{1/3} to \eqn{2/3} of their length, ie. branchesCM = 0.33-0.66.
-\eqn{x}, \eqn{y}, \eqn{z} moments are computed by multiplying the cartesian coordinate by 
-branch or log mass.}
+have CM approx. \eqn{2/3} of their length, ie. branchesCM = 0.66.
+\eqn{x}, \eqn{y}, \eqn{z} moments are computed by multiplying the corresponding cartesian coordinates by 
+branch or log mass, e.g. \eqn{m_x = F \cdot l_x}, where \eqn{F} is branch or log mass, \eqn{l_x} is the \eqn{x} component of the lever arm (e.g. the \eqn{x} component of the branch or log projection on the ground).}
 \value{a vector holding 5 reals:
 \itemize{
 \item{the \eqn{x} coordinate of branch CM}
@@ -24,11 +24,11 @@ branch or log mass.}
 \item{the \eqn{x} moment of the branch}
 \item{the \eqn{y} moment of the branch}
 \item{the \eqn{z} moment of the branch}}}
-\note{BranchCM is assumed to have same value in branches and logs. This is not the case in the real world. As a measure of safety one should use higher values than \eqn{1/3}, eg 1 for branchesCM.}
+\note{BranchCM is assumed to have same value in branches and logs. This is not the case in the real world. As a measure of safety one should use the highest valuepossible, eg branchesCM = 1.}
 \note{\eqn{z} coordinate of CM is not returned because it would be useless in a 2D plot. It is computed using \eqn{mz}, which is, as a matter of facts, returned}
 \author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
 \arguments{\item{object}{A data frame holding the appropriate colums}
-\item{angle}{The name of the data frame column holding the angle of branch orientation}
+\item{angle}{The name of the data frame column holding branch compass heading}
 \item{distance}{The name of the data frame column holding the length of the 
 branch projection on the ground}
 \item{height}{The name of the data frame column holding the height of branch
