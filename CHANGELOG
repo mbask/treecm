@@ -1,5 +1,6 @@
 1.0.3
 Added a new allometry fitting equation yielding stone pine fresh weight (allometryABDC) 
+Density dataset now provides 50% moisture content densities for a whole variety of conifers and dicots: Niklas, K. J. & Spatz, H.-C. Worldwide correlations of mechanical properties and green wood density American Journal of Botany, 2010, 97, 1587-1594
 1.0.2
 New feature: slenderness ratio for branches is computed and plotted. Tree SR is defined as L/D according to Mattheck, C. and Breloer, H. Banches SR is corrected to take into account branch deviation from the verticality.
 Minor tweaks and speed improvements
