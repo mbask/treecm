@@ -159,7 +159,7 @@ CM has actually moved 0.5 metres towards tree base, and farther away from the ho
 
 \subsection{Slenderness ratio}
 
-The slenderness ratio of a tree is defined as $SR = \frac{h}{d}$ where $h$ is the height of the tree trunk, and $d$ is the diameter of the tree \cite{Matth}. The SR is a measure of tree stability and is extensively used in tree stability measures carried out by Visual Tree Assessment (VTA). $SR$ in the range $30 \leq SR \leq 50$ are considered optimal, whereas $SR > 50$ lead to consider the tree at risk of breaking due to its excessive slenderness.
+The slenderness ratio of a tree is defined as $SR = \frac{h}{d}$ where $h$ is the height of the tree trunk, and $d$ is the diameter of the tree \cite{Matth}. The SR is a measure of tree stability and is extensively used in tree stability measures carried out by Visual Tree Assessment (VTA). $SR$ in the range $30 \leq SR \leq 70$ are considered optimal, whereas $SR > 70$ lead to consider the tree at risk of breaking due to its excessive slenderness.
 The authors have applied the same concept to tree branches as well. While $SR$ in vertical trees has a physical meaning \cite{Matth}, branches are not usually vertical. As the branch starts to deviate from the verticality (as most of the branches do) the arm of the moment gets longer, reaching a maximum limit in horizontal branches. The longer the arm, the higher the stress on the branch. In order to estimate the added stress imposed by branch angle we improved Mattheck's formula by adding a component proportional to branch tilt angle:
 
 $SR_c = \frac{l}{d} \cdot (1 + cos \alpha)$
@@ -286,7 +286,7 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 
 \begin{thebibliography}{100}
 
-\bibitem[Cutini et al., 2009]{cutini} Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@@}, \textbf{6}, 75--84
+\bibitem[Cutini et al., 2009]{cutini} Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@}, \textbf{6}, 75--84
 
 \bibitem[Niklas, K. J. et al., 2010]{niklas} Niklas, K. J. and Spatz, H.-C., 2010, Worldwide correlations of mechanical properties and green wood density \emph{American Journal of Botany}, \textbf{97}, 1587--1594
 
