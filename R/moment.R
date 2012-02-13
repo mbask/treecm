@@ -16,15 +16,15 @@
 #' \eqn{x}, \eqn{y}, \eqn{z} moments are computed by multiplying the corresponding cartesian coordinates by 
 #' branch or log mass, e.g. \eqn{m_x = F \cdot l_x}, where \eqn{F} is branch or log mass, \eqn{l_x} is the \eqn{x} component of the lever arm (e.g. the \eqn{x} component of the branch or log projection on the ground).
 #'
-#' @param object A data frame holding the appropriate colums
-#' @param angle The name of the data frame column holding branch compass heading
-#' @param distance The name of the data frame column holding the length of the 
-#' branch projection on the ground
-#' @param height The name of the data frame column holding the height of branch
-#' insertion on the stem or the height of log lower section
-#' @param incl The name of the data frame column holding the inclination of
-#' the branch or log in degrees
-#' @param mass The name of the data frame column holding the mass of the branch or log
+#' @param azimuth Branch compass heading
+#' @param dBase unused argument
+#' @param dTip unused argument
+#' @param length Branch length
+#' @param tipD unused argument
+#' @param height Height of branch insertion on the stem or the height of log lower section
+#' @param tilt Inclination of the branch or log in degrees
+#' @param toBePruned unused argument
+#' @param biomass Mass of the branch or log
 #' @param branchesCM a real number varying from 0.01 to 1 proportional to the centre of
 #' mass position along the branch (0.01 branch base, 1 branch tip)
 #' @return a vector holding 5 reals:
@@ -38,24 +38,19 @@
 #'
 #' @note \eqn{z} coordinate of CM is not returned because it would be useless in a 2D plot. It is computed using \eqn{mz}, which is, as a matter of facts, returned
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-getCoordinatesAndMoment <- function (object, angle, distance, height, incl, mass, branchesCM) {
-  ## get variables
-  angle    <- as.integer(object[angle])
-  distance <- as.real(object[distance])
-  mass     <- as.real(object[mass])
-  inclRad  <- as.integer(object[incl]) * pi / 180
+getCoordinatesAndMoment <- function (azimuth, dBase, dTip, length, tipD, height, tilt, toBePruned, biomass, branchesCM) {
   # height (h) to be added to branch height (z), as a function of the 
   # angle of its tilt (0° = horiz., 90° = vert.), its distance (length of its 
   # projection on the ground, 
   # from tree base to branch tip), and the estimated position of the centro of mass
-  h  <- distance * sin(inclRad) * branchesCM
+  h  <- tipD * sin(tilt * pi / 180) * branchesCM
   ## computes cartesian coordinates of centre of mass of branches and their moments (mx, my, mz).
-  ## When branchesCM = 1 x and y are coordinates of branch tip
-  xy  <- toCartesianXY(angle, (distance * branchesCM))
-  z   <- as.real(object[height]) + h
-
-  mx  <- mass * xy[1]
-  my  <- mass * xy[2]
-  mz  <- mass * z
+  ## When branchesCM = 1, x and y are coordinates of branch tip
+  xy  <- toCartesianXY(azimuth, (tipD * branchesCM))
+  z   <- height + h
+  
+  mx  <- biomass * xy[1]
+  my  <- biomass * xy[2]
+  mz  <- biomass * z
   c(xy, mx, my, mz)
 }

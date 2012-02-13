@@ -52,7 +52,7 @@ The core of the package is the \verb!summary! method for CM object. The centre o
 A simple visualization of tree centre of mass and its logs and branches is achieved simply by:
 
 <<ex2, fig=TRUE>>=
-plot.vectors(vectors, 
+plot(vectors, 
   CM = CM,
   main = "A stone pine centre of mass"
 )
@@ -63,7 +63,7 @@ In a cartesian coordinate system whose origin lies at tree base, the masses of l
 If we measured the polar coordinates of the building(s) around the tree we would have plot them alongside the tree using the \verb!plotPolarSegment! function:
 
 <<ex3, fig=TRUE>>=
-plot.vectors(vectors, 
+plot(vectors, 
   CM = CM,
   main = "A stone pine centre of mass",
   xlim = c(-8, 10),
@@ -93,7 +93,7 @@ Let's recaltulate the vectors under snow load and plot the results:
 vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)
 summary(CM)
-plot.vectors(vectors, 
+plot(vectors, 
   CM = CM,
   main = "A stone pine centre of mass under 2x snow load",
   xlim = c(-8,10),
@@ -138,7 +138,7 @@ CM       <- centreOfMass(vectors)
 
 op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
 
-plot.vectors(vectors, 
+plot(vectors, 
   CM = CM,
   main = "Centre of mass of a stone pine"
 )
@@ -146,7 +146,7 @@ plot.vectors(vectors,
 treeData <- switchBranchPruningStatus(treeData, c(4, 6))
 vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)
-plot.vectors(vectors, 
+plot(vectors, 
   CM = CM,
   main = "Centre of mass of a stone pine, B2 and B4 removed"
 )
@@ -174,7 +174,7 @@ data(treeData)
 treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
 vectors <- treeVectors(treeData)
 SR      <- treeSR(treeData,vectors)
-plot.SR(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
+plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
 @
 
 The 2D plot charts branches azimuth as arrows whose length is $SR_c$. The longer the arrows the more slender the branch. Arrows pointing inside the red circle are considered to be stable, whereas longer arrows are considered as risky ($SR_c \geq 70$). The plot may be a visual clue on the process of branch pruning selection. 

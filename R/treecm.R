@@ -39,13 +39,14 @@
 #' @name treecm-package
 #' @aliases treecm
 #' @docType package
+#' @import plyr
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 #' @keywords package
 #' @examples
 #' data(treeData)
 #' vectors  <- treeVectors(treeData)
 #' CM       <- centreOfMass(vectors)
-#' plot.vectors(vectors, 
+#' plot(vectors, 
 #'    CM = CM, 
 #'    main = "Centre Of Mass", 
 #'    col = "grey30", 
@@ -53,6 +54,7 @@
 #' summary(CM)
 #' @references Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})
 NULL
+
 
 
 

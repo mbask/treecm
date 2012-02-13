@@ -31,6 +31,7 @@ centreOfMass <- function(object) {
 #' @param object An object of class \code{CM}
 #' @param ...    Additional arguments, not used
 #' @return       \code{NULL}
+#' @method summary CM
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 summary.CM <- function(object, ...) {

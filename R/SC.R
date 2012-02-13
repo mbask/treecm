@@ -96,3 +96,4 @@ plot.SR <- function(x, y = NULL, safeSR = 70, ...) {
   center <- 0 + 0i
   lines(center + Circle(t, safeSR), col = "red", lwd = 2)
 }
+

@@ -39,18 +39,18 @@ help:
 # Development Tasks
 #------------------------------------------------------------------------------
 deps:
-	"$(RBIN)/R" --vanilla --slave -e "install.packages(c('roxygen'))"
+	"$(RBIN)/R" --vanilla --slave -e "install.packages(c('roxygen2'))"
 
 cleanman:
-	mv man/Dst.Rd ./
-	mv man/fieldData.Rd ./
-	mv man/treeData.Rd ./
-	rm man/*
-	mv *.Rd man/
+#	mv man/Dst.Rd ./
+#	mv man/fieldData.Rd ./
+#	mv man/treeData.Rd ./
+#	rm man/*
+#	mv *.Rd man/
 
 docs: cleanman
-	cd ..;\
-	"$(RBIN)/R" --no-restore --slave -e "library(roxygen); roxygenize('$(PKGSRC)', '$(PKGSRC)', use.Rd2=TRUE, overwrite=TRUE, unlink.target=FALSE, copy.package=FALSE)"
+  cd ..;\
+	"$(RBIN)/R" --no-restore --slave -e "library(roxygen2); roxygenize('$(PKGSRC)', '$(PKGSRC)', overwrite=TRUE, unlink.target=FALSE, copy.package=FALSE)"
 
 vignette:
 	cd inst/doc;\

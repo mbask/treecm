@@ -9,26 +9,10 @@
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 treeVectors <- function(object) {
-
   ## vectors data frame is populated
   vectors <- subset(object$fieldData, select = c(azimuth, tipD, biomass, height, tilt, toBePruned))
-
   ## computes cartesian coordinates of branch tip and its x, y and z moments are added to vectors slot
-  vectors <- cbind(vectors, 
-    t(
-      apply(
-        vectors, 
-        1, 
-        getCoordinatesAndMoment, 
-        angle      = "azimuth", 
-        distance   = "tipD", 
-        height     = "height",
-        incl       = "tilt",
-        mass       = "biomass",
-        branchesCM = object$branchesCM
-      )
-    )
-  )
+  vectors <- mdply(vectors, getCoordinatesAndMoment, branchesCM = object$branchesCM)
   colnames(vectors) <- c("Azimuth", "Distance", "Biomass", "Height", "Tilt", "toBePruned", "x", "y", "mx", "my", "mz")
   class(vectors) <- c("vector", class(vectors))
   return(vectors)

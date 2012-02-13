@@ -1,12 +1,27 @@
 \name{centreOfMass}
 \alias{centreOfMass}
 \title{Computes the centre of mass of the tree}
-\usage{centreOfMass(object)
+\usage{
+  centreOfMass(object)
 }
-\description{The \eqn{x} coordinate of the centre of mass is defined as \eqn{\frac{\sum(m_ix_i)}{\sum(m_i)}} where \eqn{m_i} is the biomass of the \eqn{i^{th}} branch and \eqn{x_i} is the \eqn{x} coordinate of the \eqn{i^{th}} branch. \eqn{y} and \eqn{z} coordinates are similarly computed.
-The centre of mass computation excludes branches to be pruned (ie: those whose \code{toBePruned} value is set to \code{TRUE}).}
-\value{A vector holding \eqn{x}, \eqn{y}, \eqn{z} coordinates of the centre of mass}
-\author{Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}}
-\arguments{\item{object}{A data frame of class \code{vectors}}
+\arguments{
+  \item{object}{A data frame of class \code{vectors}}
+}
+\value{
+  A vector holding \eqn{x}, \eqn{y}, \eqn{z} coordinates of
+  the centre of mass
+}
+\description{
+  The \eqn{x} coordinate of the centre of mass is defined
+  as \eqn{\frac{\sum(m_ix_i)}{\sum(m_i)}} where \eqn{m_i}
+  is the biomass of the \eqn{i^{th}} branch and \eqn{x_i}
+  is the \eqn{x} coordinate of the \eqn{i^{th}} branch.
+  \eqn{y} and \eqn{z} coordinates are similarly computed.
+  The centre of mass computation excludes branches to be
+  pruned (ie: those whose \code{toBePruned} value is set to
+  \code{TRUE}).
+}
+\author{
+  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
 }
 
