@@ -3,6 +3,7 @@ Updated to R 2.14.1
 Updated to roxygen2
 Slight change to treeVectors and new dependency from plyr
 Correctly declared S3 methods: plot.vectors, plot.SR and summary.CM
+Improved Makefile
 1.0.3
 Added a new allometry fitting equation yielding stone pine fresh weight (allometryABDC) 
 Density dataset now provides 50% moisture content densities for a whole variety of conifers and dicots: Niklas, K. J. & Spatz, H.-C. Worldwide correlations of mechanical properties and green wood density American Journal of Botany, 2010, 97, 1587-1594

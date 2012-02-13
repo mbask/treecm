@@ -58,6 +58,105 @@ NULL
 
 
 
+#' Green wood density data for a few tree species
+#' 
+#' Wood density is used to convert wood volume measures in the field to their
+#' fresh weights. It is measured in \eqn{\frac{kg}{m^3}}.
+#' 
+#' Density is measured at humidity level 50%, very close to mean living tree
+#' wood humidity. The dataset is provided as a reference only, please be
+#' cautioned about using these values on your samples.
+#' 
+#' @name Dst
+#' @docType data
+#' @format A data frame with 170 observations on the following 3 variables. \code{
+#' data.frame:  170 obs. of  3 variables:
+#'   $ species: chr  "Abies alba" "Abies alba" "Abies balsama" "Abies grandis" ...
+#'   $ group  : Factor w/ 2 levels "conifer","dicot": 1 1 1 1 1 1 1 1 1 1 ...
+#'   $ density: int  545 577 529 449 465 673 689 497 673 577 ...}
+#' @source Niklas, K. J. and Spatz, H.-C. (2010) Worldwide correlations of
+#' mechanical properties and green wood density. American Journal of Botany,
+#' 97, 1587-1594
+#' @keywords datasets
+#' @examples
+#' 
+#' data(Dst)
+NULL 
+
+
+
+#' Raw CSV file of field recorded values for a stone pine tree
+#' 
+#' Required data for the assessment of the centre of mass have been recorded in
+#' the field for a stone pine (\emph{Pinus pinea} L.). This is an example of
+#' csv file that should be fed to \code{\link{treeBiomass}} to assess tree
+#' centre of mass.
+#' 
+#' 
+#' @name fieldData
+#' @docType data
+#' @format \code{
+#' "code","dir","dBase","dTip","length","tipD","height","tilt","toBePruned"
+#' "L1",275,73,41,10.2,2.5,0,80, "L2",275,41,16,3.9,2.75,10.2,80,
+#' "B1",190,15,0,,7.95,10.1,, "B2",200,22,0,,7.95,10.4,,
+#' "B3",230,15,0,,7.95,10.4,, "B4",200,18,0,,7.95,11.15,,
+#' "B5",180,7,0,,7.95,11.3,, "B6",150,6,0,,7.95,11.3,,
+#' "B7",340,16,0,,3.95,11.3,, "B8",220,13,0,,7.95,11.8,,
+#' "B9",165,19,0,,7.95,11.8,, "B10",280,8,0,,3.95,11.9,,
+#' "B11",170,9,0,,7.95,11.9,, "B12",265,8,0,,7.95,12.2,,
+#' "B13",75,6,0,,3.95,12.2,, "B14",180,6,0,,7.95,12.2,,
+#' "B15",170,6,0,,7.95,12.6,, "B16",120,5,0,,7.95,12.6,,
+#' "B17",10,14,0,,3.95,13,, "B18",180,13,0,,7.95,13,,
+#' "B19",260,13,0,,7.95,13.2,, "B20",75,6,0,,3.95,13.2,,
+#' "B21",75,10,0,,3.95,13.75,, "B22",215,7,0,,7.95,13.75,,
+#' "B23",140,7,0,,7.95,13.75,, "C",275,16,0,3,3,14.1,80, }
+#' @source Original data collected by the author
+#' @keywords datasets
+#' @examples
+#' 
+#' \dontrun{
+#'   treeData <- importFieldData("fieldData.csv", 530, branchBiomassPinePorte)
+#'   }
+NULL
+
+
+#' Field recorded values for a stone pine tree
+#' 
+#' Required data for the assessment of the centre of mass have been recorded in
+#' the field for a stone pine (\emph{Pinus pinea} L.).
+#' \code{\link{treeBiomass}} has already been run on the dataset, vectors have
+#' yet to be computed.
+#' 
+#' 
+#' @name treeData
+#' @docType data
+#' @format The format is: List of 4
+#' 
+#' \tabular{ll}{ $ fieldData : \tab 'data.frame': 26 obs. of 9 variables:\cr
+#' ..$ dir : \tab int [1:26] 275 275 190 200 230 200 180 150 340 220 ...\cr ..$
+#' dBase : \tab int [1:26] 73 41 15 22 15 18 7 6 16 13 ...\cr ..$ dTip : \tab
+#' num [1:26] 41 16 0 0 0 0 0 0 0 0 ...\cr ..$ length : \tab num [1:26] 10.2
+#' 3.9 NA NA NA NA NA NA NA NA ...\cr ..$ tipD : \tab num [1:26] 2.5 2.75 7.95
+#' 7.95 7.95 7.95 7.95 7.95 3.95 7.95 ...\cr ..$ height : \tab num [1:26] 0
+#' 10.2 10.1 10.4 10.4 ...\cr ..$ tilt : \tab num [1:26] 80 80 0 0 0 0 0 0 0 0
+#' ...\cr ..$ toBePruned: \tab logi [1:26] FALSE FALSE FALSE FALSE FALSE FALSE
+#' ...\cr ..$ biomass : \tab num [1:26] 1741 184 120 247 120 ...\cr $ density :
+#' \tab num 620\cr $ allometryFUN:\tab function (x, diameter) ..- attr(*,
+#' "source")= chr [1:5] "function(x, diameter) " ...\cr $ branchesCM : \tab num
+#' 1\cr }
+#' @source Original data collected by the author
+#' @keywords datasets
+#' @examples
+#' 
+#' data(treeData)
+#' vectors  <- treeVectors(treeData)
+#' CM       <- centreOfMass(vectors)
+#' summary(CM)
+NULL
+
+
+
+
 #' @title Plots a segment
 #'
 #' @description Plots a segmente given two set of polar coordinates (angle, distance
