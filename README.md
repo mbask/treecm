@@ -21,7 +21,7 @@ To get started, try:
     data(treeData)
 	vectors  <- treeVectors(treeData)
 	CM       <- centreOfMass(vectors)
-	plot.vectors(vectors, 
+	plot(vectors, 
 	  CM = CM,
 	  main = "A stone pine centre of mass"
 	)
@@ -37,6 +37,6 @@ To get started, try:
 	treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
 	vectors <-treeVectors(treeData)
 	SR      <- treeSR(treeData,vectors)
-	plot.SR(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
+	plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
 
 <img src="https://github.com/mbask/treecm/raw/master/paper/treecm-exSR.png" alt="A slenderness ratio plot" title="Plot of SR" />
