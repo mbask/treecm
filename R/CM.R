@@ -13,12 +13,11 @@ centreOfMass <- function(object) {
   col.sums    <- apply(treeVectors, 2, sum)
 
   # cartesian coordinates of centre of mass of the tree
-  M <- c(
-    col.sums["mx"] / col.sums["Biomass"], 
-    col.sums["my"] / col.sums["Biomass"], 
-    col.sums["mz"] / col.sums["Biomass"]
+  M <- list(
+    x = col.sums[["mx"]] / col.sums[["Biomass"]], 
+    y = col.sums[["my"]] / col.sums[["Biomass"]], 
+    z = col.sums[["mz"]] / col.sums[["Biomass"]]
   )
-  names(M) <- c("x", "y", "z")
   class(M) <- c("CM", class(M))
   return(M)
 }
@@ -38,12 +37,12 @@ summary.CM <- function(object, ...) {
 
   cat("Coordinates of the centre of mass:\n")
   cat("Cartesian (x/m, y/m, z/m):", 
-    sprintf("%.2f", object["x"]), ",", 
-    sprintf("%.2f", object["y"]), ",", 
-    sprintf("%.2f", object["z"]), "\n"
+    sprintf("%.2f", object$x), ",", 
+    sprintf("%.2f", object$y), ",", 
+    sprintf("%.2f", object$z), "\n"
   )
 
-  polar <- toPolar(object["x"], object["y"])
+  polar <- toPolar(object$x, object$y)
   cat("Polar (angle/degrees, distance/m, height/m):", 
     polar[1], ",", 
     sprintf("%.2f", polar[2]), ",", 
@@ -68,14 +67,14 @@ summary.CM <- function(object, ...) {
 plot.CM <- function(x, y = NULL, ...) {
   chw <- par()$cxy[1] 
   cmText <- paste("CM (z=", sprintf("%.2f", x["z"]), ")")
-  points(x["x"], x["y"], pch = 13, col = 2, cex = 3)
+  points(x$x, x$y, pch = 13, col = 2, cex = 3)
   text(
-    x["x"] - chw, 
-    x["y"] - chw, 
+    x$x - chw, 
+    x$y - chw, 
     labels = cmText, 
     adj = 0, 
     cex = 0.8,
     col = 2
     ) 
-  arrows(0, 0, x["x"], x["y"], col = 2, lwd = 2) 
+  arrows(0, 0, x$x, x$y, col = 2, lwd = 2) 
 }
