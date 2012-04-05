@@ -148,13 +148,6 @@ logBiomass <- function(x, lowerD, higherD, logLength, density) {
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 treeBiomass <- function(object) {
-  
-  object$fieldData <- within(object$fieldData, {
-    dTip[is.na(dTip)] <- 0
-    tilt[is.na(tilt)] <- 0
-    toBePruned[is.na(toBePruned)] <- FALSE
-  })
-  
   object <- within(object, {
     ## gets stem and cut branches (ie. diameter at tip > 0) biomass, by converting its fresh volume to dry weight
     fieldData$biomass[(fieldData$dTip > 0)] <- as.vector(

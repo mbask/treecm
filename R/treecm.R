@@ -7,7 +7,7 @@
 #
 # Documentation was created using roxygen:
 # package.skeleton(name="treecm", code_files="treecm.R")
-# roxygenize('treecm', roxygen.dir='treecm', copy.package=FALSE, unlink.target=FALSE, use.Rd2=TRUE)
+# library(roxygen2); roxygenize('treecm', 'treecm', overwrite=TRUE, unlink.target=FALSE, copy.package=FALSE)
 ###############################################################################
 
 #' @title Assessment of x, y, z coordinates of centre of mass of trees
@@ -179,7 +179,8 @@ plotPolarSegment <- function(a0, d0, a1, d1) {
 
 #' @title Imports field data from csv file
 #'
-#' @description Imports \code{csv} file holding field recorded data returning a list holding field and other key data provided as arguments
+#' @description Imports \code{csv} file holding field recorded data returning a list holding field and other key data provided as arguments. 
+#' Missing data for \code{dTip} and \code{tilt} is defaulted to 0, missing data for \code{toBePruned} is defaulted to \code{FALSE}.
 #'
 #' @param fileName Name of csv file holding field data
 #' @param dst Fresh density of wood of the tree
@@ -190,14 +191,22 @@ plotPolarSegment <- function(a0, d0, a1, d1) {
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
-  ## il file .csv e deve contenere il nome del ramo come prima colonna
+  ## il file .csv deve contenere il nome del ramo come prima colonna
   tree <- read.csv(fileName, row.names = 1)
+  
+  tree <- within(tree, {
+    dTip[is.na(dTip)] <- 0
+    tilt[is.na(tilt)] <- 0
+    toBePruned[is.na(toBePruned)] <- FALSE
+  })
+  
   list(
     fieldData    = tree, 
     density      = dst, 
     allometryFUN = branchesAllometryFUN,
     branchesCM   = bCM
   )
+  
 }
 
 #' @title Stores branches CM in an object

@@ -27,7 +27,9 @@
 \description{
   Imports \code{csv} file holding field recorded data
   returning a list holding field and other key data
-  provided as arguments
+  provided as arguments. Missing data for \code{dTip} and
+  \code{tilt} is defaulted to 0, missing data for
+  \code{toBePruned} is defaulted to \code{FALSE}.
 }
 \author{
   Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
