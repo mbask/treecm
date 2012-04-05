@@ -48,7 +48,8 @@ docs:
 vignette:
 	cd vignettes;\
 	"$(RBIN)/R" CMD Sweave $(PKGNAME).Rnw;\
-	R CMD pdflatex $(PKGNAME).tex
+	R CMD pdflatex $(PKGNAME).tex;\
+	cp $(PKGNAME).pdf ../inst/doc
 
 build: docs
 	mv paper/ ../
@@ -66,7 +67,7 @@ check: build
 
 clean:
 	find . -type f -iname "*.aux"  -exec rm {} \; 
-	find ./inst/doc -type f -iname "*-*"  -exec rm {} \; 
+	find ./vignettes -type f -iname "*-*"  -exec rm {} \; 
 	find . -type f -iname "*.tex"  -exec rm {} \; 
 	find . -type f -iname "*.log"  -exec rm {} \; 
 	find . -type f -iname "*.out"  -exec rm {} \; 
