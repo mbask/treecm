@@ -1,8 +1,9 @@
 1.0.4
-Updated to R 2.14.1
+Updated to R 2.15.0
 Updated to roxygen2
 Slight change to treeVectors and new dependency from plyr
-Correctly declared S3 methods: plot.vectors, plot.SR and summary.CM
+Correctly declared S3 methods: plot.vector, plot.SR and summary.CM
+New S3 method plot.CM to plot CM on top of a plot.vector
 Improved Makefile
 1.0.3
 Added a new allometry fitting equation yielding stone pine fresh weight (allometryABDC) 

@@ -18,23 +18,22 @@ treeVectors <- function(object) {
   return(vectors)
 }
 
-#' @title Plots branches, logs, and tree CM
+#' @title Plots branches and logs
 #'
-#' @description Plots branches, logs, and tree CM
+#' @description Plots branches and logs
 #'
-#' The 2d plot represents branch, log and tree CM as vectors pointing inwards. CMs vector radii are proportional to CM magnitude. Tree CM is connected to tree base by an arrow showing the direction the tree would take in case of it falling down. \eqn{z} coordinate of tree CM is printed alongside its vector (if branch height has been recorded in the field).
+#' The 2d plot represents branches and logs as vectors pointing inwards.
 #' Branches to be pruned are not shown on graph.
 #'
 #' @param x      vectors object
 #' @param y      unused
-#' @param CM     Centre of mass object
 #' @param txtcol Colour of text labels, defaults to "grey80"
 #' @param ...    Arguments to be passed to plot.default
 #' @return \code{NULL}
 #' @method plot vector
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-plot.vector <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
+plot.vector <- function(x, y = NULL, txtcol = "grey80", ...) {
   treeVectors <- x[!x$toBePruned,]
 
   ## plots branch masses
@@ -48,24 +47,4 @@ plot.vector <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
   # print vector labels
   chw <- par()$cxy[1] 
   text(treeVectors[c("x", "y")] - chw, labels = row.names(treeVectors), adj = 0, cex = 0.8, col = txtcol) 
-
-  ## plots and labels centre of mass point
-  cmText <- paste("CM (z=", sprintf("%.2f", CM["z"]), ")")
-  points(CM["x"], CM["y"], pch = 13, col = 2, cex = 3)
-  text(
-    CM["x"] - chw, 
-    CM["y"] - chw, 
-    labels = cmText, 
-    adj = 0, 
-    cex = 0.8,
-    col = 2
-  ) 
-  arrows(0, 0, CM["x"], CM["y"], col = 2, lwd = 2)
-  
-  ## draws vector (branch) arrows; to avoid warnings
-  ## only vector whose tip has coordinates != (0, 0) should be drawn
-#    tmpVector <- treeVectors[(treeVectors[, "1"] != 0 | treeVectors[, "2"] != 0),]
-#    s <- seq(nrow(tmpVector))
-#    arrows(0, 0, tmpVector[s, "1"], tmpVector[s, "2"])
-#    points(tmpVector[s, "1"], tmpVector[s, "2"], pch = 13)
 }

@@ -50,3 +50,32 @@ summary.CM <- function(object, ...) {
     sprintf("%.2f", object["z"]), "\n"
   )
 }
+
+
+#' @title Plots tree CM
+#'
+#' @description Plots tree centre of mass as a layer on top of the \code{plot.vector}.
+#'
+#' CMs vector radii are proportional to CM magnitude. Tree CM is connected to tree base by an arrow showing the direction the tree would take in case of it falling down. \eqn{z} coordinate of tree CM is printed alongside its vector (if branch height has been recorded in the field).
+#'
+#' @param x      CM object
+#' @param y      unused
+#' @param ...    Arguments to be passed to plot.default
+#' @return \code{NULL}
+#' @method plot CM
+#' @export
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+plot.CM <- function(x, y = NULL, ...) {
+  chw <- par()$cxy[1] 
+  cmText <- paste("CM (z=", sprintf("%.2f", x["z"]), ")")
+  points(x["x"], x["y"], pch = 13, col = 2, cex = 3)
+  text(
+    x["x"] - chw, 
+    x["y"] - chw, 
+    labels = cmText, 
+    adj = 0, 
+    cex = 0.8,
+    col = 2
+    ) 
+  arrows(0, 0, x["x"], x["y"], col = 2, lwd = 2) 
+}

@@ -1,16 +1,14 @@
 \name{plot.vector}
 \alias{plot.vector}
-\title{Plots branches, logs, and tree CM}
+\title{Plots branches and logs}
 \usage{
-  \method{plot}{vector} (x, y = NULL, CM,
-    txtcol = "grey80", ...)
+  \method{plot}{vector} (x, y = NULL, txtcol = "grey80",
+    ...)
 }
 \arguments{
   \item{x}{vectors object}
 
   \item{y}{unused}
-
-  \item{CM}{Centre of mass object}
 
   \item{txtcol}{Colour of text labels, defaults to
   "grey80"}
@@ -21,15 +19,10 @@
   \code{NULL}
 }
 \description{
-  Plots branches, logs, and tree CM
+  Plots branches and logs
 
-  The 2d plot represents branch, log and tree CM as vectors
-  pointing inwards. CMs vector radii are proportional to CM
-  magnitude. Tree CM is connected to tree base by an arrow
-  showing the direction the tree would take in case of it
-  falling down. \eqn{z} coordinate of tree CM is printed
-  alongside its vector (if branch height has been recorded
-  in the field). Branches to be pruned are not shown on
+  The 2d plot represents branches and logs as vectors
+  pointing inwards. Branches to be pruned are not shown on
   graph.
 }
 \author{
