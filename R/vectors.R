@@ -31,18 +31,18 @@ treeVectors <- function(object) {
 #' @param txtcol Colour of text labels, defaults to "grey80"
 #' @param ...    Arguments to be passed to plot.default
 #' @return \code{NULL}
-#' @method plot vectors
+#' @method plot vector
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
-plot.vectors <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
-  treeVectors <- subset(x, !toBePruned)
+plot.vector <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
+  treeVectors <- x[!x$toBePruned,]
 
   ## plots branch masses
-  ## size of points is proprortional to branch biomass
+  ## size of points is proportional to branch biomass
   maxPointSize <- 10
   pointSize <- maxPointSize * as.numeric(as.character(treeVectors$Biomass)) / max(treeVectors$Biomass)
-  
-  plot(treeVectors[c("x", "y")], cex = pointSize, pch = 13, ...)
+
+  plot.default(treeVectors[c("x", "y")], cex = pointSize, pch = 13, ...)
   abline(h = 0, v = 0, col = "gray70")
   
   # print vector labels
