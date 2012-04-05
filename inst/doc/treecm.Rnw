@@ -52,10 +52,8 @@ The core of the package is the \verb!summary! method for CM object. The centre o
 A simple visualization of tree centre of mass and its logs and branches is achieved simply by:
 
 <<ex2, fig=TRUE>>=
-plot(vectors, 
-  CM = CM,
-  main = "A stone pine centre of mass"
-)
+plot(vectors, main = "A stone pine centre of mass")
+plot(CM)
 @
 
 In a cartesian coordinate system whose origin lies at tree base, the masses of logs branches and branches are plotted as vectors pointing inwards, towards the ground. Each circle represent a branch or log mass. Circle radius is proportional to branch or log mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow exemplifies the direction the tree will follow should it break from its base.
@@ -64,11 +62,11 @@ If we measured the polar coordinates of the building(s) around the tree we would
 
 <<ex3, fig=TRUE>>=
 plot(vectors, 
-  CM = CM,
   main = "A stone pine centre of mass",
   xlim = c(-8, 10),
   ylim = c(-12, 4)
 )
+plot(CM)
 plotPolarSegment(210, 10.6, 140, 14.4)
 @
 
@@ -94,11 +92,11 @@ vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)
 summary(CM)
 plot(vectors, 
-  CM = CM,
   main = "A stone pine centre of mass under 2x snow load",
   xlim = c(-8,10),
   ylim = c(-12,4)
 )
+plot(CM)
 plotPolarSegment(210, 10.6, 140, 14.4)
 @
 
@@ -138,18 +136,14 @@ CM       <- centreOfMass(vectors)
 
 op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
 
-plot(vectors, 
-  CM = CM,
-  main = "Centre of mass of a stone pine"
-)
+plot(vectors, main = "Centre of mass of a stone pine")
+plot(CM)
 
 treeData <- switchBranchPruningStatus(treeData, c(4, 6))
 vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)
-plot(vectors, 
-  CM = CM,
-  main = "Centre of mass of a stone pine, B2 and B4 removed"
-)
+plot(vectors, main = "Centre of mass of a stone pine, B2 and B4 removed")
+plot(CM)
 
 par(op)
 rm(op)
