@@ -67,7 +67,7 @@ treeSR <- function(treeObject, vectorObject) {
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plot.SR <- function(x, y = NULL, safeSR = 70, ...) {
-
+  
   Circle <- function(t, a) {
     a * cos(t) + 1i * a * sin(t)
   }
@@ -80,18 +80,21 @@ plot.SR <- function(x, y = NULL, safeSR = 70, ...) {
   
   plot(xyCoord, type="n", asp = 1, ...)
   chw <- par()$cxy[1] 
-
+  
   xyCoord <- cbind(xyCoord, x$SR)
   colnames(xyCoord) <- c("x", "y", "SR")
   safe   <- subset(xyCoord, SR <= safeSR, select = c(x, y))
   unsafe <- subset(xyCoord, SR > safeSR,  select = c(x, y))
-
-  arrows(0, 0, safe$x, safe$y, col = "green")
-  arrows(0, 0, unsafe$x, unsafe$y, col = "red")
-
-  text(safe$x - chw, safe$y - chw, labels = row.names(safe), adj = 0, cex = 0.8, col = "green") 
-  text(unsafe$x - chw, unsafe$y - chw, labels = row.names(unsafe), adj = 0, cex = 0.8, col = "red") 
-
+  
+  if (nrow(safe) > 0) {
+    arrows(0, 0, safe$x, safe$y, col = "green")
+    text(safe$x - chw, safe$y - chw, labels = row.names(safe), adj = 0, cex = 0.8, col = "green") 
+  }
+  if (nrow(unsafe) > 0) {
+    arrows(0, 0, unsafe$x, unsafe$y, col = "red")
+    text(unsafe$x - chw, unsafe$y - chw, labels = row.names(unsafe), adj = 0, cex = 0.8, col = "red") 
+  }
+  
   t <- seq(0, 2 * pi, by=0.01)
   center <- 0 + 0i
   lines(center + Circle(t, safeSR), col = "red", lwd = 2)

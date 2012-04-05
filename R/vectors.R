@@ -48,7 +48,7 @@ plot.vector <- function(x, y = NULL, CM, txtcol = "grey80", ...) {
   # print vector labels
   chw <- par()$cxy[1] 
   text(treeVectors[c("x", "y")] - chw, labels = row.names(treeVectors), adj = 0, cex = 0.8, col = txtcol) 
-   
+
   ## plots and labels centre of mass point
   cmText <- paste("CM (z=", sprintf("%.2f", CM["z"]), ")")
   points(CM["x"], CM["y"], pch = 13, col = 2, cex = 3)
