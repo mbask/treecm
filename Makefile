@@ -46,7 +46,7 @@ docs:
 	"$(RBIN)/R" --no-restore --slave -e "library(roxygen2); roxygenize('$(PKGSRC)', '$(PKGSRC)', overwrite=TRUE, unlink.target=FALSE, copy.package=FALSE)"
 
 vignette:
-	cd inst/doc;\
+	cd vignettes;\
 	"$(RBIN)/R" CMD Sweave $(PKGNAME).Rnw;\
 	R CMD pdflatex $(PKGNAME).tex
 
