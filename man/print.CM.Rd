@@ -1,0 +1,22 @@
+\name{print.CM}
+\alias{print.CM}
+\title{Simple print of Centre of Mass data}
+\usage{
+  \method{print}{CM} (x, ...)
+}
+\arguments{
+  \item{x}{An object of class \code{CM}}
+
+  \item{...}{Additional arguments, not used}
+}
+\value{
+  \code{NULL}
+}
+\description{
+  Prints in a human-readable format the cartesian
+  coordinates of tree CM
+}
+\author{
+  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
+}
+

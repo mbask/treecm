@@ -34,13 +34,7 @@ centreOfMass <- function(object) {
 #' @export
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 summary.CM <- function(object, ...) {
-
-  cat("Coordinates of the centre of mass:\n")
-  cat("Cartesian (x/m, y/m, z/m):", 
-    sprintf("%.2f", object$x), ",", 
-    sprintf("%.2f", object$y), ",", 
-    sprintf("%.2f", object$z), "\n"
-  )
+  print(CM)
 
   polar <- toPolar(object$x, object$y)
   cat("Polar (angle/degrees, distance/m, height/m):", 
@@ -50,6 +44,24 @@ summary.CM <- function(object, ...) {
   )
 }
 
+#' @title Simple print of Centre of Mass data
+#'
+#' @description Prints in a human-readable format the cartesian coordinates of tree CM
+#'
+#' @param x An object of class \code{CM}
+#' @param ...    Additional arguments, not used
+#' @return       \code{NULL}
+#' @method print CM
+#' @export
+#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+print.CM <- function(x, ...) {
+    cat("Coordinates of the centre of mass:\n")
+    cat("Cartesian (x/m, y/m, z/m):", 
+      sprintf("%.2f", x$x), ",", 
+      sprintf("%.2f", x$y), ",", 
+      sprintf("%.2f", x$z), "\n"
+      )
+}
 
 #' @title Plots tree CM
 #'
