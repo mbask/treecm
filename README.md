@@ -21,10 +21,8 @@ To get started, try:
     data(treeData)
 	vectors  <- treeVectors(treeData)
 	CM       <- centreOfMass(vectors)
-	plot(vectors, 
-	  CM = CM,
-	  main = "A stone pine centre of mass"
-	)
+	plot(vectors, main = "A stone pine centre of mass")
+	plot(CM)
 
 <img src="https://github.com/mbask/treecm/raw/master/paper/treecm-ex2.png" alt="A centre of mass plot" title="Plot of CM" />
 
