@@ -24,7 +24,4 @@
   \eqn{z} coordinate of tree CM is printed alongside its
   vector (if branch height has been recorded in the field).
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

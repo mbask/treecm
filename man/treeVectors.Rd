@@ -18,9 +18,6 @@
   height from the ground (and tilt) have been measured in
   the field.
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \seealso{
   \code{\link{getCoordinatesAndMoment}}
 }

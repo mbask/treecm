@@ -16,7 +16,4 @@
   Prints in a human-readable format the polar and cartesian
   coordinates of tree CM
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

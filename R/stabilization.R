@@ -131,9 +131,7 @@ toCartesianXYZ <- function(x) {
 #' vectors <- treeVectors(treeData)
 #' CM <- centreOfMass(vectors)
 #' logs <- logPathSelection(treeData$fieldData)
-#' aR <- anchorRange(logs, CM)
-#' # a sequence of 6 values from 1m above CM to 2m below main stem tip
-#' round(seq(aR[["z"]] + 1, aR[["hMax"]] - 2, length.out = 6), 2)
+#' anchorRange(logs, CM)
 anchorRange <- function(logs, CM) {
   c(CM["z"], hMax = cumsum(logs$length * sin(logs$tilt*pi/180))[nrow(logs)])
 }
@@ -167,9 +165,7 @@ anchorRange <- function(logs, CM) {
 #'   )
 #' treeMoment <- calcMoment(treeMoment)
 #' logs <- logPathSelection(treeData$fieldData)
-#' aR <- anchorRange(logs, CM)
-#' l.stemSeq <- round(seq(aR[["z"]] + 1, aR[["hMax"]] - 2, length.out = 6), 2)
-#' plinth <- data.frame(getPlinthForce(l.stemSeq, 17:50, logs, getMoment(treeMoment), CM))
+#' plinth <- data.frame(getPlinthForce(10, 20, logs, getMoment(treeMoment), CM))
 getPlinthForce <- function(l.stem, d, logs, treeMoment, CM) {
   ## Controllo congruenza dei dati definiti dall'utente
   ## Ferma se: l'altezza dell'ancoraggio sul fusto è sotto il baricentro o se è maggiore dell'altezza del fusto
@@ -267,7 +263,7 @@ buildMomentObject <- function(length, mass, angle) {
 
 #' @title Computes moment and returns the moment object
 #'
-#' @description Moment is computed as $M=l * F$, where l is moment arm, F is the component of the force (\emph{mass times g}) normal to moment arm
+#' @description Moment is computed as \eqn{M=l \cdot F}, where l is moment arm, F is the component of the force (\emph{mass times g}) normal to moment arm
 #'
 #' @param object an instance of moment class
 #' @param g the standard gravity

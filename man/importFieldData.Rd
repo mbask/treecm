@@ -22,7 +22,7 @@
 }
 \value{
   a list of 4 elements: field data, wood fresh density,
-  allometryF function and branches CM
+  allometryFUN function and branches CM
 }
 \description{
   Imports \code{csv} file holding field recorded data
@@ -30,9 +30,6 @@
   provided as arguments. Missing data for \code{dTip} and
   \code{tilt} is defaulted to 0, missing data for
   \code{toBePruned} is defaulted to \code{FALSE}.
-}
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
 }
 \seealso{
   \code{\link{getCoordinatesAndMoment}}

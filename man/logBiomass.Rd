@@ -41,9 +41,6 @@
   (scarcely ever!) and diameters include bark thickness the
   log biomass is somewhat over-estimated!
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \references{
   la Marca, O. \emph{Elementi di dendrometria} 2004, Patron
   Editore (Bologna), p. 119

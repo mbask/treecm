@@ -24,9 +24,6 @@
   The allometric equation takes the form of a power
   equation
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \references{
   Data collected by A. Ascarelli, non linear regression by
   M. Bascietto

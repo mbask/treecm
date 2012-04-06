@@ -21,7 +21,4 @@
   (angle, distance from tree base), may be used to
   represent buildings close to the tree on the CM plot
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

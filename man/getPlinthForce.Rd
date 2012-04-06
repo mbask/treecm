@@ -61,9 +61,7 @@ treeMoment <- buildTreeMomentObject(
   )
 treeMoment <- calcMoment(treeMoment)
 logs <- logPathSelection(treeData$fieldData)
-aR <- anchorRange(logs, CM)
-l.stemSeq <- round(seq(aR[["z"]] + 1, aR[["hMax"]] - 2, length.out = 6), 2)
-plinth <- data.frame(getPlinthForce(l.stemSeq, 17:50, logs, getMoment(treeMoment), CM))
+plinth <- data.frame(getPlinthForce(10, 20, logs, getMoment(treeMoment), CM))
 }
 \seealso{
   Other Stabilization: \code{\link{anchorRange}},

@@ -27,9 +27,6 @@
   on a wider range of branch diameters and it superseeds
   it.
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \references{
   Data collected by A. Ascarelli and integrated by small
   diameter branches by M. Bascietto and B. De Cinti, non

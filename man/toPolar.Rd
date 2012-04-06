@@ -18,7 +18,4 @@
   polar (angle, distance) ones, assuming (0, 0) as origin
   of axes and, incidentally, the position of tree base
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

@@ -13,9 +13,9 @@
   the updated moment object
 }
 \description{
-  Moment is computed as $M=l * F$, where l is moment arm, F
-  is the component of the force (\emph{mass times g})
-  normal to moment arm
+  Moment is computed as \eqn{M=l \cdot F}, where l is
+  moment arm, F is the component of the force (\emph{mass
+  times g}) normal to moment arm
 }
 \seealso{
   \code{\link{getPlinthForce}}

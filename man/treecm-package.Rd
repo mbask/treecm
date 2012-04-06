@@ -2,25 +2,32 @@
 \name{treecm-package}
 \alias{treecm}
 \alias{treecm-package}
-\title{Assessment of x, y, z coordinates of centre of mass of trees}
+\title{Assessment of the position of the centre of mass of trees}
 \description{
-  Given a few data about branchiness of a tree the package
-  computes and plots the centre of mass of the tree itself.
   The centre of mass is a crucial data for arborists in
   order to consolidate a tree using steel or dynamic
-  cables. The tree stem is ideally sectioned in logs. The
-  weight of tree components is assessed based on \itemize{
-  \item the sum of volume of stem logs \item the sum of
-  branches biomass } Field measures to be taken on logs and
-  branches are described in the \code{\link{fieldData}}
-  dataset. In order to help the arborist in the pruning
-  selection process a simple plot of branch coefficient of
-  slenderness is implemented.
+  cables. Given field-recorded data on branchiness of a
+  tree, the package: \itemize{ \item{computes and plots the
+  centre of mass of the tree itself} \item{computes
+  branches slenderness coefficient in order to aid the
+  arborist identify potentially dangerous branches}
+  \item{computes the force acting on a ground plinth and
+  its best position relating to the tree centre of mass,
+  should the tree need to be stabilized by a steel cable} }
+  The tree stem is ideally sectioned in logs. The weight of
+  tree components is assessed based on \itemize{ \item the
+  sum of volume of stem logs \item the sum of branches
+  biomass } Field measures to be taken on logs and branches
+  are described in the \code{\link{fieldData}} dataset and
+  are to be recorded on the tree itself, possibly using
+  tree-climbing tecniques. In order to help the arborist in
+  the pruning selection process a simple plot of branch
+  coefficient of slenderness is implemented.
 }
 \note{
   \bold{Branch biomass} is computed by allometric equations
-  relating its weight (wood + leaves) to its diameter at
-  point of insertion on the stem. \bold{Log biomass} is
+  relating its fresh weight (wood + leaves) to its diameter
+  at point of insertion on the stem. \bold{Log biomass} is
   computed by converting its volume to weight using wood
   fresh density. Volume is computed using Smalian's formula
   (see \code{\link{logBiomass}} description). A sample

@@ -20,7 +20,4 @@
   Returns the result of the exponential equation \eqn{Y = a
   * X^b} given \eqn{a}, \eqn{b} and \eqn{X}
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

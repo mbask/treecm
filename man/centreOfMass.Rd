@@ -21,7 +21,4 @@
   pruned (ie: those whose \code{toBePruned} value is set to
   \code{TRUE}).
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

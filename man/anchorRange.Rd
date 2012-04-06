@@ -25,9 +25,7 @@ data(treeData)
 vectors <- treeVectors(treeData)
 CM <- centreOfMass(vectors)
 logs <- logPathSelection(treeData$fieldData)
-aR <- anchorRange(logs, CM)
-# a sequence of 6 values from 1m above CM to 2m below main stem tip
-round(seq(aR[["z"]] + 1, aR[["hMax"]] - 2, length.out = 6), 2)
+anchorRange(logs, CM)
 }
 \seealso{
   Other Stabilization: \code{\link{centreOfMassAngle}},

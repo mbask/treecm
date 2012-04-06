@@ -26,9 +26,6 @@
   The allometric equation takes the form of a pure
   quadratic equation
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \references{
   Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti,
   M. and Amorini, E. 2009, Effetti della struttura del

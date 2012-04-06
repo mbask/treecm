@@ -20,7 +20,4 @@
   Method \code{\link{treeVectors}} must be invoked to take
   changes into effect
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

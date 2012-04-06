@@ -20,9 +20,6 @@
   0 (ie they have a tip) whereas logs have a final diameter
   > 0.
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \seealso{
   \code{\link{logBiomass}}
 }

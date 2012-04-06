@@ -28,7 +28,4 @@
   enabling a correct representation of them on a cartesian
   plot.
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

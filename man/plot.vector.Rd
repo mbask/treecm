@@ -25,7 +25,4 @@
   pointing inwards. Branches to be pruned are not shown on
   graph.
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

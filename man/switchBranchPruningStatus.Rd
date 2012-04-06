@@ -27,7 +27,4 @@ treeData <- switchBranchPruningStatus(treeData, c(7, 11, 13, 15, 17, 23, 19, 22,
 CM       <- centreOfMass(treeVectors(treeData))
 summary(CM)
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

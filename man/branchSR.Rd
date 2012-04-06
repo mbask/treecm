@@ -32,9 +32,6 @@
   \eqn{D} is branch diameter in cm Vertical branches have
   \eqn{SL = SL_c}
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \references{
   Mattheck, C. and Breloer, H. \emph{The Body Language of
   Trees: A Handbook for Failure Analysis (Research for

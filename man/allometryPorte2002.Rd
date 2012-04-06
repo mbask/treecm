@@ -27,9 +27,6 @@
   The allometric equation takes the form of a power
   equation
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \references{
   Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau,
   D. 2002, Allometric relationships for branch and tree

@@ -72,7 +72,4 @@
   be useless in a 2D plot. It is computed using \eqn{mz},
   which is, as a matter of facts, returned
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 

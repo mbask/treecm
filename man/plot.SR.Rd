@@ -30,9 +30,6 @@
   branch tilt (the more it deviates from the verticality
   the higher its coefficient)
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 \seealso{
   \code{\link{treeSR}}
 }

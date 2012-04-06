@@ -20,7 +20,4 @@
   Returns the result of the pure quadratic equation \eqn{Y
   = a + bX^2} given \eqn{a}, \eqn{b} and \eqn{X}
 }
-\author{
-  Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
-}
 
