@@ -12,7 +12,7 @@
 
 #' @title Assessment of the position of the centre of mass of trees
 #'
-#' @description The centre of mass is a crucial data for arborists in order to consolidate a tree using steel or dynamic cables. Given field-recorded data on branchiness of a tree the package:
+#' @description The centre of mass is a crucial data for arborists in order to consolidate a tree using steel or dynamic cables. Given field-recorded data on branchiness of a tree, the package:
 #' \itemize{
 #'   \item{computes and plots the centre of mass of the tree itself}
 #'   \item{computes branches slenderness coefficient in order to aid the arborist identify potentially dangerous branches}
