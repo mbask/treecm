@@ -37,7 +37,6 @@
 #' @note BranchCM is assumed to have same value in branches and logs. This is not the case in the real world. As a measure of safety one should use the highest value possible, eg branchesCM = 1.
 #'
 #' @note \eqn{z} coordinate of CM is not returned because it would be useless in a 2D plot. It is computed using \eqn{mz}, which is, as a matter of facts, returned
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 getCoordinatesAndMoment <- function (azimuth, dBase, dTip, length, tipD, height, tilt, toBePruned, biomass, branchesCM) {
   # height (h) to be added to branch height (z), as a function of the 
   # angle of its tilt (0° = horiz., 90° = vert.), its distance (length of its 

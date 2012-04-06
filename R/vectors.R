@@ -7,7 +7,6 @@
 #' @return an object of class \code{vectors} 
 #' @seealso \code{\link{getCoordinatesAndMoment}}
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 treeVectors <- function(object) {
   ## vectors data frame is populated
   vectors <- subset(object$fieldData, select = c(azimuth, tipD, biomass, height, tilt, toBePruned))
@@ -32,7 +31,6 @@ treeVectors <- function(object) {
 #' @return \code{NULL}
 #' @method plot vector
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plot.vector <- function(x, y = NULL, txtcol = "grey80", ...) {
   treeVectors <- x[!x$toBePruned,]
 

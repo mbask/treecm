@@ -14,7 +14,6 @@
 #' @param tilt The name of the data frame column holding tilt of the branch
 #' @return slenderness ratio
 #' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 branchSR <- function(x, diameter, length, tilt) {
   tiltRad <- as.real(x[tilt]) * pi / 180
   SR <- as.real(x[length]) / as.real(x[diameter]) * 100
@@ -36,7 +35,6 @@ branchSR <- function(x, diameter, length, tilt) {
 #' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
 #' @export
 #' @seealso \code{\link{branchSR}}
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 treeSR <- function(treeObject, vectorObject) {
   SR <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
   SR <- cbind(SR, vectorObject$Azimuth)
@@ -65,7 +63,6 @@ treeSR <- function(treeObject, vectorObject) {
 #' @method plot SR
 #' @seealso \code{\link{treeSR}}
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plot.SR <- function(x, y = NULL, safeSR = 70, ...) {
   
   Circle <- function(t, a) {

@@ -6,7 +6,6 @@
 #' @param object A data frame of class \code{vectors}
 #' @return A vector holding \eqn{x}, \eqn{y}, \eqn{z} coordinates of the centre of mass
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 centreOfMass <- function(object) {
   # sums the masses of tree branches and their x and y moments
   treeVectors <- subset(object, !toBePruned, select = c("Biomass", "mx", "my", "mz"))
@@ -22,7 +21,6 @@ centreOfMass <- function(object) {
   return(M)
 }
 
-
 #' @title Summary of Centre of Mass data
 #'
 #' @description Prints in a human-readable format the polar and cartesian coordinates of tree CM
@@ -32,7 +30,6 @@ centreOfMass <- function(object) {
 #' @return       \code{NULL}
 #' @method summary CM
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 summary.CM <- function(object, ...) {
   print(CM)
 
@@ -53,7 +50,6 @@ summary.CM <- function(object, ...) {
 #' @return       \code{NULL}
 #' @method print CM
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 print.CM <- function(x, ...) {
     cat("Coordinates of the centre of mass:\n")
     cat("Cartesian (x/m, y/m, z/m):", 
@@ -75,7 +71,6 @@ print.CM <- function(x, ...) {
 #' @return \code{NULL}
 #' @method plot CM
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plot.CM <- function(x, y = NULL, ...) {
   chw <- par()$cxy[1] 
   cmText <- paste("CM (z=", sprintf("%.2f", x["z"]), ")")

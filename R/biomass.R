@@ -12,7 +12,6 @@
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the total biomass of the branch of a stone pine (in kg, dry state)
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 allometryCutini2009 <- function(x, diameter) {
   a <- -198.236
   b <- 0.620
@@ -32,7 +31,6 @@ allometryCutini2009 <- function(x, diameter) {
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 allometryPorte2002 <- function(x, diameter) {
   a <- 21.228
   b <- 2.818
@@ -52,7 +50,6 @@ allometryPorte2002 <- function(x, diameter) {
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the fresh biomass of the branch of a stone pine (in kg)
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 allometryAsca2011 <- function(x, diameter) {
   a <- 0.7201
   b <- 1.8882
@@ -75,7 +72,6 @@ allometryAsca2011 <- function(x, diameter) {
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the fresh biomass of the branch of a stone pine (in kg)
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 allometryABDC <- function(x, diameter) {
   a <- 0.16843
   b <- 2.43523
@@ -91,7 +87,6 @@ allometryABDC <- function(x, diameter) {
 #' @param b the parameter \eqn{a} in the pure quadratic equation
 #' @param x the dependent variable
 #' @return the dependent variable (\eqn{Y})
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 pureQuadraticEquation <- function(a, b, x) {
   a + b * x^2
 }
@@ -105,7 +100,6 @@ pureQuadraticEquation <- function(a, b, x) {
 #' @param b the parameter \eqn{b} in the exponential equation
 #' @param x the independent variable
 #' @return the dependent variable (\eqn{Y})
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 powerEquation <- function(a, b, x) {
   a * x^b
 }
@@ -127,7 +121,6 @@ powerEquation <- function(a, b, x) {
 #' @param logLength The name of the data frame column holding the length of the log or branch in m
 #' @param density The name of the data frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}
 #' @references la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 logBiomass <- function(x, lowerD, higherD, logLength, density) {
   lowerS   <- pi * (as.real(x[lowerD]) / 200)^2 
   higherS  <- pi * (as.real(x[higherD]) / 200)^2
@@ -146,7 +139,6 @@ logBiomass <- function(x, lowerD, higherD, logLength, density) {
 #' @return an object of \code{treeData} class
 #' @seealso \code{\link{logBiomass}}
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 treeBiomass <- function(object) {
   object <- within(object, {
     ## gets stem and cut branches (ie. diameter at tip > 0) biomass, by converting its fresh volume to dry weight
