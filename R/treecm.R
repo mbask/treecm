@@ -197,7 +197,6 @@ NULL
 #' @param d1 distance of second set of coordinates
 #' @return \code{NULL}
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 plotPolarSegment <- function(a0, d0, a1, d1) {
   xy0 <- toCartesianXY(a0, d0)
   xy1 <- toCartesianXY(a1, d1)
@@ -216,11 +215,9 @@ plotPolarSegment <- function(a0, d0, a1, d1) {
 #' @param branchesAllometryFUN the function that should compute branch biomass from its diameter
 #' @param bCM Estimated position of the centre of mass of branches, a real number from 0.01 (CM at branch base) to 1.00 (CM at branch tip). As a rule of thumb, average live branches, with an average amount of foliage, have CM approx. from \eqn{1/3} to \eqn{2/3} of their length. bCM = 1.0 (default value)
 #' @seealso \code{\link{getCoordinatesAndMoment}}
-#' @return a list of 4 elements: field data, wood fresh density, allometryF function and branches CM
+#' @return a list of 4 elements: field data, wood fresh density, allometryFUN function and branches CM
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
-  ## il file .csv deve contenere il nome del ramo come prima colonna
   tree <- read.csv(fileName, row.names = 1)
   
   tree <- within(tree, {
@@ -249,7 +246,6 @@ importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
 #' @param value the new branch CM
 #' @return the updated list
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 setBranchesCM <- function(object, value) {
   if (is.list(object) && value > 0 && value <=1) 
     object$branchesCM <- value
@@ -271,7 +267,6 @@ setBranchesCM <- function(object, value) {
 #' CM       <- centreOfMass(treeVectors(treeData))
 #' summary(CM)
 #' @export
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 switchBranchPruningStatus <- function(object, value) {
   if (is.list(object))
     object$fieldData$toBePruned[value] <- !object$fieldData$toBePruned[value]
