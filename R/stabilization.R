@@ -88,9 +88,6 @@ centreOfMassAngle <- function(object) {
 #' @examples 
 #' library(treecm)
 #' data(treeData)
-#' treeData$fieldData <- within(treeData$fieldData, {
-#'   pathToTip <- c(TRUE, TRUE, rep(FALSE, 23), TRUE)
-#' })
 #' logs <- logPathSelection(treeData$fieldData)
 logPathSelection <- function(fieldData) {
   rbind(0, with(treeData, fieldData[
@@ -131,9 +128,6 @@ toCartesianXYZ <- function(x) {
 #' @examples 
 #' library(treecm)
 #' data(treeData)
-#' treeData$fieldData <- within(treeData$fieldData, {
-#'   pathToTip <- c(TRUE, TRUE, rep(FALSE, 23), TRUE)
-#' })
 #' vectors <- treeVectors(treeData)
 #' CM <- centreOfMass(vectors)
 #' logs <- logPathSelection(treeData$fieldData)
@@ -164,9 +158,6 @@ anchorRange <- function(logs, CM) {
 #' @examples 
 #' library(treecm)
 #' data(treeData)
-#' treeData$fieldData <- within(treeData$fieldData, {
-#'   pathToTip <- c(TRUE, TRUE, rep(FALSE, 23), TRUE)
-#' })
 #' vectors <- treeVectors(treeData)
 #' CM <- centreOfMass(vectors)
 #' treeMoment <- buildTreeMomentObject(

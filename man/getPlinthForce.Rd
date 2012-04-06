@@ -52,9 +52,6 @@
 \examples{
 library(treecm)
 data(treeData)
-treeData$fieldData <- within(treeData$fieldData, {
-  pathToTip <- c(TRUE, TRUE, rep(FALSE, 23), TRUE)
-})
 vectors <- treeVectors(treeData)
 CM <- centreOfMass(vectors)
 treeMoment <- buildTreeMomentObject(

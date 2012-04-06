@@ -19,20 +19,9 @@
 #'   \item the sum of volume of stem logs
 #'   \item the sum of branches biomass
 #' }
-#' Field measures to be taken on logs and branches include:
-#' \itemize{
-#'   \item{\bold{Diameter at base}: diameter at insertion point on the stem, for branches, diameter of the lower section for logs, mandatory}
-#'   \item{\bold{Diameter at top}: 0 for branches, diameter of the higher section for logs, optional, defaults to 0}
-#'   \item{\bold{Distance}: Length of branch or log projection on the ground, starting from tree base to tip of branch or log, mandatory}
-#'   \item{\bold{Length}: Length of logs (no use for branches), mandatory}
-#'   \item{\bold{Height}: height of branch insertion on the stem or height of lower section of the log, to be used to compute z coordinate of CM, optional, defaults to NA}
-#'   \item{\bold{Azimuth}: mean angle of orientation of the branch or log measured from the base of the tree (usually with magnetic north as reference, measured clockwise), mandatory}
-#'   \item{\bold{Tilt}: mean branch or log tilt from the horizontal plane (eg a vertical branch is 90 degrees, an horizontal branch is 0 degrees), to be used to compute z coordinate of CM, optional, defaults to 0. Note however that the tree tip should be considered as a branch, not a log, in order to account for foliage biomass. In this case tilt value should be recorded otherwise it would default to 0, ie an horizontal branch} 
-#'   \item{\bold{To be pruned}: a boolean value, optional, defaults to FALSE}
-#' }
-#'
+#' Field measures to be taken on logs and branches are described in the \code{\link{fieldData}} dataset.
 #' In order to help the arborist in the pruning selection process a simple plot of branch coefficient of slenderness is implemented.
-#' @note Branch biomass is computed by allometric equations relating its weight (wood + leaves) to its diameter at point of insertion on the stem. Log biomass is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see \code{\link{logBiomass}} description).
+#' @note \bold{Branch biomass} is computed by allometric equations relating its weight (wood + leaves) to its diameter at point of insertion on the stem. \bold{Log biomass} is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see \code{\link{logBiomass}} description).
 #' A sample \code{.CSV} file is provided to guide through data filling in the field
 #' @seealso \code{\link{logBiomass}}
 #' \code{\link{fieldData}}
@@ -92,31 +81,58 @@ NULL
 #' csv file that should be fed to \code{\link{treeBiomass}} to assess tree
 #' centre of mass.
 #' 
+#' Field measures to be taken on logs and branches include:
+#' \itemize{
+#'   \item{\bold{Azimuth} (\code{azimuth}): mean angle of orientation of the branch or log measured from the base of the tree (usually with magnetic north as reference, measured clockwise), \emph{mandatory}}
+#'   \item{\bold{Diameter at base} (\code{dBase}): diameter at insertion point on the stem, for branches, diameter of the lower section for logs, \emph{mandatory}}
+#'   \item{\bold{Diameter at top} (\code{dTip}): always 0 for branches, diameter of the higher section for logs, defaults to 0, \emph{mandatory} only for logs}
+#'   \item{\bold{Length} (\code{length}): length of logs or branches, \emph{mandatory} for logs, \emph{mandatory} for branches only if their slenderness coefficient is to be computed}
+#'   \item{\bold{Distance} (\code{tipD}): length of branch or log projection on the ground, starting from tree base to tip of branch or log, \emph{mandatory}}
+#'   \item{\bold{Height} (\code{height}): height of branch insertion on the stem or height of lower section of the log, to be used to compute \code{z} coordinate of CM, defaults to NA, \emph{mandatory} only for \code{z} determination of CM}
+#'   \item{\bold{Tilt} (\code{tilt}): mean branch tilt or log tilt from the horizontal plane (eg a vertical branch is 90 degrees, an horizontal branch is 0 degrees), to be used to compute \code{z} coordinate of CM, defaults to 0, \emph{mandatory} only for \code{z} determination of CM. Note however that the tree tip should be considered as a branch, not a log, in order to account for foliage biomass. In this case the tilt value should be recorded otherwise it would default to 0, \emph{ie} an horizontal branch}
+#'   \item{\bold{To be pruned} (\code{toBePruned}): a boolean value, defaults to FALSE, \emph{optional}}
+#'   \item{\bold{Path to tip} (\code{pathToTip}): a boolean value TRUE on logs and branches that make part of the ``main stem'' of the tree, defaults to FALSE, \emph{optional}}
+#' }
+#' 
+#' The \code{.csv} file must contain all column headings listed, regardless of them being optional (no data in them) or mandatory.
 #' 
 #' @name fieldData
 #' @docType data
 #' @format \code{
-#' "code","dir","dBase","dTip","length","tipD","height","tilt","toBePruned"
-#' "L1",275,73,41,10.2,2.5,0,80, "L2",275,41,16,3.9,2.75,10.2,80,
-#' "B1",190,15,0,,7.95,10.1,, "B2",200,22,0,,7.95,10.4,,
-#' "B3",230,15,0,,7.95,10.4,, "B4",200,18,0,,7.95,11.15,,
-#' "B5",180,7,0,,7.95,11.3,, "B6",150,6,0,,7.95,11.3,,
-#' "B7",340,16,0,,3.95,11.3,, "B8",220,13,0,,7.95,11.8,,
-#' "B9",165,19,0,,7.95,11.8,, "B10",280,8,0,,3.95,11.9,,
-#' "B11",170,9,0,,7.95,11.9,, "B12",265,8,0,,7.95,12.2,,
-#' "B13",75,6,0,,3.95,12.2,, "B14",180,6,0,,7.95,12.2,,
-#' "B15",170,6,0,,7.95,12.6,, "B16",120,5,0,,7.95,12.6,,
-#' "B17",10,14,0,,3.95,13,, "B18",180,13,0,,7.95,13,,
-#' "B19",260,13,0,,7.95,13.2,, "B20",75,6,0,,3.95,13.2,,
-#' "B21",75,10,0,,3.95,13.75,, "B22",215,7,0,,7.95,13.75,,
-#' "B23",140,7,0,,7.95,13.75,, "C",275,16,0,3,3,14.1,80, }
+#' "code","azimuth","dBase","dTip","length","tipD","height","tilt","toBePruned","pathToTip"
+#' "L1",275,73,41,"10.2","2.5",0,80,"FALSE","TRUE"
+#' "L2",275,41,16,"3.9","2.75","10.2",80,"FALSE","TRUE"
+#' "B1",190,15,0,"7.95","10.1",,,"FALSE","FALSE"
+#' "B2",200,22,0,"7.95","10.4",,,"FALSE","FALSE"
+#' "B3",230,15,0,"7.95","10.4",,,"FALSE","FALSE"
+#' "B4",200,18,0,"7.95","11.15",,,"FALSE","FALSE"
+#' "B5",180,7,0,"7.95","11.3",,,"FALSE","FALSE"
+#' "B6",150,6,0,"7.95","11.3",,,"FALSE","FALSE"
+#' "B7",340,16,0,"3.95","11.3",,,"FALSE","FALSE"
+#' "B8",220,13,0,"7.95","11.8",,,"FALSE","FALSE"
+#' "B9",165,19,0,"7.95","11.8",,,"FALSE","FALSE"
+#' "B10",280,8,0,"3.95","11.9",,,"FALSE","FALSE"
+#' "B11",170,9,0,"7.95","11.9",,,"FALSE","FALSE"
+#' "B12",265,8,0,"7.95","12.2",,,"FALSE","FALSE"
+#' "B13",75,6,0,"3.95","12.2",,,"FALSE","FALSE"
+#' "B14",180,6,0,"7.95","12.2",,,"FALSE","FALSE"
+#' "B15",170,6,0,"7.95","12.6",,,"FALSE","FALSE"
+#' "B16",120,5,0,"7.95","12.6",,,"FALSE","FALSE"
+#' "B17",10,14,0,"3.95",13,,,"FALSE","FALSE"
+#' "B18",180,13,0,"7.95",13,,,"FALSE","FALSE"
+#' "B19",260,13,0,"7.95","13.2",,,"FALSE","FALSE"
+#' "B20",75,6,0,"3.95","13.2",,,"FALSE","FALSE"
+#' "B21",75,10,0,"3.95","13.75",,,"FALSE","FALSE"
+#' "B22",215,7,0,"7.95","13.75",,,"FALSE","FALSE"
+#' "B23",140,7,0,"7.95","13.75",,,"FALSE","FALSE"
+#' "C",275,16,0,3,3,"14.1",80,"FALSE","TRUE"
+#' }
 #' @source Original data collected by the author
 #' @keywords datasets
 #' @examples
-#' 
-#' \dontrun{
-#'   treeData <- importFieldData("fieldData.csv", 530, branchBiomassPinePorte)
-#'   }
+#' library("treecm")
+#'   treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryAsca2011)
+#' head(treeData$fieldData)
 NULL
 
 
@@ -127,31 +143,44 @@ NULL
 #' \code{\link{treeBiomass}} has already been run on the dataset, vectors have
 #' yet to be computed.
 #' 
-#' 
+#' This dataset includes a list of 4 elements:
+#' \itemize{
+#' \item{the \code{\link{fieldData}} dataset}
+#' \item{the density of wood}
+#' \item{the allometry function to be used to compute branches biomass}
+#' \item{the estimate of branches centre of mass}
+#' }
+#'
 #' @name treeData
 #' @docType data
-#' @format The format is: List of 4
-#' 
-#' \tabular{ll}{ $ fieldData : \tab 'data.frame': 26 obs. of 9 variables:\cr
-#' ..$ dir : \tab int [1:26] 275 275 190 200 230 200 180 150 340 220 ...\cr ..$
-#' dBase : \tab int [1:26] 73 41 15 22 15 18 7 6 16 13 ...\cr ..$ dTip : \tab
-#' num [1:26] 41 16 0 0 0 0 0 0 0 0 ...\cr ..$ length : \tab num [1:26] 10.2
-#' 3.9 NA NA NA NA NA NA NA NA ...\cr ..$ tipD : \tab num [1:26] 2.5 2.75 7.95
-#' 7.95 7.95 7.95 7.95 7.95 3.95 7.95 ...\cr ..$ height : \tab num [1:26] 0
-#' 10.2 10.1 10.4 10.4 ...\cr ..$ tilt : \tab num [1:26] 80 80 0 0 0 0 0 0 0 0
-#' ...\cr ..$ toBePruned: \tab logi [1:26] FALSE FALSE FALSE FALSE FALSE FALSE
-#' ...\cr ..$ biomass : \tab num [1:26] 1741 184 120 247 120 ...\cr $ density :
-#' \tab num 620\cr $ allometryFUN:\tab function (x, diameter) ..- attr(*,
-#' "source")= chr [1:5] "function(x, diameter) " ...\cr $ branchesCM : \tab num
-#' 1\cr }
+#' @format The format is: 
+#' \code{
+#'  List of 4
+#' $ fieldData   :'data.frame':  26 obs. of  10 variables:
+#' ..$ azimuth   : int [1:26] 275 275 190 200 230 200 180 150 340 220 ...
+#' ..$ dBase     : int [1:26] 73 41 15 22 15 18 7 6 16 13 ...
+#' ..$ dTip      : num [1:26] 41 16 0 0 0 0 0 0 0 0 ...
+#' ..$ length    : num [1:26] 10.2 3.9 NA NA NA NA NA NA NA NA ...
+#' ..$ tipD      : num [1:26] 2.5 2.75 7.95 7.95 7.95 7.95 7.95 7.95 7.95 3.95 ...
+#' ..$ height    : num [1:26] 0 10.2 10.1 10.4 10.4 ...
+#' ..$ tilt      : num [1:26] 80 80 0 0 0 0 0 0 0 0 ...
+#' ..$ toBePruned: logi [1:26] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#' ..$ pathToTip : logi [1:26] TRUE TRUE FALSE FALSE FALSE FALSE ...
+#' ..$ biomass   : num [1:26] 1488 157 120 247 120 ...
+#' $ density     : num 530
+#' $ allometryFUN:function (x, diameter)  
+#'   $ branchesCM  : num 1
+#' }
 #' @source Original data collected by the author
 #' @keywords datasets
 #' @examples
-#' 
 #' data(treeData)
 #' vectors  <- treeVectors(treeData)
 #' CM       <- centreOfMass(vectors)
 #' summary(CM)
+#' # The steps to recreate this dataset:
+#' treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryAsca2011)
+#' treeData <- treeBiomass(treeData)
 NULL
 
 
@@ -198,6 +227,7 @@ importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
     dTip[is.na(dTip)] <- 0
     tilt[is.na(tilt)] <- 0
     toBePruned[is.na(toBePruned)] <- FALSE
+    pathToTip[is.na(pathToTip)] <- FALSE
   })
   
   list(
