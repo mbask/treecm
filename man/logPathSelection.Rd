@@ -1,0 +1,54 @@
+\name{logPathSelection}
+\alias{logPathSelection}
+\title{Returns tree logs and branches being part of the ``main stem''}
+\usage{
+  logPathSelection(fieldData)
+}
+\arguments{
+  \item{fieldData}{a \code{fieldData} data frame}
+}
+\value{
+  a data frame subsetted from the \code{fieldData} data
+  frame having \code{TRUE} selected branches and logs, with
+  three columns: \code{azimuth}, \code{length},
+  \code{tilt}. The first row if filled with zeros.
+}
+\description{
+  The ``main stem'' is not very clearly defined. Most
+  softwood species (\emph{ie} \emph{Picea}, \emph{Abies},
+  \emph{Pseudotsuga} etc.) have only one stem given by
+  their dominant apex. Hardwood species (\emph{Quercus},
+  \emph{Tilia} etc) and some softwood species (\emph{eg}
+  \emph{Pinus pinea}) do not exhibit a dominant apex and
+  branches often enlarge and grow taller than the apex. In
+  these latter cases one has to select an appropriate path
+  from tree base to tree tip, according to what may be
+  considered the ``main stem'' of the tree. Both in former
+  and latter cases the path selection has to be laid down
+  in the \code{fieldData} data frame.
+}
+\note{
+  Selected branches and logs have a \code{TRUE} value in
+  the \code{pathToTip} column. This is a necessary step
+  towards anchor force detemrination, as the returned data
+  frame has to be submitted to \code{\link{getPlinthForce}}
+}
+\examples{
+library(treecm)
+data(treeData)
+treeData$fieldData <- within(treeData$fieldData, {
+  pathToTip <- c(TRUE, TRUE, rep(FALSE, 23), TRUE)
+})
+logs <- logPathSelection(treeData$fieldData)
+}
+\seealso{
+  \code{\link{importFieldData}}
+
+  Other Stabilization: \code{\link{anchorRange}},
+  \code{\link{centreOfMassAngle}},
+  \code{\link{centreOfMassModulus}},
+  \code{\link{getPlinthForce}},
+  \code{\link{toCartesianXYZ}},
+  \code{\link{treeTotalBiomass}}
+}
+

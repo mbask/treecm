@@ -1,0 +1,28 @@
+\name{getMoment}
+\alias{getMoment}
+\title{Returns the moment}
+\usage{
+  getMoment(object)
+}
+\arguments{
+  \item{object}{an instance of moment class}
+}
+\value{
+  the moment figure
+}
+\description{
+  For a description of how moment is computes see
+  \code{\link{calcMoment}}. The function computes moment,
+  if not yet done in a previous user call to
+  \code{\link{calcMoment}}, and only returns it without
+  updating the moment object
+}
+\seealso{
+  \code{\link{getPlinthForce}}
+
+  Other Stabilization momentClass:
+  \code{\link{buildMomentObject}},
+  \code{\link{buildTreeMomentObject}},
+  \code{\link{calcMoment}}
+}
+

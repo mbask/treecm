@@ -1,0 +1,42 @@
+\name{centreOfMassModulus}
+\alias{centreOfMassModulus}
+\title{Computes the modulus of the CM vector}
+\usage{
+  centreOfMassModulus(object)
+}
+\arguments{
+  \item{object}{an object of \code{CM} class}
+}
+\value{
+  a real number
+}
+\description{
+  The Centre of Mass vector starts from the tree base and
+  points towards the CM. Its modulus is the distance
+  between the CM (x, y, z) and tree base (0, 0, 0).
+}
+\note{
+  This function is mainly needed to compute the moment of
+  the tree. The CM modulus is the tree moment arm.
+}
+\examples{
+library(treecm)
+data(treeData)
+vectors <- treeVectors(treeData)
+CM <- centreOfMass(object=vectors)
+print(centreOfMassModulus(CM))
+treeMoment <- buildTreeMomentObject(
+ centreOfMassModulus(CM)
+ , treeTotalBiomass(vectors)
+ , centreOfMassAngle(CM)
+ )
+}
+\seealso{
+  Other Stabilization: \code{\link{anchorRange}},
+  \code{\link{centreOfMassAngle}},
+  \code{\link{getPlinthForce}},
+  \code{\link{logPathSelection}},
+  \code{\link{toCartesianXYZ}},
+  \code{\link{treeTotalBiomass}}
+}
+

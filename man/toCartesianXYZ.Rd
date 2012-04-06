@@ -1,0 +1,25 @@
+\name{toCartesianXYZ}
+\alias{toCartesianXYZ}
+\title{Returns vector cartesian coordinates}
+\usage{
+  toCartesianXYZ(x)
+}
+\arguments{
+  \item{x}{a named vector of three elements (z, x, y)}
+}
+\value{
+  a list holding z, x, y coordinates
+}
+\description{
+  Given a modulus, a tilt angle and an azimuth angle it
+  returns the vector cartesian coordinates
+}
+\seealso{
+  Other Stabilization: \code{\link{anchorRange}},
+  \code{\link{centreOfMassAngle}},
+  \code{\link{centreOfMassModulus}},
+  \code{\link{getPlinthForce}},
+  \code{\link{logPathSelection}},
+  \code{\link{treeTotalBiomass}}
+}
+

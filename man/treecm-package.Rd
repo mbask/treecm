@@ -57,10 +57,10 @@ data(treeData)
 vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)
 plot(vectors,
-   CM = CM,
    main = "Centre Of Mass",
    col = "grey30",
    txtcol = "grey30")
+plot(CM)
 summary(CM)
 }
 \author{

@@ -1,0 +1,34 @@
+\name{buildTreeMomentObject}
+\alias{buildTreeMomentObject}
+\title{Constructor for the generic class treeMoment}
+\usage{
+  buildTreeMomentObject(length, mass, angle)
+}
+\arguments{
+  \item{length}{the distance from tree base to CM, as
+  computed by \code{\link{centreOfMassModulus}}}
+
+  \item{mass}{the tree mass (in kg), not its weight, as
+  computed by \code{\link{treeTotalBiomass}}}
+
+  \item{angle}{the angle between the moment arm (from tree
+  base to CM) and the vector pointing towards the ground
+  (the tree weight vector), as computed by
+  \code{\link{centreOfMassAngle}}}
+}
+\value{
+  an instance of \code{treeMoment}, \code{moment} and list
+  classes
+}
+\description{
+  The class inherits from \code{moment} without adding any
+  more properties
+}
+\seealso{
+  \code{\link{calcMoment}}
+
+  Other Stabilization momentClass:
+  \code{\link{buildMomentObject}},
+  \code{\link{calcMoment}}, \code{\link{getMoment}}
+}
+
