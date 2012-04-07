@@ -45,7 +45,7 @@ Please notice that some rules have to be followed in order to record sound data 
   \item note that \texttt{length} has been only recorded for the \texttt{C} branch (not considering logs) as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than branch length and its angle from the horizonatl plane (\texttt{tilt}) should also be recorded. Otherwise branch \texttt{length} is not needed.
 \end{itemize}
 
-Branch and log biomass has been added to field measures and included in the \testtt{treeData} dataset by a simple call to \texttt{treeData <- treeBiomass(treeData)}.
+Branch and log biomass has been added to field measures and included in the \texttt{treeData} dataset by a simple call to \texttt{treeData <- treeBiomass(treeData)}.
 
 Let's get going and compute the centre of mass of this pine:
 
@@ -183,17 +183,18 @@ plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", y
 
 The 2D plot charts branches azimuth as arrows whose length is $SR_c$. The longer the arrows the more slender the branch. Arrows pointing inside the red circle are considered to be stable, whereas longer arrows are considered as risky ($SR_c \geq 70$). The plot may be a visual clue on the process of branch pruning selection. 
 
-\section{Tree stabilization}
+
+\subsection{Tree stabilization}
 Estimating the coordinates of the centre of mass of a tree is crucial to judge its static stability. The centre of mass of a perfectly balanced tree lies in between its trunk, that is the $x$ and $y$ coordinates of the CM lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
 
 The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
 
-[........CONTINUARE CON LA DESCRIZIONE DELLA STABILIZZAZIONE............]
+........CONTINUARE CON LA DESCRIZIONE DELLA STABILIZZAZIONE
 
 
 menzionare come deve essere fatto l'ancoraggio sull'albero e che deve essere periodicamente allargato, magari allegare una foto di cosa succede se viene messo troppo stretto sull'albero.
 
-menzionare che deve essere lasso ma non troppo perché l'albero, se cade, ci si deve appoggiare senza strappi dovuti ad una velocità eccessiva che può prendere se l'ancora è eccessivamente lassa.
+menzionare che deve essere lasso ma non troppo perche l'albero, se cade, ci si deve appoggiare senza strappi dovuti ad una velocita' eccessiva che puo' prendere se l'ancora e' eccessivamente lassa.
 
 
 \section{Data collection}
@@ -243,7 +244,7 @@ The package behaviour can be modified in order to let the position branches and 
 The relative position of the centre of mass of branches and logs can be set as a real number ranging from 0.01 (base) to 1 (tip, the default behaviour). Setting can be done during import of field data using function \verb!importField! and its parameter \verb!bCM! or by using the setter function \verb!setBrancheSRM!.
 
 \subsubsection{The density}
-Log mass is estimated by converting its volume (as measured in the field) to fresh weight. The conversion factor is usually referred to as density. Wood density is usually quite conservative among individual of the same tree species. Density values are commonly found in published literature. The following table (\cite{niklas}) can be a useful resource (density in $\frac{kg}{m^3}$, measured at 50\% moisture content):
+Log mass is estimated by converting its volume (as measured in the field) to fresh mass. The conversion factor is usually referred to as density. Wood density is usually quite conservative among individual of the same tree species. Density values are commonly found in published literature. The following table (\cite{niklas}) can be a useful resource (density in $\frac{kg}{m^3}$, measured at 50\% moisture content):
 <<bst>>=
 library(treecm)
 data(Dst)
