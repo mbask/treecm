@@ -8,21 +8,22 @@
   order to consolidate a tree using steel or dynamic
   cables. Given field-recorded data on branchiness of a
   tree, the package: \itemize{ \item{computes and plots the
-  centre of mass of the tree itself} \item{computes
-  branches slenderness coefficient in order to aid the
-  arborist identify potentially dangerous branches}
-  \item{computes the force acting on a ground plinth and
-  its best position relating to the tree centre of mass,
-  should the tree need to be stabilized by a steel cable} }
-  The tree stem is ideally sectioned in logs. The weight of
-  tree components is assessed based on \itemize{ \item the
-  sum of volume of stem logs \item the sum of branches
-  biomass } Field measures to be taken on logs and branches
-  are described in the \code{\link{fieldData}} dataset and
-  are to be recorded on the tree itself, possibly using
-  tree-climbing tecniques. In order to help the arborist in
-  the pruning selection process a simple plot of branch
-  coefficient of slenderness is implemented.
+  centre of mass of the tree itself} \item{simulates the
+  shift in CM position as branches are pruned}
+  \item{computes branches slenderness coefficient in order
+  to aid the arborist identify potentially dangerous
+  branches} \item{computes the force acting on a ground
+  plinth and its best position relating to the tree centre
+  of mass, should the tree need to be stabilized by a steel
+  cable} } The tree stem is ideally sectioned in logs. The
+  weight of tree components is assessed based on \itemize{
+  \item the sum of volume of stem logs \item the sum of
+  branches biomass } Field measures to be taken on logs and
+  branches are described in the \code{\link{fieldData}}
+  dataset and are to be recorded on the tree itself,
+  possibly using tree-climbing tecniques. In order to help
+  the arborist in the pruning selection process a simple
+  plot of branch coefficient of slenderness is implemented.
 }
 \note{
   \bold{Branch biomass} is computed by allometric equations
