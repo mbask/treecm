@@ -21,22 +21,28 @@
 
 \subsection{Plot centre of mass}
 
-We will make use of the data set bundled in the package to plot a basic view of masses of branches and logs of a stone pine sampled by the author:
+We will make use of the data set bundled in the package to plot a basic view of masses of branches and logs of a stone pine (\emph{Pinus pinea} L.) sampled by the author:
 <<ex1>>=
 library(treecm)
 data(treeData)
 print(treeData)
 @
 
-This data set has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizonatal plane). The stem has been sectioned in two logs (\verb!L1! and \verb!L2!), and a final branch (\verb!C!). The crown was made up of 23 branches (\verb!B1!-\verb!B23!), all of them horizontal (ie tilted 0$^{\circ}$). The package recognizes rows as branches because their diameter at tip is 0.
+This data set has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizonatal plane). The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a final branch (\texttt{C}). These two logs and the final branch components have been defined in the field as the ``main stem'' of the tree, all the other components of the tree fall into the crown. The definition af the main stem is important only for the correct assessment of the position of the anchor on the tree, should the tree need stabilization with a steel cable. Main stem components get a \texttt{TRUE} value in the \texttt{pathToTip} column. 
+
+A component with \texttt{FALSE} or missing value in the \texttt{pathToTip} column is treated as it belonging to the crown. The crown was made up of 23 branches (\texttt{B1-B23}), all of them horizontal (\emph{ie} tilted 0$^{\circ}$). 
+
+Log and branch fresh biomass has alredy been calculated and added as \texttt{biomass} to \texttt{treeData\$fieldData} data frame. Log biomass is computed by Smalian's formula (\cite{laMarca}). Branch total (wood, leaves, fruits) fresh biomass is computed by \texttt{allometryAsca2011} function, wood fresh density is \Sexpr{treeData$density} $\frac{kg}{m^3}$. It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
+
+The package recognizes rows that represent branches because their diameter at tip (\texttt{tipD}) is 0.
 
 \label{sec:rules}
 
 Please notice that some rules have to be followed in order to record sound data in the field:
 \begin{itemize}
-  \item the diameter of the tip of \verb!L1! is equal to the diameter of the base of \verb!L2!. \verb!L2! tip diameter is, in turn, equal to \verb!C! base diameter. Height figures must match as well as diameter measures
-  \item the distance of the tip of the branch (\verb!tipD!) is not the length of the branch but the distance between tree base (the origin of the cartesian plot) and branch tip
-  \item note that only the \verb!length! of \verb!C! branch has been recorded as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than one should record branch length and its angle from the horizonatl plane (\verb!tilt!). Otherwise branch \verb!length! is not needed.
+  \item the diameter of the tip of \texttt{L1} is equal to the diameter of the base of \texttt{L2}. \texttt{L2} tip diameter is, in turn, equal to \texttt{C} base diameter. Height figures must match between consecutive logs, as well as diameter measures do
+  \item the distance of the tip of the branch (\texttt{tipD}) is not the length of the branch but the distance between tree base (the origin of the cartesian plot) and the branch tip
+  \item note that \texttt{length} has been only recorded for the \texttt{C} branch (not considering logs) as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than branch length and its angle from the horizonatl plane (\texttt{tilt}) should also be recorded. Otherwise branch \texttt{length} is not needed.
 \end{itemize}
 
 Let's get going and compute the centre of mass of this pine:
@@ -47,7 +53,7 @@ CM       <- centreOfMass(vectors)
 summary(CM)
 @
 
-The core of the package is the \verb!summary! method for CM object. The centre of mass for this stone pine lies 2.88 metres South-West of tree base (226$^{\circ}$ from magnetic North), 7.70 metres above ground. Cartesian coordinates are provided as well, though not so usefull as polar ones.
+The core of the package is the \texttt{summary} method for \texttt{CM} class. The centre of mass for this stone pine lies \Sexpr{round(toPolar(CM$x, CM$y)[2], 2)} metres South-West of tree base (\Sexpr{toPolar(CM$x, CM$y)[1]}$^{\circ}$ from magnetic North), \Sexpr{round(CM$z, 2)} metres above ground. Cartesian coordinates are provided as well, though not so usefull as polar ones.
 
 A simple visualization of tree centre of mass and its logs and branches is achieved simply by:
 
@@ -56,9 +62,9 @@ plot(vectors, main = "A stone pine centre of mass")
 plot(CM)
 @
 
-In a cartesian coordinate system whose origin lies at tree base, the masses of logs branches and branches are plotted as vectors pointing inwards, towards the ground. Each circle represent a branch or log mass. Circle radius is proportional to branch or log mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow exemplifies the direction the tree will follow should it break from its base.
+In a cartesian coordinate system whose origin lies at tree base, the masses of logs and branches are plotted as vectors pointing inwards, towards the ground. Each circle represent a branch or log mass whose radius is proportional to branch or log mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow approximates the direction the tree will follow should it break at its base.
 
-If we measured the polar coordinates of the building(s) around the tree we would have plot them alongside the tree using the \verb!plotPolarSegment! function:
+It is important that, should the tree break, it does not fall onto buildings or cause damage to people. We can add buildings and other important points to the CM plot provided that we measured the polar coordinates of their relevant points, from the the tree base, using the \texttt{plotPolarSegment} function. Let's add a building face facing the tree:
 
 <<ex3, fig=TRUE>>=
 plot(vectors, 
@@ -122,11 +128,11 @@ CM       <- centreOfMass(vectors)
 summary(CM)
 @
 
-Under a heavy Southbound wind the CM of the tree will move considerably towards South and 1.2 metres farther away from tree base. Although too simplicistic a model the results lead to the conclusion that dynamic forces in prevailing wind conditions should be taken into account when assessing tree stability.
+Under a heavy southbound wind the CM of the tree will move considerably towards South and 1 metre farther away from tree base. Although too simplicistic a model the results lead to the conclusion that dynamic forces in prevailing wind conditions should be taken into account when assessing tree stability.
 
-\subsection{Effect of pruning}
+\subsection{Effect of pruning on CM}
 
-As far as static forces are concerned, in an effort to move centre of mass toward tree base, we could prune a few heavy branches. Let's have a look how CM would move if we cut B2 and B4. We will make use of function \verb!switchBranchPruningStatus!:
+As far as static forces are concerned, in an effort to move centre of mass toward tree base, we could prune a few heavy branches. Let's have a look how CM would move if we cut \texttt{B2} and \texttt{B4}:
 
 <<exPruning, fig=TRUE>>=
 library(treecm)
@@ -139,7 +145,7 @@ op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
 plot(vectors, main = "Centre of mass of a stone pine")
 plot(CM)
 
-treeData <- switchBranchPruningStatus(treeData, c(4, 6))
+treeData$fieldData$toBePruned[c(4, 6)] <- TRUE
 vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)
 plot(vectors, main = "Centre of mass of a stone pine, B2 and B4 removed")
@@ -149,23 +155,25 @@ par(op)
 rm(op)
 @
 
-CM has actually moved 0.5 metres towards tree base, and farther away from the house. As a matter of facts, branch pruning has not been a reasonable action towards a safer tree. 
+CM has actually moved towards tree base, and farther away from the house. As a matter of facts, branch pruning has been a slight reasonable action towards a safer tree. 
 
 \subsection{Slenderness ratio}
 
-The slenderness ratio of a tree is defined as $SR = \frac{h}{d}$ where $h$ is the height of the tree trunk, and $d$ is the diameter of the tree \cite{Matth}. The SR is a measure of tree stability and is extensively used in tree stability measures carried out by Visual Tree Assessment (VTA). $SR$ in the range $30 \leq SR \leq 70$ are considered optimal, whereas $SR > 70$ lead to consider the tree at risk of breaking due to its excessive slenderness.
+The slenderness ratio of a tree is a pure number defined as $SR = \frac{h}{d}$ where $h$ is the height of the tree trunk, and $d$ is the diameter of the tree \cite{Matth}. The SR is a measure of tree stability and is extensively used in tree stability measures carried out by Visual Tree Assessment (VTA). $SR$ in the range $30 \leq SR \leq 70$ are considered optimal, whereas $SR > 70$ lead to consider the tree at risk of breaking due to its excessive slenderness.
 The authors have applied the same concept to tree branches as well. While $SR$ in vertical trees has a physical meaning \cite{Matth}, branches are not usually vertical. As the branch starts to deviate from the verticality (as most of the branches do) the arm of the moment gets longer, reaching a maximum limit in horizontal branches. The longer the arm, the higher the stress on the branch. In order to estimate the added stress imposed by branch angle we improved Mattheck's formula by adding a component proportional to branch tilt angle:
 
 $SR_c = \frac{l}{d} \cdot (1 + cos \alpha)$
 
 where $\alpha$ is branch tilt angle (i.e. $90^{\circ}$ for a vertical branch, $0^{\circ}$ for an horizontal branch). In vertical branches $SR_c=SR$, in horizontal branches $SR_c=2SR$. As far as we know this is the first attempt to apply the slenderness ratio to branches. Optimal (safe) branches could be in the range $30 \leq SR_c \leq 70$.
 
-When \verb!treeData! object is filled with branches length (not the length of the projection on the ground, from the tree base to their tip) than $SR_c$ can be computed and plotted:
+When \texttt{treeData} object is filled with branches \texttt{length} (not to be confused with \texttt{tipD}, the length of branch projection on the ground, from the tree base to branch tip) than $SR_c$ can be computed and plotted:
 
 <<exSR, fig=TRUE>>=
 data(treeData)
 # assign length to branches
-treeData$fieldData$length <- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
+treeData$fieldData <- within(treeData$fieldData,
+length[3:25] <- c(7, 7, 7, 7, 7, 7, 4, 7, 7, 4, 7, 7, 4, 7, 7, 7, 4, 7, 7, 4, 4, 7, 7)
+)
 vectors <- treeVectors(treeData)
 SR      <- treeSR(treeData,vectors)
 plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
@@ -173,12 +181,18 @@ plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", y
 
 The 2D plot charts branches azimuth as arrows whose length is $SR_c$. The longer the arrows the more slender the branch. Arrows pointing inside the red circle are considered to be stable, whereas longer arrows are considered as risky ($SR_c \geq 70$). The plot may be a visual clue on the process of branch pruning selection. 
 
-\section{The problem}
-Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the $x$ and $y$ coordinates of the barycentre lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
+\section{Tree stabilization}
+Estimating the coordinates of the centre of mass of a tree is crucial to judge its static stability. The centre of mass of a perfectly balanced tree lies in between its trunk, that is the $x$ and $y$ coordinates of the CM lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
 
-The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and  the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
+The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
 
-Nevertheless, the estimate of barycentre position is useful to assess the effects of different pruning SRhemes as far as tree balance is concerned.
+[........CONTINUARE CON LA DESCRIZIONE DELLA STABILIZZAZIONE............]
+
+
+menzionare come deve essere fatto l'ancoraggio sull'albero e che deve essere periodicamente allargato, magari allegare una foto di cosa succede se viene messo troppo stretto sull'albero.
+
+menzionare che deve essere lasso ma non troppo perché l'albero, se cade, ci si deve appoggiare senza strappi dovuti ad una velocità eccessiva che può prendere se l'ancora è eccessivamente lassa.
+
 
 \section{Data collection}
 Data collection to estimation of the centre of mass is carried out in three steps:
@@ -189,14 +203,14 @@ Data collection to estimation of the centre of mass is carried out in three step
 \end{enumerate}
 
 \subsection{Field measurements}
-A few field measurements are needed to estimate centre of mass position at the stem level and at the branch level. Field data are easily taken climbing the tree using tree climbing techniques or by hydraulic platforms. A few instruments are needed including:
+A few field measurements are needed to estimate centre of mass position at the stem level and at the branch level. Field data are easily recorded climbing the tree using tree-climbing techniques or by hydraulic platforms. A few instruments are needed including:
 \begin{itemize}
   \item A forestry caliper to measure diameter of logs and branches
   \item A clinometer, or ipsometer or any other instrument to measure height of branches or logs
   \item A measuring tape to measure length of branch or log projections on the ground
 \end{itemize}
 
-The stem is ideally sectioned in logs in order to compute their volume and biomass. The measurements to be taken on each log include:
+The stem is ideally sectioned in logs in order to compute their volume and mass. The measurements to be taken on each log include:
 \begin{itemize}
   \item Diameter at the base of the log, in cm
   \item Diameter at the top of the log, in cm
@@ -237,6 +251,7 @@ print(Dst)
 
 
 \subsection{Finding a correct allometric equation in order to estimate branch and foliage biomass}
+\label{sec:allequation}
 It is not feasible to weight the branches of a living tree. As a result branch and foliage biomass is estimated using branch diameter at base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a subsample of branches.
 
 When subsampling is not possible one should rely on published allometric equations and feed them to \verb!treecm!. Currently \verb!treecm! ships with three allometric equations:
@@ -274,7 +289,7 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 \verb!treecm! is an ongoing project hosted on GitHub (\url{https://github.com/mbask/treecm}). Many areas need to be expanded including:
 \begin{itemize}
   \item branch biomass estimation; allometric equations are used to estimate fresh branch and foliage biomass. So far only branch biomass for stone pine and maritime pine have been developed or integrated into the software from published data. We need to expand further the number of species represented, particularly for those species common in urban area such as cedars, magnolias, oaks
-  \item The package does not estimate the position of the centre of mass of tree branches. This position may vary according to foliage mass and its distribution along the branchs, branch tapering, quantity of water in leaves (ie: shaded or lit leaves) \emph{etc}. The position must be fed to the package during data loading, as the variable \verb!brancheSRM!. Although going for the safe road, setting a branch centre of mass position on its tip may not be sufficiently precise should one assess wood quality as a function of load balance. Work is under way in order to to model branch load balance
+  \item The package does not estimate the position of the centre of mass of tree branches. This position may vary according to foliage mass and its distribution along the branchs, branch tapering, quantity of water in leaves (\emph{ie} shaded or lit leaves) \emph{etc}. The position must be fed to the package during data loading, as the variable \verb!brancheSRM!. Although going for the safe road, setting a branch centre of mass position on its tip may not be sufficiently precise should one assess wood quality as a function of load balance. Work is under way in order to to model branch load balance
   \item As far as postion of centre of mass il logs, the package does not tell branches and logs apart. The position of CM in logs follows branches CM position settings, though not realistic.
 \end{itemize}
 
@@ -282,7 +297,9 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 
 \bibitem[Cutini et al., 2009]{cutini} Cutini, A. and Hajny, M. and Gugliotta, O. and Manetti, M. and Amorini, E. 2009, Effetti della struttura del popolamento sui modelli di stima del volume e della biomassa epigea (Pineta di Castelfusano - Roma) \emph{Forest@}, \textbf{6}, 75--84
 
-\bibitem[Niklas, K. J. et al., 2010]{niklas} Niklas, K. J. and Spatz, H.-C., 2010, Worldwide correlations of mechanical properties and green wood density \emph{American Journal of Botany}, \textbf{97}, 1587--1594
+\bibitem[la Marca, 2004]{laMarca} la Marca, O. 2004, \emph{Elementi di dendrometria}. Patron Editore (Bologna), p. 119
+
+\bibitem[Niklas et al., 2010]{niklas} Niklas, K. J. and Spatz, H.-C., 2010, Worldwide correlations of mechanical properties and green wood density \emph{American Journal of Botany}, \textbf{97}, 1587--1594
 
 \bibitem[Port\'{e} et al., 2002]{porte} Port\'{e}, A. and Trichet, P. and Bert, D. and Loustau, D. 2002, Allometric relationships for branch and tree woody biomass of Maritime pine (\emph{Pinus pinaster} Ait.) \emph{Forest Ecology and Management}, \textbf{158}, 71--83
 
