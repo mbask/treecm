@@ -45,6 +45,8 @@ Please notice that some rules have to be followed in order to record sound data 
   \item note that \texttt{length} has been only recorded for the \texttt{C} branch (not considering logs) as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than branch length and its angle from the horizonatl plane (\texttt{tilt}) should also be recorded. Otherwise branch \texttt{length} is not needed.
 \end{itemize}
 
+Branch and log biomass has been added to field measures and included in the \testtt{treeData} dataset by a simple call to \texttt{treeData <- treeBiomass(treeData)}.
+
 Let's get going and compute the centre of mass of this pine:
 
 <<ex11>>=
