@@ -289,7 +289,7 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 
 
 \section{Contribute!}
-\verb!treecm! is an ongoing project hosted on GitHub (\url{https://github.com/mbask/treecm}). Many areas need to be expanded including:
+\verb!treecm! is an ongoing project hosted on GitHub (\url{http://mbask.github.com/treecm/}). Many areas need to be expanded including:
 \begin{itemize}
   \item branch biomass estimation; allometric equations are used to estimate fresh branch and foliage biomass. So far only branch biomass for stone pine and maritime pine have been developed or integrated into the software from published data. We need to expand further the number of species represented, particularly for those species common in urban area such as cedars, magnolias, oaks
   \item The package does not estimate the position of the centre of mass of tree branches. This position may vary according to foliage mass and its distribution along the branchs, branch tapering, quantity of water in leaves (\emph{ie} shaded or lit leaves) \emph{etc}. The position must be fed to the package during data loading, as the variable \verb!brancheSRM!. Although going for the safe road, setting a branch centre of mass position on its tip may not be sufficiently precise should one assess wood quality as a function of load balance. Work is under way in order to to model branch load balance
