@@ -215,23 +215,31 @@ A few field measurements are needed to estimate centre of mass position at the s
 
 The stem is ideally sectioned in logs in order to compute their volume and mass. The measurements to be taken on each log include:
 \begin{itemize}
-  \item Diameter at the base of the log, in cm
-  \item Diameter at the top of the log, in cm
-  \item Length of the log, in m
-  \item Azimuth of the log, in case it is not vertical, in degrees from North (O$^{\circ}$ North, 180$^{\circ}$ South)
-  \item Length of log projection on the ground, from the tree base to the log tip (0 for a vertical stem), in m
-  \item Height above ground of the base of the log, in m
-  \item Log tilt from the horizontal plane (eg a vertical log is tilted by 90$^{\circ}$, an horizontal log is tilted by 0$^{\circ}$), in degrees (optional)
+  \item Diameter at the base of the log, in cm (\texttt{dBase})
+  \item Diameter at the top of the log, in cm (\texttt{dTip})
+  \item Length of the log, in m (\texttt{length})
+  \item Azimuth of the log (\texttt{azimuth}), in case it is not vertical, in degrees from North (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Length of log projection on the ground (\texttt{tipD}), from the tree base to the log tip (0 for a vertical log), in m
+  \item Height above ground of the base of the log, in m (\texttt{height})
+  \item Log tilt (\texttt{tilt}) from the horizontal plane (eg a vertical log is tilted by 90$^{\circ}$, an horizontal log is tilted by 0$^{\circ}$), in degrees (optional, default to 0 if missing)
 \end{itemize}
 
 Each branch contributes to the position of the centre of mass by means of their wooden component and their foliage component. Every part of a tree carrying foliage is considered to as a branch. This definition applies to tree tip as well, although some trees may have lost their tip or have it removed during topping operations.
 The measurements to be taken on each branch include:
 \begin{itemize}
-  \item Diameter at the base of the branch, in cm
-  \item Azimuth of the branch, in degrees, usually measured with a compass (O$^{\circ}$ North, 180$^{\circ}$ South)
-  \item Length of branch projection on the ground, from the tree base to the branch tip, in m
-  \item Height above ground of the branch insertion into the stem
-  \item Branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional)
+  \item Diameter at the base of the branch, in cm (\texttt{dBase})
+  \item Diameter at the top of the log must be 0
+  \item Length of the log, in m (\texttt{length}) only if slenderness coefficient is to be computed
+  \item Azimuth of the branch (\texttt{azimuth}), in degrees, usually measured with a compass (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Length of branch projection on the ground (\texttt{tipD}), from the tree base to the branch tip, in m
+  \item Height above ground of the branch insertion into the stem, in m (\texttt{height})
+  \item Branch tilt (\texttt{tilt}) from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, default to 0 if missing)
+\end{itemize}
+
+Two more boolean fields are not strictly measured but they can initially be recorded in the field:
+\begin{itemize}
+	\item Pruning status (\texttt{toBePruned}), which branches are going to be pruned? How would it affect CM? Optional, defaults to FALSE
+	\item Main stem selection (\texttt{pathToTip}), which logs and branches make part of the ``main stem'' of the tree? Optional, defaults to FALSE
 \end{itemize}
 
 \subsection{Visual check for correctness of assumptions}
