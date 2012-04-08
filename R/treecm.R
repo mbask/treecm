@@ -46,7 +46,7 @@
 #'    txtcol = "grey30")
 #' plot(CM)
 #' summary(CM)
-#' @references Source code is hosted at GitHub (\url{https://github.com/mbask/treecm})
+#' @references Source code is hosted at GitHub (\url{http://mbask.github.com/treecm/})
 NULL
 
 

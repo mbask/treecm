@@ -51,7 +51,7 @@ summary(CM)
 }
 \references{
   Source code is hosted at GitHub
-  (\url{https://github.com/mbask/treecm})
+  (\url{http://mbask.github.com/treecm/})
 }
 \seealso{
   \code{\link{logBiomass}} \code{\link{fieldData}}
