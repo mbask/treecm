@@ -52,10 +52,8 @@ vignette:
 	mv $(PKGNAME).pdf ../inst/doc/
 
 build: docs
-	mv paper/ ../
 	cd ..;\
 	"$(RBIN)/R" CMD build --no-vignettes $(PKGSRC)
-	mv ../paper/ .
 
 install: build
 	cd ..;\

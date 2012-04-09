@@ -24,7 +24,7 @@ To get started, try:
 	plot(vectors, main = "A stone pine centre of mass")
 	plot(CM)
 
-<img src="https://github.com/mbask/treecm/raw/master/paper/treecm-ex2.png" alt="A centre of mass plot" title="Plot of CM" />
+<img src="https://github.com/mbask/treecm/raw/master/vignettes/treecm-ex2.png" alt="A centre of mass plot" title="Plot of CM" />
 
 ### Slenderness ratio
 
@@ -37,4 +37,4 @@ To get started, try:
 	SR      <- treeSR(treeData,vectors)
 	plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
 
-<img src="https://github.com/mbask/treecm/raw/master/paper/treecm-exSR.png" alt="A slenderness ratio plot" title="Plot of SR" />
+<img src="https://github.com/mbask/treecm/raw/master/vignettes/treecm-exSR.png" alt="A slenderness ratio plot" title="Plot of SR" />
