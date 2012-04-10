@@ -17,11 +17,11 @@
 \author{Marco Bascietto}
 \maketitle
 
-\section{Examples}
+\section{Usage examples}
 
 \subsection{Plot centre of mass}
 
-We will make use of the data set bundled in the package to plot a basic view of masses of branches and logs of a stone pine (\emph{Pinus pinea} L.) sampled by the author:
+We will make use of the data set bundled in the package to plot a basic view of masses of branches and logs of a stone pine (\emph{Pinus pinea} L.) sampled by B. De Cinti and M. Bascietto:
 <<ex1>>=
 library(treecm)
 data(treeData)
@@ -34,16 +34,7 @@ A component with \texttt{FALSE} or missing value in the \texttt{pathToTip} colum
 
 Log and branch fresh biomass has alredy been calculated and added as \texttt{biomass} to \texttt{treeData\$fieldData} data frame. Log biomass is computed by Smalian's formula (\cite{laMarca}). Branch total (wood, leaves, fruits) fresh biomass is computed by \texttt{allometryAsca2011} function, wood fresh density is \Sexpr{treeData$density} $\frac{kg}{m^3}$. It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
 
-The package recognizes rows that represent branches because their diameter at tip (\texttt{tipD}) is 0.
-
-\label{sec:rules}
-
-Please notice that some rules have to be followed in order to record sound data in the field:
-\begin{itemize}
-  \item the diameter of the tip of \texttt{L1} is equal to the diameter of the base of \texttt{L2}. \texttt{L2} tip diameter is, in turn, equal to \texttt{C} base diameter. Height figures must match between consecutive logs, as well as diameter measures do
-  \item the distance of the tip of the branch (\texttt{tipD}) is not the length of the branch but the distance between tree base (the origin of the cartesian plot) and the branch tip
-  \item note that \texttt{length} has been only recorded for the \texttt{C} branch (not considering logs) as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than branch length and its angle from the horizonatl plane (\texttt{tilt}) should also be recorded. Otherwise branch \texttt{length} is not needed.
-\end{itemize}
+The package recognizes rows that represent branches because their diameter at tip (\texttt{tipD}) is 0 (see more at page \pageref{sec:rules}).
 
 Branch and log biomass has been added to field measures and included in the \texttt{treeData} dataset by a simple call to \texttt{treeData <- treeBiomass(treeData)}.
 
@@ -187,14 +178,186 @@ The 2D plot charts branches azimuth as arrows whose length is $SR_c$. The longer
 \subsection{Tree stabilization}
 Estimating the coordinates of the centre of mass of a tree is crucial to judge its static stability. The centre of mass of a perfectly balanced tree lies in between its trunk, that is the $x$ and $y$ coordinates of the CM lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
 
-The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
+The more distant the centre of mass from tree base the higher the constrains the tree poses on the ground through its roots. When concerns about tree stability are raised and the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
 
-........CONTINUARE CON LA DESCRIZIONE DELLA STABILIZZAZIONE
+One or two static steel cables properly linking the tree to a plinth on the ground may effectively and easily lock the tree into place should its roots loose connection to the ground.
+
+Although putting in place the cable(s) and building an appropriate plinth on the ground are technically easy a correct assessment of the masses into play is mandatory to design a proper system:
+\label{sec:anchor}
+\begin{itemize}
+	\item The height of the anchor on the tree must be carefully chosen to be above its centre of mass (to prevent its turnover!)
+	\item The height of the anchor on the tree must be well below its tip, to not allow the stem to flex, break and fall down
+	\item The force acting on the cable(s) and on the plinth gets lower the farther away it is from tree base
+\end{itemize}
+
+As a rule of thumb, as far as safety is concerned, the higher on the tree the anchor is and the farther the plinth is from tree base the better. Due to the presence of other trees, buildings etc. in urban settings, scarcely ever it is possible to install very long cables, though.
+
+Function \texttt{getPlinthForce} is designed to return the force on the cable and on the plinth given the length of the cable and the position of the anchor on the stem.
+
+Its rationale lies in the comparing the moment of the tree (applied to its centre of mass) and the moment of the anchor, applied (on the anchor):
+
+\begin{equation}
+	M_{tree}=M_{anchor}
+\end{equation}
+
+Where:
+
+\begin{equation}
+	M_{tree} = l_{cm} \cdot f_{cm} \cdot sin \alpha
+\end{equation}
+
+and:
+
+\begin{equation}
+	M_{anchor} = l_{anchor} \cdot f_{anchor}  \cdot sin \beta 
+\end{equation}
+
+where:
+\begin{itemize}
+	\item $l_x$ are the moment arms
+	\item $f_x$ are the weight forces (masses by standard gravity)
+	\item $\alpha$ is the angle on the centre of mass point, between the tree weight vector and the moment arm toward tree base
+	\item $\beta$ is the angle on the anchor point, between the steel cable and the vector toward tree base
+\end{itemize}
+
+The force on the cable and on the plith is then easily derived as:
+
+\begin{equation}
+	f_{anchor} = \frac{M_{tree}}{l_{anchor} \cdot sin \beta}
+\end{equation}
+
+Let's look at a simple example using the \texttt{treeData} dataset we seek the force and plinth position by positioning the anchor at 10m along the main stem and for a 40m long steel cable:
+
+<<exStabilization1>>=
+library(treecm)
+data(treeData)
+vectors <- treeVectors(treeData)
+CM      <- centreOfMass(vectors)
+
+## We need to compute the tree moment
+treeMoment <- buildTreeMomentObject(
+  centreOfMassModulus(CM)
+  , treeTotalBiomass(vectors)
+  , centreOfMassAngle(CM)
+)
+treeMoment <- calcMoment(treeMoment)
+
+## We extract the logs belonging to the main stem
+mainStem <- logPathSelection(treeData$fieldData) #$
+
+(plinth <- getPlinthForce(
+	l.stem = 10, 
+	d = 40, 
+	logs = mainStem, 
+	treeMoment = getMoment(treeMoment), 
+	CM = CM
+))
+@
+
+A named list of six elements is returned:
+\begin{enumerate}
+	\item \texttt{force} (\Sexpr{round(plinth$force)} N) is the actual force on the steel cable and plinth. Conversion to kilogram-force is approximately done by dividing it by 10 as $1 kg_F \approx 9.81 N$ (\emph{ie} \Sexpr{round(plinth$force / 10)} $kg_F$)
+	\item \texttt{distanceOnGround} (\Sexpr{round(plinth$distanceOnGround, 2)} m) is the distance between the plinth and tree base (assuming a flat terrain)
+	\item \texttt{anchorAlongStem} (\Sexpr{plinth$anchorAlongStem} m) is the distance between the anchor and tree base, following the tree main stem
+	\item \texttt{cableLength} (\Sexpr{plinth$cableLength} m)
+	\item \texttt{anchorHeight} (\Sexpr{round(plinth$anchorHeight, 2)} m) is the height above ground of the anchor, equal to \texttt{anchorAlongStem} only when the main stem is vertical (90$^{\circ}$ above ground)
+	\item \texttt{azimuth}  (\Sexpr{plinth$azimuth}$^{\circ}$) is the azimuth relative to North where the plinth should be positioned (this is simply the CM azimuth $\pm 180^\circ$)
+\end{enumerate}
+
+We now have the polar coordinates for the position of the plinth (\texttt{distanceOnGround}, \texttt{azimuth}) and the force on it in order to engineer the cable width and the plinth accordingly.
+
+What if we had constraints on the position of the plinth? It turns out that \texttt{getPlinthForce} is vectorized both to \texttt{l.stem} and \texttt{d}.
+
+Let's examine the possible outcomes for a 15m to 50m long cable:
+
+<<exStabilization2>>=
+plinth <- getPlinthForce(
+	l.stem = 10, 
+	d = 15:50, 
+	logs = mainStem, 
+	treeMoment = getMoment(treeMoment), 
+	CM = CM
+)
+print(plinth$force)
+@
+
+There's almost a 30\% decrease in the force to the plinth if we had the chance of setting the plinth 50m away from tree base. Let's now assess how force to the plinth varies when we shift the anchor position along the stem. Remember that the tree centre of mass is \Sexpr{round(CM$z, 2)}m high, and that \texttt{l.stem} is the distance between tree base and the anchor, following the stem, not the anchor height on the ground:
+
+<<exStabilization3>>=
+plinth <- getPlinthForce(
+	l.stem = seq(9, 12, 0.5), 
+	d = 40, 
+	logs = mainStem, 
+	treeMoment = getMoment(treeMoment), 
+	CM = CM
+)
+print(plinth$force)
+@
+There's almost a 20\% decrease in the force to the plinth at 12m along the stem. If the tree trunk at its 12$^{\circ}$m was large enough we could position the anchor there.
+
+Let's have a closer look at how the force to the plinth reacts by letting vary both \texttt{l.stem} and {d}:
+
+<<exStabilization4>>=
+aR <- anchorRange(mainStem, CM)
+l.stemSeq <- round(seq(aR[["z"]] + 1, aR[["hMax"]] - 2, length.out = 6), 2)
+plinth <- data.frame(
+	getPlinthForce(
+		l.stemSeq, 
+		17:50, 
+		mainStem, 
+		getMoment(treeMoment), 
+		CM
+))
+head(plinth)
+@
+
+We make use of the \texttt{anchorRange} function to select the proper range along the stem (see page \pageref{sec:anchor}). We compute \texttt{getPlinthForce} for a range of distances from the stem [\Sexpr{l.stemSeq[1]}..\Sexpr{l.stemSeq[length(l.stemSeq)]}], each distance for a range of cable lengths [17..50].
+Converting the list in a data frame let us plot it with \texttt{ggplot2}:
+
+<<exStabilization5, fig=TRUE>>=
+library(ggplot2)
+ggplot(data = plinth, aes(x = cableLength, y = force)) +
+  geom_line(aes(color = factor(anchorAlongStem), group = anchorAlongStem)) + 
+  ylab('Force [N]') +
+  xlab('Cable length [m]') +
+  labs(colour = "Anchor\nstem\ndistance [m]") +
+  opts(title = "Force to the plinth (a stone pine)", 
+	legend.position = c(.8, .7), 
+	legend.background = theme_rect(fill="white")
+  )
+@
+
+Expressing force as a ratio to tree biomass and expressing distances relative to tree CM height or distance anchor-tree base:
+
+<<exStabilization6, fig=TRUE>>=
+plinth <- transform(plinth, 
+                    distanceOverAnchorHeight = distanceOnGround / anchorAlongStem
+                    , heightOverAnchorHeight = round(anchorAlongStem / CM[["z"]], 2)
+                    , forceOverTreeBiomass   = force / treeTotalBiomass(vectors)/10
+                    )
+head(plinth[c("distanceOverAnchorHeight", "heightOverAnchorHeight", "forceOverTreeBiomass")])
+ggplot(data = plinth, 
+	aes(x = distanceOverAnchorHeight, y = forceOverTreeBiomass)) +
+  geom_line() + 
+  facet_wrap(~heightOverAnchorHeight)
+@
+
+It looks like positioning the anchor 1.5 times the height of the centre of mass, positioning the plinth 3 times the distance tree base-anchor, would expose the cable and the plith to $1/4$ of the weight of the tree itself. 
 
 
-menzionare come deve essere fatto l'ancoraggio sull'albero e che deve essere periodicamente allargato, magari allegare una foto di cosa succede se viene messo troppo stretto sull'albero.
 
-menzionare che deve essere lasso ma non troppo perche l'albero, se cade, ci si deve appoggiare senza strappi dovuti ad una velocita' eccessiva che puo' prendere se l'ancora e' eccessivamente lassa.
+\subsubsection{A word of caution}
+The cable system is engineered for the safety of people and their properties. Let's not forget that it should not add to the dangers of the tree breaking down! Practisioners should pay attention that:
+\begin{itemize}
+	\item in the case of the tree breaking down it should immediatly lean on the anchor
+	\item the anchor on the tree should not be strictly tightened to the trunk. The secondary growth of the trees would include the cable itself, resulting in a wekness point along the stem
+	\item the anchor should be loose on the trunk, positioned just above a fork. The anchor should be loosened from time to time in order to avoid the previous effect
+	\item the cable must not be extremely tightened so as to constrain the tree in its position so as to enable it its natural movements under wind or snow. At the other end a loosened cable would enable the tree to gain speed, should it break, before leaning on the anchor. A compromise should be reached between a tight cable and a loose one
+	\item From time to time the cable must be checked for potential damages
+	\item As soon as the tree grows taller and changes its crown layout, or as soon as a pruning is carried out, the anchor-cable-plinth system must be modified accordingly. Rememeber that the plinth, being a quasi-permanent structure should be engineered to resist to potentially higher forces and that the anchor position should be raised as the tree get taller and heavier.
+\end{itemize}
+
+
 
 
 \section{Data collection}
@@ -204,6 +367,8 @@ Data collection to estimation of the centre of mass is carried out in three step
   \item Visual check for correctness of assumptions
   \item Collection of correct allometric equation in order to estimate branch and foliage biomass
 \end{enumerate}
+
+
 
 \subsection{Field measurements}
 A few field measurements are needed to estimate centre of mass position at the stem level and at the branch level. Field data are easily recorded climbing the tree using tree-climbing techniques or by hydraulic platforms. A few instruments are needed including:
@@ -242,18 +407,21 @@ Two more boolean fields are not strictly measured but they can initially be reco
 	\item Main stem selection (\texttt{pathToTip}), which logs and branches make part of the ``main stem'' of the tree? Optional, defaults to FALSE
 \end{itemize}
 
+
+
 \subsection{Visual check for correctness of assumptions}
 \subsubsection{Relative position of centre of masses of branches and logs}
-The position of the centre of mass of a tree is computed taking into account the centre of mass of each branch and log. Pinpointing the centre of mass along a branch, taking into account branch form factor and the pattern of distribution of leaves biomass along it, would require many more field measures raising the time spent on it and the costs of the sampling.
+The position of the centre of mass of a tree is computed taking into account the centre of mass of each branch and log. Pinpointing the centre of mass along a branch, taking into account branch form factor and the pattern of distribution of leaves biomass along it, would require many more field measures highering the time spent on it and the costs of the sampling.
 
-Since the package aims to help engineering a consolidation system, the centre of mass is by default located at branches or logs tip. This leads to an estimate of the coordinated of tree centre of mass that is further away from the base than the real one. This difference can be regarded as an inherent safety factor.
+Since the package aims to help engineering a consolidation system, the centre of mass is by default located at branches or logs tip. This leads to an estimate of the coordinates of the tree centre of mass that is farther away from the base than the actual one. This difference can be regarded as an inherent safety factor.
 
 The package behaviour can be modified in order to let the position branches and logs centre of mass to get nearer to their base. 
-The relative position of the centre of mass of branches and logs can be set as a real number ranging from 0.01 (base) to 1 (tip, the default behaviour). Setting can be done during import of field data using function \verb!importField! and its parameter \verb!bCM! or by using the setter function \verb!setBrancheSRM!.
+The relative position of the centre of mass of branches and logs can be set as a real number ranging from 0.01 (base) to 1 (tip, the default behaviour). Setting can be done during import of field data using function \texttt{importField} and its parameter \texttt{bCM} or by using the setter function \texttt{setBrancheSRM}.
 
 \subsubsection{The density}
 Log mass is estimated by converting its volume (as measured in the field) to fresh mass. The conversion factor is usually referred to as density. Wood density is usually quite conservative among individual of the same tree species. Density values are commonly found in published literature. The following table (\cite{niklas}) can be a useful resource (density in $\frac{kg}{m^3}$, measured at 50\% moisture content):
-<<bst>>=
+
+<<dst>>=
 library(treecm)
 data(Dst)
 print(Dst)
@@ -263,19 +431,21 @@ print(Dst)
 
 \subsection{Finding a correct allometric equation in order to estimate branch and foliage biomass}
 \label{sec:allequation}
-It is not feasible to weight the branches of a living tree. As a result branch and foliage biomass is estimated using branch diameter at base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a subsample of branches.
+It is not possible to weight the branches of a living tree. As a result branch and foliage biomass is estimated using branch diameter at base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a sample of branches (eg during a pruning process).
 
-When subsampling is not possible one should rely on published allometric equations and feed them to \verb!treecm!. Currently \verb!treecm! ships with three allometric equations:
+When sampling is not possible one should rely on published allometric equations and feed them to \texttt{treecm}. Currently \texttt{treecm} ships with three allometric equations:
 \begin{itemize}
-  \item \verb!branchBiomassPine!, tested on stone pine trees (not on branches), 40+ cm diameter, returns biomass (dry weight), \cite{cutini}
-  \item \verb!branchBiomassPinePorte!, tested on maritime pine branches, 10- cm diameter, returns biomass (dry weight), \cite{porte}
-  \item \verb!branchBiomassPineASRa!, tested on stone pine branches, 8-16 cm diameter, predominantly from the lower layers of the crown, returns fresh weight
+  \item \texttt{allometryABDC}, tested on stone pine branches, 5-16 cm diameter, returns fresh weight
+  \item \texttt{allometryAsca2011}, tested on stone pine branches, 8-16 cm diameter, predominantly from the lower layers of the crown, returns fresh weight, it is based on a subsample of \texttt{allometryABDC} and it must be considered as deprecated
+  \item \texttt{allometryCutini2009}, tested on stone pine trees (not on branches), 40+ cm diameter, returns biomass, dry weight, \cite{cutini}, its results should be increased by the estimated amount of water present in the branches
+  \item \texttt{allometryPorte2002}, tested on maritime pine branches, 10- cm diameter, returns biomass (dry weight), \cite{porte}, its results should be increased by the estimated amount of water present in the branches 
 \end{itemize}
-The proper allometric equation to be used must be fed to \verb!treecm! when importing field data using function \verb!importFieldData!, parameter \verb!branchesAllometryFUN!.
+The proper allometric equation to be used must be fed to \texttt{treecm} when importing field data using function \texttt{importFieldData}, parameter \texttt{branchesAllometryFUN}.
 
 We welcome contributions to increase the available list of allometric equations.
 
-Note that one should pick an allometric equation that yields fresh mass of branches in order to get results as closer as possible to the real tree centre of mass. Function \verb!branchBiomassPineASRa! returns fresh weight values for stone pine branches.
+Note that one should pick an allometric equation that yields fresh mass of branches in order to get results as closer as possible to the real tree centre of mass. 
+
 
 
 \section{Correct layout of CSV file}
@@ -292,8 +462,20 @@ CSV files are made up of 9 columns. The first row has to hold column headers. He
   \item \textbf{height} height of log basal section of height of branch insertion on stem
   \item \textbf{tilt} log or branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, only useful to estimate $z$ coordinate of centre of mass) 
   \item \textbf{toBePruned} boolean to simulate branch pruning
+  \item \textbf{pathToTip} boolean to point out the ``main stem''
+
 \end{enumerate}
-There are a few simple rules to be followed in order to layout a correct CSV file, please refer to page \pageref{sec:rules}
+
+\subsection{Rules to layout a correct CSV file}
+\label{sec:rules}
+
+Please notice that some rules have to be followed in order to record sound data in the field:
+\begin{itemize}
+  \item the diameter of the tip of \texttt{L1} is equal to the diameter of the base of \texttt{L2}. \texttt{L2} tip diameter is, in turn, equal to \texttt{C} base diameter. Height figures must match between consecutive logs, as well as diameter measures do
+  \item the distance of the tip of the branch (\texttt{tipD}) is not the length of the branch but the distance between tree base (the origin of the cartesian plot) and the branch tip
+  \item note that \texttt{length} has been only recorded for the \texttt{C} branch (not considering logs) as it is the only branch not being horizontal. Non horizontal branches affect tree CM z-coordinate. When non-horizontal branches are present, and if one is interested in the z-coordinate of CM, than branch length and its angle from the horizonatl plane (\texttt{tilt}) should also be recorded. Otherwise branch \texttt{length} is not needed.
+\end{itemize}
+
 
 
 \section{Contribute!}
@@ -301,8 +483,19 @@ There are a few simple rules to be followed in order to layout a correct CSV fil
 \begin{itemize}
   \item branch biomass estimation; allometric equations are used to estimate fresh branch and foliage biomass. So far only branch biomass for stone pine and maritime pine have been developed or integrated into the software from published data. We need to expand further the number of species represented, particularly for those species common in urban area such as cedars, magnolias, oaks
   \item The package does not estimate the position of the centre of mass of tree branches. This position may vary according to foliage mass and its distribution along the branchs, branch tapering, quantity of water in leaves (\emph{ie} shaded or lit leaves) \emph{etc}. The position must be fed to the package during data loading, as the variable \verb!brancheSRM!. Although going for the safe road, setting a branch centre of mass position on its tip may not be sufficiently precise should one assess wood quality as a function of load balance. Work is under way in order to to model branch load balance
-  \item As far as postion of centre of mass il logs, the package does not tell branches and logs apart. The position of CM in logs follows branches CM position settings, though not realistic.
+  \item As far as postion of centre of mass, the package does not tell branches and logs apart. The position of CM in logs follows branches CM position settings, though not realistic
 \end{itemize}
+
+
+
+\section{Future enhancement}
+\begin{itemize}
+  \item \texttt{getPlinthForce} should also account for the case where two cables could be laid down from the same anchor, to enhance safety
+  \item \texttt{getPlinthForce} could also be used to test the engineering of a laid down system
+\end{itemize}
+
+
+
 
 \begin{thebibliography}{100}
 
