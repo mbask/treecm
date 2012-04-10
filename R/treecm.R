@@ -184,7 +184,7 @@ NULL
 #' CM       <- centreOfMass(vectors)
 #' summary(CM)
 #' # The steps to recreate this dataset:
-#' treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryAsca2011)
+#' treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryABDC)
 #' treeData <- treeBiomass(treeData)
 NULL
 
