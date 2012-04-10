@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Treecm by mbask</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Treecm</h1>
+        <p>A R package to compute centre of mass of trees </p>
+        <p class="view"><a href="https://github.com/mbask/treecm">View the Project on GitHub <small>mbask/treecm</small></a></p>
+        <ul>
+          <li><a href="https://github.com/mbask/treecm/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mbask/treecm/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mbask/treecm">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>treecm</h1>
+
+<p><code>treecm</code> is an R package to compute and plot the centre of mass of the tree itself. </p>
+
+<h2>Centre of mass</h2>
+
+<p>Estimating the coordinates of the centre of mass (barycentre) of a tree is crucial to judge its static stability. The centre of mass of a perfectly static tree lies inside its circumference at its base, that is the x and y coordinates of the barycentre lie inside the <code>pi * r^2</code> surface where r is the radius of tree base.</p>
+
+<p>The more distant the centre of mass from tree base the higher the constrains the tree poses on the soil through its roots. When concerns about tree stability are raised and  the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.</p>
+
+<p>Nevertheless, the estimate of barycentre position is useful to assess the effects of different pruning schemes as far as tree balance is concerned.</p>
+
+<h2>Slenderness ratio</h2>
+
+<p>A simple plot of slenderness ratio of branches is also provided. Too thin/long branches and logs (i.e. whose SRc &gt; 70) are considered risky in the Visual Tree Assessment protocol, where SRc is the authors attempt to apply Mattheck's tree slenderness ratio to branches (details in the package vignette). The plot aids in pointing out which branches exceed the SRc70 rule and need to be pruned.</p>
+
+<h2>Installation</h2>
+
+<p>You can install the stable version on <a href="http://cran.r-project.org/package=treecm">CRAN</a>:</p>
+
+<div class="highlight">
+<pre>install.packages<span class="p">(</span><span class="s">'treecm'</span><span class="p">,</span> dependencies <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Or download the <a href="https://github.com/mbask/treecm/zipball/master">zip ball</a> or <a href="https://github.com/mbask/treecm/tarball/master">tar ball</a>, decompress and run <code>R CMD INSTALL</code> on it, or use the <strong>devtools</strong> package to install the development version:</p>
+
+<div class="highlight">
+<pre><span class="c1">## you may also need to update your packages: </span>
+<span class="c1">## options(repos = c(CRAN = '<a href="http://cran.r-project.org')">http://cran.r-project.org')</a>)</span>
+<span class="c1">## update.packages()</span>
+library<span class="p">(</span>devtools<span class="p">);</span> install_github<span class="p">(</span><span class="s">'treecm'</span><span class="p">,</span> <span class="s">'mbask'</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Note Windows users have to first install <a href="http://www.murdoch-sutherland.com/Rtools/">Rtools</a>.</p>
+
+<h2>Get started</h2>
+
+<h3>Centre of mass</h3>
+
+<p>To get started, try:</p>
+
+<pre><code>library(treecm)
+data(treeData)
+vectors  &lt;- treeVectors(treeData)
+CM       &lt;- centreOfMass(vectors)
+plot(vectors, main = "A stone pine centre of mass")
+plot(CM)
+</code></pre>
+
+<p><img src="https://github.com/mbask/treecm/raw/master/vignettes/treecmex2.png" alt="A centre of mass plot" title="Plot of CM"></p>
+
+<h3>Slenderness ratio</h3>
+
+<p>To get started, try:</p>
+
+<pre><code>data(treeData)
+# assign length to branches
+treeData$fieldData$length &lt;- c(10.2, 3.9, 7, 7, 7, 7, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 3.95, 7, 7, 7, 3.95, 7, 7, 3.95, 3.95, 7, 7, 3.00)
+vectors &lt;-treeVectors(treeData)
+SR      &lt;- treeSR(treeData,vectors)
+plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
+</code></pre>
+
+<p><img src="https://github.com/mbask/treecm/raw/master/vignettes/treecmexSR.png" alt="A slenderness ratio plot" title="Plot of SR"></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mbask">mbask</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
