@@ -125,7 +125,11 @@ NULL
 #' @keywords datasets
 #' @examples
 #' library("treecm")
-#'   treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryABDC)
+#' treeData <- importFieldData(
+#'   system.file("data/fieldData.csv.gz", package = "treecm"), 
+#'   650, 
+#'   allometryABDC
+#' )
 #' head(treeData$fieldData)
 NULL
 
@@ -160,8 +164,8 @@ NULL
 #' ..$ tilt      : num [1:26] 80 80 0 0 0 0 0 0 0 0 ...
 #' ..$ toBePruned: logi [1:26] FALSE FALSE FALSE FALSE FALSE FALSE ...
 #' ..$ pathToTip : logi [1:26] TRUE TRUE FALSE FALSE FALSE FALSE ...
-#' ..$ biomass   : num [1:26] 1488 157 120 247 120 ...
-#' $ density     : num 530
+#' ..$ biomass   : num [1:26] 1825 193 123 313 123 ...
+#' $ density     : num 650
 #' $ allometryFUN:function (x, diameter)  
 #'   $ branchesCM  : num 1
 #' }
@@ -173,7 +177,7 @@ NULL
 #' CM       <- centreOfMass(vectors)
 #' summary(CM)
 #' # The steps to recreate this dataset:
-#' treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryABDC)
+#' treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 650, allometryABDC)
 #' treeData <- treeBiomass(treeData)
 NULL
 

@@ -54,7 +54,11 @@
 }
 \examples{
 library("treecm")
-  treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryABDC)
+treeData <- importFieldData(
+  system.file("data/fieldData.csv.gz", package = "treecm"),
+  650,
+  allometryABDC
+)
 head(treeData$fieldData)
 }
 \keyword{datasets}
