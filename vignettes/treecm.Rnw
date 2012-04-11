@@ -253,7 +253,7 @@ treeMoment <- buildTreeMomentObject(
 treeMoment <- calcMoment(treeMoment)
 
 ## We extract the logs belonging to the main stem
-mainStem <- logPathSelection(treeData$fieldData) #$
+mainStem <- logPathSelection(treeData)
 
 (plinth <- getPlinthForce(
 	l.stem = 10, 

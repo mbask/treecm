@@ -54,7 +54,7 @@ centreOfMassAngle <- function(object) {
 #' @note Selected branches and logs have a \code{TRUE} value in the \code{pathToTip} column. This is a necessary step
 #' towards anchor force detemrination, as the returned data frame has to be submitted to \code{\link{getPlinthForce}}
 #'
-#' @param fieldData a \code{fieldData} data frame
+#' @param treeData A named list that includes a \code{fieldData} data frame element, holding \code{pathToTip}-, \code{azimuth}-, \code{length}-, \code{tilt}-named columns
 #' @return a data frame subsetted from the \code{fieldData} data frame having \code{TRUE} selected branches and logs, with three columns: \code{azimuth}, \code{length}, \code{tilt}. The first row if filled with zeros.
 #' @export
 #' @family Stabilization
@@ -62,8 +62,8 @@ centreOfMassAngle <- function(object) {
 #' @examples 
 #' library(treecm)
 #' data(treeData)
-#' logs <- logPathSelection(treeData$fieldData)
-logPathSelection <- function(fieldData) {
+#' logs <- logPathSelection(treeData)
+logPathSelection <- function(treeData) {
   rbind(0, with(treeData, fieldData[
     fieldData$pathToTip, c("azimuth", "length", "tilt")
     ]
@@ -104,7 +104,7 @@ toCartesianXYZ <- function(x) {
 #' data(treeData)
 #' vectors <- treeVectors(treeData)
 #' CM <- centreOfMass(vectors)
-#' logs <- logPathSelection(treeData$fieldData)
+#' logs <- logPathSelection(treeData)
 #' anchorRange(logs, CM)
 anchorRange <- function(logs, CM) {
   c(CM["z"], hMax = cumsum(logs$length * sin(logs$tilt*pi/180))[nrow(logs)])
@@ -138,7 +138,7 @@ anchorRange <- function(logs, CM) {
 #'   , centreOfMassAngle(CM)
 #'   )
 #' treeMoment <- calcMoment(treeMoment)
-#' logs <- logPathSelection(treeData$fieldData)
+#' logs <- logPathSelection(treeData)
 #' plinth <- data.frame(getPlinthForce(10, 20, logs, getMoment(treeMoment), CM))
 getPlinthForce <- function(l.stem, d, logs, treeMoment, CM) {
   ## Controllo congruenza dei dati definiti dall'utente

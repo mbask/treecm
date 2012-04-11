@@ -2,10 +2,13 @@
 \alias{logPathSelection}
 \title{Returns tree logs and branches being part of the ``main stem''}
 \usage{
-  logPathSelection(fieldData)
+  logPathSelection(treeData)
 }
 \arguments{
-  \item{fieldData}{a \code{fieldData} data frame}
+  \item{treeData}{A named list that includes a
+  \code{fieldData} data frame element, holding
+  \code{pathToTip}-, \code{azimuth}-, \code{length}-,
+  \code{tilt}-named columns}
 }
 \value{
   a data frame subsetted from the \code{fieldData} data
@@ -36,7 +39,7 @@
 \examples{
 library(treecm)
 data(treeData)
-logs <- logPathSelection(treeData$fieldData)
+logs <- logPathSelection(treeData)
 }
 \seealso{
   \code{\link{importFieldData}}

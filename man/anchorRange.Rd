@@ -24,7 +24,7 @@ library(treecm)
 data(treeData)
 vectors <- treeVectors(treeData)
 CM <- centreOfMass(vectors)
-logs <- logPathSelection(treeData$fieldData)
+logs <- logPathSelection(treeData)
 anchorRange(logs, CM)
 }
 \seealso{

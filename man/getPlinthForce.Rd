@@ -60,7 +60,7 @@ treeMoment <- buildTreeMomentObject(
   , centreOfMassAngle(CM)
   )
 treeMoment <- calcMoment(treeMoment)
-logs <- logPathSelection(treeData$fieldData)
+logs <- logPathSelection(treeData)
 plinth <- data.frame(getPlinthForce(10, 20, logs, getMoment(treeMoment), CM))
 }
 \seealso{
