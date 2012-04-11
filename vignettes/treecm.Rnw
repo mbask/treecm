@@ -500,7 +500,7 @@ When sampling is not possible one should rely on published allometric equations 
 \begin{itemize}
   \item \texttt{allometryABDC}, tested on stone pine branches, 5-16 cm diameter, returns fresh weight
   \item \texttt{allometryAsca2011}, tested on stone pine branches, 8-16 cm diameter, predominantly from the lower layers of the crown, returns fresh weight, it is based on a subsample of \texttt{allometryABDC} and it must be considered as deprecated
-  \item \texttt{allometryCutini2009}, tested on stone pine trees (not on branches), 40+ cm diameter, returns biomass, dry weight, \cite{cutini}, its results should be increased by the estimated amount of water present in the branches
+  \item \texttt{allometryCutini2009}, tested on stone pine trees (not on branches), 24+ cm diameter, returns biomass, dry weight, \cite{cutini}, its results should be increased by the estimated amount of water present in the branches
   \item \texttt{allometryPorte2002}, tested on maritime pine branches, 10- cm diameter, returns biomass (dry weight), \cite{porte}, its results should be increased by the estimated amount of water present in the branches 
 \end{itemize}
 The proper allometric equation to be used must be fed to \texttt{treecm} when importing field data using function \texttt{importFieldData}, parameter \texttt{branchesAllometryFUN}.
