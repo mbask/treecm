@@ -125,7 +125,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' library("treecm")
-#' treeData <- importFieldData(
+#' stonePine1FieldData <- importFieldData(
 #'   system.file("data/stonePine1FieldData.csv.gz", package = "treecm"), 
 #'   650, 
 #'   allometryABDC
