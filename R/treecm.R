@@ -90,7 +90,7 @@ NULL
 #' 
 #' The \code{.csv} file must contain all column headings listed in \code{\link{importFieldData}}, regardless of them being optional (no data in them) or mandatory.
 #' 
-#' @name fieldData
+#' @name stonePine1FieldData
 #' @docType data
 #' @format \code{
 #' "code","azimuth","dBase","dTip","length","tipD","height","tilt","toBePruned","pathToTip"
@@ -126,7 +126,7 @@ NULL
 #' @examples
 #' library("treecm")
 #' treeData <- importFieldData(
-#'   system.file("data/fieldData.csv.gz", package = "treecm"), 
+#'   system.file("data/stonePine1FieldData.csv.gz", package = "treecm"), 
 #'   650, 
 #'   allometryABDC
 #' )
@@ -177,7 +177,7 @@ NULL
 #' CM       <- centreOfMass(vectors)
 #' summary(CM)
 #' # The steps to recreate this dataset:
-#' treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 650, allometryABDC)
+#' treeData <- importFieldData(system.file("data/stonePine1FieldData.csv.gz", package = "treecm"), 650, allometryABDC)
 #' treeData <- treeBiomass(treeData)
 NULL
 

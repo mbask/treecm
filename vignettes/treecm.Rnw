@@ -22,6 +22,7 @@
 \subsection{Plot centre of mass}
 
 We will make use of the data set bundled in the package to plot a basic view of masses of branches and logs of a stone pine (\emph{Pinus pinea} L.) sampled by B. De Cinti and M. Bascietto (figure \ref{fig:stonePine1}):
+
 <<ex1>>=
 library(treecm)
 data(treeData)
@@ -42,11 +43,9 @@ This data set has been collected for a 17.1 metres tall stone pine whose stem wa
 
 A component with \texttt{FALSE} or missing value in the \texttt{pathToTip} column is treated as it belonging to the crown. The crown was made up of 23 branches (\texttt{B1-B23}), all of them horizontal (\emph{ie} tilted 0$^{\circ}$). 
 
-Log and branch fresh biomass has alredy been calculated and added as \texttt{biomass} to \texttt{treeData\$fieldData} data frame. Log biomass is computed by Smalian's formula (\cite{laMarca}). Branch total (wood, leaves, fruits) fresh biomass is computed by \texttt{allometryAsca2011} function, wood fresh density is \Sexpr{treeData$density} $\frac{kg}{m^3}$. It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
+Log and branch fresh biomass has alredy been calculated and added as \texttt{biomass} to \texttt{treeData\$fieldData} data frame. Log biomass is computed by Smalian's formula (\cite{laMarca}). Branch total (wood, leaves, fruits) fresh biomass is computed by \texttt{allometryABDC} function, wood fresh density is \Sexpr{treeData$density} $\frac{kg}{m^3}$. It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
 
 The package recognizes rows that represent branches because their diameter at tip (\texttt{tipD}) is 0 (see more at page \pageref{sec:rules}).
-
-Branch and log biomass has been added to field measures and included in the \texttt{treeData} dataset by a simple call to \texttt{treeData <- treeBiomass(treeData)}.
 
 Let's get going and compute the centre of mass of this pine:
 

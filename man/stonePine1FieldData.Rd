@@ -1,6 +1,6 @@
 \docType{data}
-\name{fieldData}
-\alias{fieldData}
+\name{stonePine1FieldData}
+\alias{stonePine1FieldData}
 \title{Raw CSV file of field recorded values for a stone pine tree}
 \format{\code{
 "code","azimuth","dBase","dTip","length","tipD","height","tilt","toBePruned","pathToTip"
@@ -55,7 +55,7 @@
 \examples{
 library("treecm")
 treeData <- importFieldData(
-  system.file("data/fieldData.csv.gz", package = "treecm"),
+  system.file("data/stonePine1FieldData.csv.gz", package = "treecm"),
   650,
   allometryABDC
 )

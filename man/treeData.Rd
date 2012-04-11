@@ -43,7 +43,7 @@ vectors  <- treeVectors(treeData)
 CM       <- centreOfMass(vectors)
 summary(CM)
 # The steps to recreate this dataset:
-treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 650, allometryABDC)
+treeData <- importFieldData(system.file("data/stonePine1FieldData.csv.gz", package = "treecm"), 650, allometryABDC)
 treeData <- treeBiomass(treeData)
 }
 \keyword{datasets}
