@@ -12,7 +12,7 @@
   \code{\link{treeBiomass}} function}
 }
 \value{
-  a real number or \code{FALSE} is the \code{biomass}
+  a real number or \code{FALSE} if the \code{biomass}
   column is \code{NA}
 }
 \description{
@@ -21,16 +21,14 @@
   \code{\link{treeBiomass}}
 }
 \note{
-  This function is mainly needed to compute the moment of
-  the tree. The tree biomass (multiplied by g) is the tree
-  force applied to its CM.
+  This function may be used to compute the moment of the
+  tree. Tree biomass (multiplied by standard gravity) is
+  the tree force applied to its CM.
 }
 \examples{
 library(treecm)
 data(treeData)
-vectors <- treeVectors(treeData)
-CM <- centreOfMass(vectors)
-print(treeTotalBiomass(vectors))
+print(treeTotalBiomass(treeData))
 }
 \seealso{
   Other Biomass: \code{\link{allometryABDC}},
