@@ -49,7 +49,7 @@ vignette:
 	cd vignettes;\
 	"$(RBIN)/R" CMD Sweave $(PKGNAME).Rnw;\
 	R CMD pdflatex $(PKGNAME).tex;\
-	mv $(PKGNAME).pdf ../inst/doc/
+#	mv $(PKGNAME).pdf ../inst/doc/
 
 build: docs
 	cd ..;\
