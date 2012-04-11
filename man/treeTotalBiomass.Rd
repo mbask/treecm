@@ -2,13 +2,18 @@
 \alias{treeTotalBiomass}
 \title{Returns the total biomass of the tree}
 \usage{
-  treeTotalBiomass(object)
+  treeTotalBiomass(treeData)
 }
 \arguments{
-  \item{object}{an object of \code{vector} class}
+  \item{treeData}{A named list that includes a
+  \code{fieldData} data frame element, holding a
+  \code{biomass}-named column. Note that the \code{biomass}
+  column is added to the data frame by a previous call to
+  \code{\link{treeBiomass}} function}
 }
 \value{
-  a real number
+  a real number or \code{FALSE} is the \code{biomass}
+  column is \code{NA}
 }
 \description{
   This is just a helper function, it sums the biomass of

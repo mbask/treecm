@@ -247,7 +247,7 @@ CM      <- centreOfMass(vectors)
 ## We need to compute the tree moment
 treeMoment <- buildTreeMomentObject(
   centreOfMassModulus(CM)
-  , treeTotalBiomass(vectors)
+  , treeTotalBiomass(treeData)
   , centreOfMassAngle(CM)
 )
 treeMoment <- calcMoment(treeMoment)
@@ -343,7 +343,7 @@ Expressing force as a ratio to tree biomass and expressing distances relative to
 plinth <- transform(plinth, 
                     distanceOverAnchorHeight = distanceOnGround / anchorAlongStem
                     , heightOverAnchorHeight = round(anchorAlongStem / CM[["z"]], 2)
-                    , forceOverTreeBiomass   = force / treeTotalBiomass(vectors)/10
+                    , forceOverTreeBiomass   = force / treeTotalBiomass(treeData)/10
                     )
 head(plinth[c("distanceOverAnchorHeight", "heightOverAnchorHeight", "forceOverTreeBiomass")])
 ggplot(data = plinth, 

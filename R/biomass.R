@@ -184,8 +184,8 @@ treeBiomass <- function(object) {
 #'
 #' @note This function is mainly needed to compute the moment of the tree. The tree biomass (multiplied by g) is the tree force applied to its CM.
 #'
-#' @param object an object of \code{vector} class
-#' @return a real number
+#' @param treeData A named list that includes a \code{fieldData} data frame element, holding a \code{biomass}-named column. Note that the \code{biomass} column is added to the data frame by a previous call to \code{\link{treeBiomass}} function
+#' @return a real number or \code{FALSE} is the \code{biomass} column is \code{NA}
 #' @export
 #' @family Biomass
 #' @examples 
@@ -194,6 +194,9 @@ treeBiomass <- function(object) {
 #' vectors <- treeVectors(treeData)
 #' CM <- centreOfMass(vectors)
 #' print(treeTotalBiomass(vectors))
-treeTotalBiomass <- function(object) {
-  sum(object$Biomass)
+treeTotalBiomass <- function(treeData) {
+  if (any(grepl("biomass", colnames(treeData$fieldData)))) 
+    return(sum(treeData$fieldData$biomass))
+  else
+    return(FALSE)
 }

@@ -27,7 +27,7 @@ CM <- centreOfMass(vectors)
 print(centreOfMassAngle(CM))
 treeMoment <- buildTreeMomentObject(
  centreOfMassModulus(CM)
- , treeTotalBiomass(vectors)
+ , treeTotalBiomass(treeData)
  , centreOfMassAngle(CM)
  )
 }

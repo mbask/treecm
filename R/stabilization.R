@@ -17,7 +17,7 @@
 #' print(centreOfMassModulus(CM))
 #' treeMoment <- buildTreeMomentObject(
 #'  centreOfMassModulus(CM)
-#'  , treeTotalBiomass(vectors)
+#'  , treeTotalBiomass(treeData)
 #'  , centreOfMassAngle(CM)
 #'  )
 centreOfMassModulus <- function(object) {
@@ -40,7 +40,7 @@ centreOfMassModulus <- function(object) {
 #' print(centreOfMassAngle(CM))
 #' treeMoment <- buildTreeMomentObject(
 #'  centreOfMassModulus(CM)
-#'  , treeTotalBiomass(vectors)
+#'  , treeTotalBiomass(treeData)
 #'  , centreOfMassAngle(CM)
 #'  )
 centreOfMassAngle <- function(object) {
@@ -134,7 +134,7 @@ anchorRange <- function(logs, CM) {
 #' CM <- centreOfMass(vectors)
 #' treeMoment <- buildTreeMomentObject(
 #'   centreOfMassModulus(CM)
-#'   , treeTotalBiomass(vectors)
+#'   , treeTotalBiomass(treeData)
 #'   , centreOfMassAngle(CM)
 #'   )
 #' treeMoment <- calcMoment(treeMoment)
