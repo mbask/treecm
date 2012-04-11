@@ -455,7 +455,7 @@ print(Dst)
 
 
 
-\subsection{Finding a correct allometric equation in order to estimate branch and foliage biomass}
+\subsection{Choosing a correct allometric equation in order to estimate branch and foliage biomass}
 \label{sec:allequation}
 It is not possible to weight the branches of a living tree. As a result branch and foliage biomass is estimated using branch diameter at base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a sample of branches (eg during a pruning process).
 
