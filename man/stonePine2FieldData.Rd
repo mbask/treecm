@@ -24,6 +24,10 @@
   tree centre of mass.
 }
 \details{
+  This dataset has been collected for a \eqn{\approx 11}
+  metres tall stone pine with a small number of very large
+  branches.
+
   The \code{.csv} file must contain all column headings
   listed in \code{\link{importFieldData}}, regardless of
   them being optional (no data in them) or mandatory.

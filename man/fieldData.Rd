@@ -42,6 +42,12 @@
   tree centre of mass.
 }
 \details{
+  This dataset has been collected for a 17.1 metres tall
+  stone pine whose stem was tilted approx. 20 degrees from
+  the vertical plane (or 80 degrees from the horizontal
+  plane). The stem has been sectioned in two logs
+  (\code{L1} and \code{L2}), and a final branch (\code{C}).
+
   The \code{.csv} file must contain all column headings
   listed in \code{\link{importFieldData}}, regardless of
   them being optional (no data in them) or mandatory.

@@ -85,6 +85,8 @@ NULL
 #' the field for a stone pine (\emph{Pinus pinea} L.). This is an example of
 #' csv file that should be fed to \code{\link{treeBiomass}} to assess tree
 #' centre of mass.
+#'
+#' This dataset has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20 degrees from the vertical plane (or 80 degrees from the horizontal plane). The stem has been sectioned in two logs (\code{L1} and \code{L2}), and a final branch (\code{C}).
 #' 
 #' The \code{.csv} file must contain all column headings listed in \code{\link{importFieldData}}, regardless of them being optional (no data in them) or mandatory.
 #' 
@@ -184,6 +186,8 @@ NULL
 #' csv file that should be fed to \code{\link{treeBiomass}} to assess tree
 #' centre of mass.
 #' 
+#' This dataset has been collected for a \eqn{\approx 11} metres tall stone pine with a small number of very large branches.
+#'
 #' The \code{.csv} file must contain all column headings listed in \code{\link{importFieldData}}, regardless of them being optional (no data in them) or mandatory.
 #' 
 #' @name stonePine2FieldData
