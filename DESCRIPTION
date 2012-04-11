@@ -27,3 +27,5 @@ URL: https://github.com/mbask/treecm
 Date: 2012-04-05
 Imports:
     plyr
+Suggests:
+    ggplot2
