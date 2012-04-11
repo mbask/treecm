@@ -86,6 +86,7 @@ allometryABDC <- function(x, diameter) {
 #' @param a the parameter \eqn{a} in the pure quadratic equation
 #' @param b the parameter \eqn{a} in the pure quadratic equation
 #' @param x the dependent variable
+#' @export
 #' @return the dependent variable (\eqn{Y})
 pureQuadraticEquation <- function(a, b, x) {
   a + b * x^2
@@ -99,6 +100,7 @@ pureQuadraticEquation <- function(a, b, x) {
 #' @param a the parameter \eqn{a} in the exponential equation
 #' @param b the parameter \eqn{b} in the exponential equation
 #' @param x the independent variable
+#' @export
 #' @return the dependent variable (\eqn{Y})
 powerEquation <- function(a, b, x) {
   a * x^b

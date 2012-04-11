@@ -136,7 +136,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' library("treecm")
-#'   treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryAsca2011)
+#'   treeData <- importFieldData(system.file("data/fieldData.csv.gz", package = "treecm"), 530, allometryABDC)
 #' head(treeData$fieldData)
 NULL
 
