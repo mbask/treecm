@@ -6,7 +6,7 @@
 \usepackage{hyperref}
 
 % \VignetteIndexEntry{Introduction to treecm package}
-% \VignetteDepends{} 
+% \VignetteDepends{treecm, ggplot2} 
 % \VignetteKeyword{centre of mass} 
 % \VignetteKeyword{barycentre}
 % \VignetteKeyword{tree}
@@ -38,7 +38,7 @@ print(treeData)
 \end{figure}
 
 
-This data set has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizonatal plane). The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a final branch (\texttt{C}). These two logs and the final branch components have been defined in the field as the ``main stem'' of the tree, all the other components of the tree fall into the crown. The definition af the main stem is important only for the correct assessment of the position of the anchor on the tree, should the tree need stabilization with a steel cable. Main stem components get a \texttt{TRUE} value in the \texttt{pathToTip} column. 
+This data set has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizontal plane). The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a final branch (\texttt{C}). These two logs and the final branch components have been defined in the field as the ``main stem'' of the tree, all the other components of the tree fall into the crown. The definition af the main stem is important only for the correct assessment of the position of the anchor on the tree, should the tree need stabilization with a steel cable. Main stem components get a \texttt{TRUE} value in the \texttt{pathToTip} column. 
 
 A component with \texttt{FALSE} or missing value in the \texttt{pathToTip} column is treated as it belonging to the crown. The crown was made up of 23 branches (\texttt{B1-B23}), all of them horizontal (\emph{ie} tilted 0$^{\circ}$). 
 
@@ -352,7 +352,7 @@ ggplot(data = plinth,
   facet_wrap(~heightOverAnchorHeight)
 @
 
-It looks like positioning the anchor 1.5 times the height of the centre of mass, positioning the plinth 3 times the distance tree base-anchor, would expose the cable and the plith to $1/4$ of the weight of the tree itself. 
+It looks like positioning the anchor $\approx 1.6$ times the height of the centre of mass, positioning the plinth 3 times the distance tree base-anchor, would expose the cable and the plith to $1/4$ of the weight of the tree itself. 
 
 
 %\begin{figure}
@@ -444,14 +444,23 @@ Since the package aims to help engineering a consolidation system, the centre of
 The package behaviour can be modified in order to let the position branches and logs centre of mass to get nearer to their base. 
 The relative position of the centre of mass of branches and logs can be set as a real number ranging from 0.01 (base) to 1 (tip, the default behaviour). Setting can be done during import of field data using function \texttt{importField} and its parameter \texttt{bCM} or by using the setter function \texttt{setBranchesCM}.
 
-\subsubsection{The density}
-Log mass is estimated by converting its volume (as measured in the field) to fresh mass. The conversion factor is usually referred to as density. Wood density is usually quite conservative among individual of the same tree species. Density values are commonly found in published literature. The following table (\cite{niklas}) can be a useful resource (density in $\frac{kg}{m^3}$, measured at 50\% moisture content):
+\subsection{The density}
+Log mass is estimated by converting its volume (as measured in the field) to fresh mass. The conversion factor is usually referred to as fresh density. Wood density is usually quite conservative among individual of the same tree species. Density values are commonly found in published literature. The dataset \texttt{Dst} (\cite{niklas}) can be a useful starting point to assess wood density, should it be unavailable, (density in $\frac{kg}{m^3}$, measured at 50\% moisture content):
 
 <<dst>>=
 library(treecm)
 data(Dst)
 print(Dst)
 @
+
+Please note that the dataset provides density figures for wood at 50\% moisture content, this is not fresh density (100\% moisture content) as needed by \texttt{treecm}. A conversion factor, shall be applied by the user. As an example, a maritime pine density at 50\% moisture content is:
+
+<<dstex1>>=
+data(Dst)
+with(Dst, density[species == "Pinus pinaster"])
+@
+
+The datasets for stone pine provided with the package have been built taking into account a $\approx 1.07$ conversion factor from 50\% to 100\% moisture content density.
 
 
 
