@@ -161,7 +161,7 @@ rm(op)
 CM has actually moved towards tree base, and farther away from the house. As a matter of facts, branch pruning has been a slight reasonable action towards a safer tree. 
 
 \subsection{Slenderness ratio}
-
+\label{sec:SR}
 The slenderness ratio of a tree is a pure number defined as $SR = \frac{h}{d}$ where $h$ is the height of the tree trunk, and $d$ is the diameter of the tree \cite{Matth}. The SR is a measure of tree stability and is extensively used in tree stability measures carried out by Visual Tree Assessment (VTA). $SR$ in the range $30 \leq SR \leq 70$ are considered optimal, whereas $SR > 70$ lead to consider the tree at risk of breaking due to its excessive slenderness.
 The authors have applied the same concept to tree branches as well. While $SR$ in vertical trees has a physical meaning \cite{Matth}, branches are not usually vertical. As the branch starts to deviate from the verticality (as most of the branches do) the arm of the moment gets longer, reaching a maximum limit in horizontal branches. The longer the arm, the higher the stress on the branch. In order to estimate the added stress imposed by branch angle we improved Mattheck's formula by adding a component proportional to branch tilt angle:
 
@@ -398,29 +398,35 @@ A few field measurements are needed to estimate centre of mass position at the s
   \item A measuring tape to measure length of branch or log projections on the ground
 \end{itemize}
 
+
+\subsubsection{Measurements on logs}
 The stem is ideally sectioned in logs in order to compute their volume and mass. The measurements to be taken on each log include:
 \begin{itemize}
   \item Diameter at the base of the log, in cm (\texttt{dBase})
   \item Diameter at the top of the log, in cm (\texttt{dTip})
   \item Length of the log, in m (\texttt{length})
   \item Azimuth of the log (\texttt{azimuth}), in case it is not vertical, in degrees from North (O$^{\circ}$ North, 180$^{\circ}$ South)
-  \item Length of log projection on the ground (\texttt{tipD}), from the tree base to the log tip (0 for a vertical log), in m
+  \item Distance between tree base and the projection of log tip on the ground (\texttt{tipD}), in m
   \item Height above ground of the base of the log, in m (\texttt{height})
   \item Log tilt (\texttt{tilt}) from the horizontal plane (eg a vertical log is tilted by 90$^{\circ}$, an horizontal log is tilted by 0$^{\circ}$), in degrees (optional, default to 0 if missing)
 \end{itemize}
 
+
+\subsubsection{Measurements on branches}
 Each branch contributes to the position of the centre of mass by means of their wooden component and their foliage component. Every part of a tree carrying foliage is considered to be a branch. This definition applies to tree tip as well, although some trees may have lost their tip or have it removed during topping operations.
 The measurements to be taken on each branch include:
 \begin{itemize}
   \item Diameter at the base of the branch, in cm (\texttt{dBase})
   \item Diameter at the top of the log must be 0
-  \item Length of the log, in m (\texttt{length}) only if slenderness coefficient is to be computed
+  \item Length of the branch, from its fork on the stem to its tip, in m (\texttt{length}), only if slenderness ratio (SR, page \pageref{sec:SR}) is to be computed
   \item Azimuth of the branch (\texttt{azimuth}), in degrees, usually measured with a compass (O$^{\circ}$ North, 180$^{\circ}$ South)
-  \item Length of branch projection on the ground (\texttt{tipD}), from the tree base to the branch tip, in m
+  \item Distance between tree base and the projection of branch tip on the ground (\texttt{tipD}), in m
   \item Height above ground of the branch insertion into the stem, in m (\texttt{height})
   \item Branch tilt (\texttt{tilt}) from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, default to 0 if missing)
 \end{itemize}
 
+
+\subsubsection{Additional optional fields}
 Two more boolean fields are not strictly measured but they can initially be recorded in the field:
 \begin{itemize}
 	\item Pruning status (\texttt{toBePruned}), which branches are going to be pruned? How would it affect CM? Optional, defaults to FALSE
@@ -430,7 +436,7 @@ Two more boolean fields are not strictly measured but they can initially be reco
 
 
 \subsection{Visual check for correctness of assumptions}
-\subsubsection{Relative position of centre of masses of branches and logs}
+\subsubsection{Relative position of centre of mass of branches and logs}
 The position of the centre of mass of a tree is computed taking into account the centre of mass of each branch and log. Pinpointing the centre of mass along a branch, taking into account branch form factor and the pattern of distribution of leaves biomass along it, would require many more field measures highering the time spent on it and the costs of the sampling.
 
 Since the package aims to help engineering a consolidation system, the centre of mass is by default located at branches or logs tip. This leads to an estimate of the coordinates of the tree centre of mass that is farther away from the base than the actual one. This difference can be regarded as an inherent safety factor.
@@ -477,7 +483,7 @@ CSV files are made up of 10 columns. The first row has to hold column headers. H
   \item \textbf{azimuth} orientation, ie: compass bearing in degrees
   \item \textbf{dBase} diameter of log or branch basal section, in cm
   \item \textbf{dTip} diameter of log or branch tip (always 0 for branches), in cm
-  \item \textbf{length} log length (leave it empty in case of branches), in m
+  \item \textbf{length} log length, in m; also branch length if slenderness ratio (SR, page \pageref{sec:SR}) is to be computed, leave it empty otherwise
   \item \textbf{tipD} distance of the tip of the log or branch to tree base (different from branch length when tree stem is not vertical)
   \item \textbf{height} height of log basal section of height of branch insertion on stem
   \item \textbf{tilt} log or branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, only useful to estimate $z$ coordinate of centre of mass) 
