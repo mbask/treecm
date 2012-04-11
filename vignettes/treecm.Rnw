@@ -1,9 +1,26 @@
 \documentclass{article}
 
 \usepackage{natbib}
-\usepackage{indentfirst}
 
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{color}
 \usepackage{hyperref}
+\pagestyle{fancy}
+\pagenumbering{arabic}
+
+\lhead{\itshape \texttt{treecm}: an introduction}
+\chead{}
+\rhead{\itshape{\nouppercase{\leftmark}}}
+\lfoot{\texttt{treecm}}
+\cfoot{}
+\rfoot{\thepage}
+
+% customize color code chunk (Scode = inline)
+\definecolor{Sinput}{rgb}{0.55,0.19,0.19}
+\definecolor{Soutput}{rgb}{0,0,0}
+\definecolor{Scode}{rgb}{0.75,0.19,0.19}
+
 
 % \VignetteIndexEntry{Introduction to treecm package}
 % \VignetteDepends{treecm, ggplot2} 
@@ -12,6 +29,16 @@
 % \VignetteKeyword{tree}
 
 \begin{document}
+
+% default size for the sweaved graphics
+\setkeys{Gin}{width=0.6\textwidth}
+% default font size and color for R code
+\DefineVerbatimEnvironment{Sinput}{Verbatim}
+{formatcom = {\color{Sinput}},fontsize=\scriptsize}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}
+{formatcom = {\color{Soutput}},fontsize=\footnotesize}
+\DefineVerbatimEnvironment{Scode}{Verbatim}
+{formatcom = {\color{Scode}},fontsize=\small}
 
 \title{treecm: an introduction}
 \author{Marco Bascietto}
@@ -454,7 +481,7 @@ data(Dst)
 print(Dst)
 @
 
-Please note that the dataset provides density figures for wood at 50\% moisture content, this is not fresh density (100\% moisture content) as needed by \texttt{treecm}. A conversion factor, shall be applied by the user. As an example, a maritime pine density at 50\% moisture content is:
+Please note that the dataset provides density figures for wood at 50\% moisture content, this is not fresh density (100\% moisture content) as needed by \texttt{treecm}. A conversion factor shall be applied by the user. As an example, a maritime pine density at 50\% moisture content is:
 
 <<dstex1>>=
 data(Dst)
