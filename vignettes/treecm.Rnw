@@ -39,11 +39,13 @@ print(treeData)
 \end{figure}
 
 
-This data set has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizontal plane). The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a final branch (\texttt{C}). These two logs and the final branch components have been defined in the field as the ``main stem'' of the tree, all the other components of the tree fall into the crown. The definition af the main stem is important only for the correct assessment of the position of the anchor on the tree, should the tree need stabilization with a steel cable. Main stem components get a \texttt{TRUE} value in the \texttt{pathToTip} column. 
+This dataset has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizontal plane).
+
+The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a final branch (\texttt{C}). These two logs and the final branch components have been defined in the field as the ``main stem'' of the tree, all the other components of the tree fall into the crown. The definition af the main stem is important only for the correct assessment of the position of the anchor on the tree, should the tree need stabilization with a steel cable. Main stem components get a \texttt{TRUE} value in the \texttt{pathToTip} column. 
 
 A component with \texttt{FALSE} or missing value in the \texttt{pathToTip} column is treated as it belonging to the crown. The crown was made up of 23 branches (\texttt{B1-B23}), all of them horizontal (\emph{ie} tilted 0$^{\circ}$). 
 
-Log and branch fresh biomass has alredy been calculated and added as \texttt{biomass} to \texttt{treeData\$fieldData} data frame. Log biomass is computed by Smalian's formula (\cite{laMarca}). Branch total (wood, leaves, fruits) fresh biomass is computed by \texttt{allometryABDC} function, wood fresh density is \Sexpr{treeData$density} $\frac{kg}{m^3}$. It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
+The  \texttt{treeData} dataset is a direct result of importing \texttt{stonePine1FieldData} with wood fresh density as \Sexpr{treeData$density} $\frac{kg}{m^3}$ and with  \texttt{allometryABDC} function as allometry function for branches. Log biomass is computed by Smalian's formula (\cite{laMarca}). It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
 
 The package recognizes rows that represent branches because their diameter at tip (\texttt{tipD}) is 0 (see more at page \pageref{sec:rules}).
 
