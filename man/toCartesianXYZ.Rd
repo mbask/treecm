@@ -19,7 +19,6 @@
   \code{\link{centreOfMassAngle}},
   \code{\link{centreOfMassModulus}},
   \code{\link{getPlinthForce}},
-  \code{\link{logPathSelection}},
-  \code{\link{treeTotalBiomass}}
+  \code{\link{logPathSelection}}
 }
 

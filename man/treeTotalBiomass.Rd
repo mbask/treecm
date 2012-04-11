@@ -12,7 +12,7 @@
 }
 \description{
   This is just a helper function, it sums the biomass of
-  all logs and branches, as computed by
+  all logs and branches, as previously computed by
   \code{\link{treeBiomass}}
 }
 \note{
@@ -26,18 +26,14 @@ data(treeData)
 vectors <- treeVectors(treeData)
 CM <- centreOfMass(vectors)
 print(treeTotalBiomass(vectors))
-treeMoment <- buildTreeMomentObject(
- centreOfMassModulus(CM)
- , treeTotalBiomass(vectors)
- , centreOfMassAngle(CM)
- )
 }
 \seealso{
-  Other Stabilization: \code{\link{anchorRange}},
-  \code{\link{centreOfMassAngle}},
-  \code{\link{centreOfMassModulus}},
-  \code{\link{getPlinthForce}},
-  \code{\link{logPathSelection}},
-  \code{\link{toCartesianXYZ}}
+  Other Biomass: \code{\link{allometryABDC}},
+  \code{\link{allometryAsca2011}},
+  \code{\link{allometryCutini2009}},
+  \code{\link{allometryPorte2002}},
+  \code{\link{logBiomass}}, \code{\link{powerEquation}},
+  \code{\link{pureQuadraticEquation}},
+  \code{\link{treeBiomass}}
 }
 

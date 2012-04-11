@@ -20,4 +20,12 @@
   Returns the result of the pure quadratic equation \eqn{Y
   = a + bX^2} given \eqn{a}, \eqn{b} and \eqn{X}
 }
+\seealso{
+  Other Biomass: \code{\link{allometryABDC}},
+  \code{\link{allometryAsca2011}},
+  \code{\link{allometryCutini2009}},
+  \code{\link{allometryPorte2002}},
+  \code{\link{logBiomass}}, \code{\link{powerEquation}},
+  \code{\link{treeBiomass}}, \code{\link{treeTotalBiomass}}
+}
 

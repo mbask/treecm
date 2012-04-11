@@ -24,32 +24,6 @@ centreOfMassModulus <- function(object) {
   with(object, sqrt(x^2 + y^2 + z^2))
 }
 
-#' @title Returns the total biomass of the tree
-#'
-#' @description This is just a helper function, it sums the biomass of all logs and branches, as computed by \code{\link{treeBiomass}}
-#'
-#' @note This function is mainly needed to compute the moment of the tree. The tree biomass (multiplied by g) is the tree force applied to its CM.
-#'
-#' @param object an object of \code{vector} class
-#' @return a real number
-#' @export
-#' @family Stabilization
-#' @examples 
-#' library(treecm)
-#' data(treeData)
-#' vectors <- treeVectors(treeData)
-#' CM <- centreOfMass(vectors)
-#' print(treeTotalBiomass(vectors))
-#' treeMoment <- buildTreeMomentObject(
-#'  centreOfMassModulus(CM)
-#'  , treeTotalBiomass(vectors)
-#'  , centreOfMassAngle(CM)
-#'  )
-treeTotalBiomass <- function(object) {
-  sum(object$Biomass)
-}
-
-
 #' @title Returns the angle between CM modulus and the tree weight vector
 #'
 #' @note This function is mainly needed to compute the moment of the tree. The angle is need to compute the projection of the tree weight normal to the CM modulus

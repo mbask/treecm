@@ -36,7 +36,6 @@ treeMoment <- buildTreeMomentObject(
   \code{\link{centreOfMassModulus}},
   \code{\link{getPlinthForce}},
   \code{\link{logPathSelection}},
-  \code{\link{toCartesianXYZ}},
-  \code{\link{treeTotalBiomass}}
+  \code{\link{toCartesianXYZ}}
 }
 

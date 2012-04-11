@@ -20,4 +20,13 @@
   Returns the result of the exponential equation \eqn{Y = a
   * X^b} given \eqn{a}, \eqn{b} and \eqn{X}
 }
+\seealso{
+  Other Biomass: \code{\link{allometryABDC}},
+  \code{\link{allometryAsca2011}},
+  \code{\link{allometryCutini2009}},
+  \code{\link{allometryPorte2002}},
+  \code{\link{logBiomass}},
+  \code{\link{pureQuadraticEquation}},
+  \code{\link{treeBiomass}}, \code{\link{treeTotalBiomass}}
+}
 

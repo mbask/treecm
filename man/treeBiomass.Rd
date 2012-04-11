@@ -22,5 +22,13 @@
 }
 \seealso{
   \code{\link{logBiomass}}
+
+  Other Biomass: \code{\link{allometryABDC}},
+  \code{\link{allometryAsca2011}},
+  \code{\link{allometryCutini2009}},
+  \code{\link{allometryPorte2002}},
+  \code{\link{logBiomass}}, \code{\link{powerEquation}},
+  \code{\link{pureQuadraticEquation}},
+  \code{\link{treeTotalBiomass}}
 }
 

@@ -12,6 +12,7 @@
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the total biomass of the branch of a stone pine (in kg, dry state)
+#' @family Biomass
 allometryCutini2009 <- function(x, diameter) {
   a <- -198.236
   b <- 0.620
@@ -31,6 +32,7 @@ allometryCutini2009 <- function(x, diameter) {
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the woody biomass (dry state, no leaves!) of the branch of a maritime pine (in kg)
+#' @family Biomass
 allometryPorte2002 <- function(x, diameter) {
   a <- 21.228
   b <- 2.818
@@ -50,6 +52,7 @@ allometryPorte2002 <- function(x, diameter) {
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the fresh biomass of the branch of a stone pine (in kg)
+#' @family Biomass
 allometryAsca2011 <- function(x, diameter) {
   a <- 0.7201
   b <- 1.8882
@@ -72,6 +75,7 @@ allometryAsca2011 <- function(x, diameter) {
 #' @param x a data frame holding diameters of branches
 #' @param diameter the name of the column holding diameter of the x data frame, diameters should be in cm 
 #' @return the fresh biomass of the branch of a stone pine (in kg)
+#' @family Biomass
 allometryABDC <- function(x, diameter) {
   a <- 0.16843
   b <- 2.43523
@@ -88,6 +92,7 @@ allometryABDC <- function(x, diameter) {
 #' @param x the dependent variable
 #' @export
 #' @return the dependent variable (\eqn{Y})
+#' @family Biomass
 pureQuadraticEquation <- function(a, b, x) {
   a + b * x^2
 }
@@ -102,6 +107,7 @@ pureQuadraticEquation <- function(a, b, x) {
 #' @param x the independent variable
 #' @export
 #' @return the dependent variable (\eqn{Y})
+#' @family Biomass
 powerEquation <- function(a, b, x) {
   a * x^b
 }
@@ -122,6 +128,7 @@ powerEquation <- function(a, b, x) {
 #' @param higherD The name of the data frame column holding the diameter of the higher section (usually smaller!) in cm
 #' @param logLength The name of the data frame column holding the length of the log or branch in m
 #' @param density The name of the data frame column holding the fresh density of the wood, defined as \eqn{D=\frac{V_f}{W_f}} where \eqn{V_f} is wood volume measured in the field (i.e. satured with water) in \eqn{m^3} and \eqn{W_f} is wood fresh weight in kg. Fresh density is measured in \eqn{\frac{kg}{m^3}}
+#' @family Biomass
 #' @references la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119
 logBiomass <- function(x, lowerD, higherD, logLength, density) {
   lowerS   <- pi * (as.real(x[lowerD]) / 200)^2 
@@ -140,6 +147,7 @@ logBiomass <- function(x, lowerD, higherD, logLength, density) {
 #' @param object an object of \code{treeData} class
 #' @return an object of \code{treeData} class
 #' @seealso \code{\link{logBiomass}}
+#' @family Biomass
 #' @export
 treeBiomass <- function(object) {
   object <- within(object, {
@@ -167,4 +175,25 @@ treeBiomass <- function(object) {
     )
   })
   return(object)
+}
+
+
+#' @title Returns the total biomass of the tree
+#'
+#' @description This is just a helper function, it sums the biomass of all logs and branches, as previously computed by \code{\link{treeBiomass}}
+#'
+#' @note This function is mainly needed to compute the moment of the tree. The tree biomass (multiplied by g) is the tree force applied to its CM.
+#'
+#' @param object an object of \code{vector} class
+#' @return a real number
+#' @export
+#' @family Biomass
+#' @examples 
+#' library(treecm)
+#' data(treeData)
+#' vectors <- treeVectors(treeData)
+#' CM <- centreOfMass(vectors)
+#' print(treeTotalBiomass(vectors))
+treeTotalBiomass <- function(object) {
+  sum(object$Biomass)
 }

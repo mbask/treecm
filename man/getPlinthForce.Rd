@@ -68,7 +68,6 @@ plinth <- data.frame(getPlinthForce(10, 20, logs, getMoment(treeMoment), CM))
   \code{\link{centreOfMassAngle}},
   \code{\link{centreOfMassModulus}},
   \code{\link{logPathSelection}},
-  \code{\link{toCartesianXYZ}},
-  \code{\link{treeTotalBiomass}}
+  \code{\link{toCartesianXYZ}}
 }
 

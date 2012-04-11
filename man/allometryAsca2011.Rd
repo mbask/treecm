@@ -30,5 +30,12 @@
 }
 \seealso{
   \code{\link{powerEquation}}
+
+  Other Biomass: \code{\link{allometryABDC}},
+  \code{\link{allometryCutini2009}},
+  \code{\link{allometryPorte2002}},
+  \code{\link{logBiomass}}, \code{\link{powerEquation}},
+  \code{\link{pureQuadraticEquation}},
+  \code{\link{treeBiomass}}, \code{\link{treeTotalBiomass}}
 }
 

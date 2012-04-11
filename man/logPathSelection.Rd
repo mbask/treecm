@@ -45,7 +45,6 @@ logs <- logPathSelection(treeData$fieldData)
   \code{\link{centreOfMassAngle}},
   \code{\link{centreOfMassModulus}},
   \code{\link{getPlinthForce}},
-  \code{\link{toCartesianXYZ}},
-  \code{\link{treeTotalBiomass}}
+  \code{\link{toCartesianXYZ}}
 }
 
