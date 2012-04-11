@@ -19,11 +19,11 @@
   weight of tree components is assessed based on \itemize{
   \item the sum of volume of stem logs \item the sum of
   branches biomass } Field measures to be taken on logs and
-  branches are described in the \code{\link{fieldData}}
-  dataset and are to be recorded on the tree itself,
-  possibly using tree-climbing tecniques. In order to help
-  the arborist in the pruning selection process a simple
-  plot of branch coefficient of slenderness is implemented.
+  branches are described in \code{\link{importFieldData}}
+  and are to be recorded on the tree itself, possibly using
+  tree-climbing tecniques. In order to help the arborist in
+  the pruning selection process a simple plot of branch
+  coefficient of slenderness is implemented.
 }
 \note{
   \bold{Branch biomass} is computed by allometric equations
@@ -36,8 +36,8 @@
   filling in the field
 }
 \examples{
-data(treeData)
-vectors  <- treeVectors(treeData)
+data(stonePine1TreeData)
+vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 plot(vectors,
    main = "Centre Of Mass",
@@ -54,7 +54,7 @@ summary(CM)
   (\url{http://mbask.github.com/treecm/})
 }
 \seealso{
-  \code{\link{logBiomass}} \code{\link{fieldData}}
+  \code{\link{logBiomass}} \code{\link{importFieldData}}
 }
 \keyword{package}
 

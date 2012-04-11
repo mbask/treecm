@@ -1,6 +1,6 @@
 \docType{data}
-\name{treeData}
-\alias{treeData}
+\name{stonePine1TreeData}
+\alias{stonePine1TreeData}
 \title{Field recorded values for a stone pine tree}
 \format{The format is:
 \code{
@@ -32,14 +32,14 @@ $ allometryFUN:function (x, diameter)
 }
 \details{
   This dataset includes a list of 4 elements: \itemize{
-  \item{the \code{\link{fieldData}} dataset} \item{the
-  density of wood} \item{the allometry function to be used
-  to compute branches biomass} \item{the estimate of
-  branches centre of mass} }
+  \item{the \code{\link{stonePine1FieldData}} dataset}
+  \item{the density of wood} \item{the allometry function
+  to be used to compute branches biomass} \item{the
+  estimate of branches centre of mass} }
 }
 \examples{
-data(treeData)
-vectors  <- treeVectors(treeData)
+data(stonePine1TreeData)
+vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 summary(CM)
 # The steps to recreate this dataset:

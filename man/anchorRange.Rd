@@ -21,10 +21,10 @@
 }
 \examples{
 library(treecm)
-data(treeData)
-vectors <- treeVectors(treeData)
+data(stonePine1TreeData)
+vectors <- treeVectors(stonePine1TreeData)
 CM <- centreOfMass(vectors)
-logs <- logPathSelection(treeData)
+logs <- logPathSelection(stonePine1TreeData)
 anchorRange(logs, CM)
 }
 \seealso{

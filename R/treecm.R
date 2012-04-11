@@ -24,12 +24,12 @@
 #'   \item the sum of volume of stem logs
 #'   \item the sum of branches biomass
 #' }
-#' Field measures to be taken on logs and branches are described in the \code{\link{fieldData}} dataset and are to be recorded on the tree itself, possibly using tree-climbing tecniques.
+#' Field measures to be taken on logs and branches are described in \code{\link{importFieldData}} and are to be recorded on the tree itself, possibly using tree-climbing tecniques.
 #' In order to help the arborist in the pruning selection process a simple plot of branch coefficient of slenderness is implemented.
 #' @note \bold{Branch biomass} is computed by allometric equations relating its fresh weight (wood + leaves) to its diameter at point of insertion on the stem. \bold{Log biomass} is computed by converting its volume to weight using wood fresh density. Volume is computed using Smalian's formula (see \code{\link{logBiomass}} description).
 #' A sample \code{.CSV} file is provided to guide through data filling in the field
 #' @seealso \code{\link{logBiomass}}
-#' \code{\link{fieldData}}
+#' \code{\link{importFieldData}}
 #' @name treecm-package
 #' @aliases treecm
 #' @docType package
@@ -37,8 +37,8 @@
 #' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
 #' @keywords package
 #' @examples
-#' data(treeData)
-#' vectors  <- treeVectors(treeData)
+#' data(stonePine1TreeData)
+#' vectors  <- treeVectors(stonePine1TreeData)
 #' CM       <- centreOfMass(vectors)
 #' plot(vectors, 
 #'    main = "Centre Of Mass", 
@@ -125,7 +125,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #' library("treecm")
-#' stonePine1FieldData <- importFieldData(
+#' treeData <- importFieldData(
 #'   system.file("data/stonePine1FieldData.csv.gz", package = "treecm"), 
 #'   650, 
 #'   allometryABDC
@@ -143,13 +143,13 @@ NULL
 #' 
 #' This dataset includes a list of 4 elements:
 #' \itemize{
-#' \item{the \code{\link{fieldData}} dataset}
+#' \item{the \code{\link{stonePine1FieldData}} dataset}
 #' \item{the density of wood}
 #' \item{the allometry function to be used to compute branches biomass}
 #' \item{the estimate of branches centre of mass}
 #' }
 #'
-#' @name treeData
+#' @name stonePine1TreeData
 #' @docType data
 #' @format The format is: 
 #' \code{
@@ -172,8 +172,8 @@ NULL
 #' @source Original data collected by the author
 #' @keywords datasets
 #' @examples
-#' data(treeData)
-#' vectors  <- treeVectors(treeData)
+#' data(stonePine1TreeData)
+#' vectors  <- treeVectors(stonePine1TreeData)
 #' CM       <- centreOfMass(vectors)
 #' summary(CM)
 #' # The steps to recreate this dataset:

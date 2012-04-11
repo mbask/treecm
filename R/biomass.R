@@ -190,8 +190,8 @@ treeBiomass <- function(object) {
 #' @family Biomass
 #' @examples 
 #' library(treecm)
-#' data(treeData)
-#' print(treeTotalBiomass(treeData))
+#' data(stonePine1TreeData)
+#' print(treeTotalBiomass(stonePine1TreeData))
 treeTotalBiomass <- function(treeData) {
   if (any(grepl("biomass", colnames(treeData$fieldData)))) 
     return(sum(treeData$fieldData$biomass))

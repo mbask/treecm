@@ -25,8 +25,8 @@ We will make use of the data set bundled in the package to plot a basic view of 
 
 <<ex1>>=
 library(treecm)
-data(treeData)
-print(treeData)
+data(stonePine1TreeData)
+print(stonePine1TreeData)
 @
 
 
@@ -34,7 +34,7 @@ print(treeData)
 	\begin{center}
 		\includegraphics[width=5cm]{stonePine1.jpg}
 	\end{center}
-	\caption{The stone pine measured in \texttt{treeData}, crown not visible}
+	\caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible}
 	\label{fig:stonePine1}
 \end{figure}
 
@@ -45,14 +45,14 @@ The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a fin
 
 A component with \texttt{FALSE} or missing value in the \texttt{pathToTip} column is treated as it belonging to the crown. The crown was made up of 23 branches (\texttt{B1-B23}), all of them horizontal (\emph{ie} tilted 0$^{\circ}$). 
 
-The  \texttt{treeData} dataset is a direct result of importing \texttt{stonePine1FieldData} with wood fresh density as \Sexpr{treeData$density} $\frac{kg}{m^3}$ and with  \texttt{allometryABDC} function as allometry function for branches. Log biomass is computed by Smalian's formula (\cite{laMarca}). It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
+The  \texttt{stonePine1TreeData} dataset is a direct result of importing \texttt{stonePine1FieldData} with wood fresh density as \Sexpr{stonePine1TreeData$density} $\frac{kg}{m^3}$ and with  \texttt{allometryABDC} function as allometry function for branches. Log biomass is computed by Smalian's formula (\cite{laMarca}). It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
 
 The package recognizes rows that represent branches because their diameter at tip (\texttt{tipD}) is 0 (see more at page \pageref{sec:rules}).
 
 Let's get going and compute the centre of mass of this pine:
 
 <<ex11>>=
-vectors  <- treeVectors(treeData)
+vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 summary(CM)
 @
@@ -87,18 +87,18 @@ Snow may increase crown load substantially, sometimes breaking entire branches. 
 Let's model a snow load that doubles the biomass of branches higher than 12 m:
 
 <<exSnow>>=
-rows <- substr(row.names(treeData$fieldData), 1, 1)
-q1 <- subset(treeData$fieldData, subset=(height < 12 | rows == "L"))
-q2 <- subset(treeData$fieldData, subset=(height > 12 & rows != "L"))
+rows <- substr(row.names(stonePine1TreeData$fieldData), 1, 1)
+q1 <- subset(stonePine1TreeData$fieldData, subset=(height < 12 | rows == "L"))
+q2 <- subset(stonePine1TreeData$fieldData, subset=(height > 12 & rows != "L"))
 q2$biomass <- q2$biomass * 2
-treeData$fieldData <- rbind(q1, q2)
+stonePine1TreeData$fieldData <- rbind(q1, q2)
 rm(list = c("q1", "q2", "rows"))
 @
 
 Let's recaltulate the vectors under snow load and plot the results:
 
 <<exSnow2, fig=TRUE>>=
-vectors  <- treeVectors(treeData)
+vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 summary(CM)
 plot(vectors, 
@@ -117,17 +117,17 @@ Tree centre of mass has clearly shifted upwards and towards the house...
 Winds may increase load on some sectors of the crown and decrease it in other sectors. We would like to model the effect of a prevailing Southbound wind that halves branches mass in the northern sector and doubles it in the southern sector.
 
 <<exWind>>=
-data(treeData)
+data(stonePine1TreeData)
 
-rows <- substr(row.names(treeData$fieldData), 1, 1)
-treeData$fieldData <- within(
-  treeData$fieldData, {
+rows <- substr(row.names(stonePine1TreeData$fieldData), 1, 1)
+stonePine1TreeData$fieldData <- within(
+  stonePine1TreeData$fieldData, {
   biomass[((azimuth >= 270 | azimuth < 90) & rows != "L")] <- biomass[((azimuth >= 270 | azimuth < 90) & rows != "L")] / 2
   biomass[((azimuth >= 90 | azimuth < 270) & rows != "L")] <- biomass[((azimuth >= 90 | azimuth < 270) & rows != "L")] * 2  
 })
 rm(rows)
 
-vectors  <- treeVectors(treeData)
+vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 summary(CM)
 @
@@ -140,8 +140,8 @@ As far as static forces are concerned, in an effort to move centre of mass towar
 
 <<exPruning, fig=TRUE>>=
 library(treecm)
-data(treeData)
-vectors  <- treeVectors(treeData)
+data(stonePine1TreeData)
+vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 
 op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
@@ -149,8 +149,8 @@ op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
 plot(vectors, main = "Centre of mass of a stone pine")
 plot(CM)
 
-treeData$fieldData$toBePruned[c(4, 6)] <- TRUE
-vectors  <- treeVectors(treeData)
+stonePine1TreeData$fieldData$toBePruned[c(4, 6)] <- TRUE
+vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 plot(vectors, main = "Centre of mass of a stone pine, B2 and B4 removed")
 plot(CM)
@@ -170,16 +170,16 @@ $SR_c = \frac{l}{d} \cdot (1 + cos \alpha)$
 
 where $\alpha$ is branch tilt angle (i.e. $90^{\circ}$ for a vertical branch, $0^{\circ}$ for an horizontal branch). In vertical branches $SR_c=SR$, in horizontal branches $SR_c=2SR$. As far as we know this is the first attempt to apply the slenderness ratio to branches. Optimal (safe) branches could be in the range $30 \leq SR_c \leq 70$.
 
-When \texttt{treeData} object is filled with branches \texttt{length} (not to be confused with \texttt{tipD}, the length of branch projection on the ground, from the tree base to branch tip) than $SR_c$ can be computed and plotted:
+When \texttt{stonePine1TreeData} object is filled with branches \texttt{length} (not to be confused with \texttt{tipD}, the length of branch projection on the ground, from the tree base to branch tip) than $SR_c$ can be computed and plotted:
 
 <<exSR, fig=TRUE>>=
-data(treeData)
+data(stonePine1TreeData)
 # assign length to branches
-treeData$fieldData <- within(treeData$fieldData,
+stonePine1TreeData$fieldData <- within(stonePine1TreeData$fieldData,
 length[3:25] <- c(7, 7, 7, 7, 7, 7, 4, 7, 7, 4, 7, 7, 4, 7, 7, 7, 4, 7, 7, 4, 4, 7, 7)
 )
-vectors <- treeVectors(treeData)
-SR      <- treeSR(treeData,vectors)
+vectors <- treeVectors(stonePine1TreeData)
+SR      <- treeSR(stonePine1TreeData,vectors)
 plot(SR, main = "Branches slenderness ratio", xaxt='n', yaxt = 'n', xlab = "", ylab = "")
 @
 
@@ -237,24 +237,24 @@ The force on the cable and on the plinth is then easily derived as:
 	f_{anchor} = \frac{M_{tree}}{l_{anchor} \cdot sin \beta}
 \end{equation}
 
-Let's look at a simple example using the \texttt{treeData} dataset we seek the force and plinth position by positioning the anchor at 10m along the main stem and for a 40m long steel cable:
+Let's look at a simple example using the \texttt{stonePine1TreeData} dataset we seek the force and plinth position by positioning the anchor at 10m along the main stem and for a 40m long steel cable:
 
 <<exStabilization1>>=
 library(treecm)
-data(treeData)
-vectors <- treeVectors(treeData)
+data(stonePine1TreeData)
+vectors <- treeVectors(stonePine1TreeData)
 CM      <- centreOfMass(vectors)
 
 ## We need to compute the tree moment
 treeMoment <- buildTreeMomentObject(
   centreOfMassModulus(CM)
-  , treeTotalBiomass(treeData)
+  , treeTotalBiomass(stonePine1TreeData)
   , centreOfMassAngle(CM)
 )
 treeMoment <- calcMoment(treeMoment)
 
 ## We extract the logs belonging to the main stem
-mainStem <- logPathSelection(treeData)
+mainStem <- logPathSelection(stonePine1TreeData)
 
 (plinth <- getPlinthForce(
 	l.stem = 10, 
@@ -344,7 +344,7 @@ Expressing force as a ratio to tree biomass and expressing distances relative to
 plinth <- transform(plinth, 
                     distanceOverAnchorHeight = distanceOnGround / anchorAlongStem
                     , heightOverAnchorHeight = round(anchorAlongStem / CM[["z"]], 2)
-                    , forceOverTreeBiomass   = force / treeTotalBiomass(treeData)/10
+                    , forceOverTreeBiomass   = force / treeTotalBiomass(stonePine1TreeData)/10
                     )
 head(plinth[c("distanceOverAnchorHeight", "heightOverAnchorHeight", "forceOverTreeBiomass")])
 ggplot(data = plinth, 
@@ -360,7 +360,7 @@ It looks like positioning the anchor $\approx 1.6$ times the height of the centr
 %	\begin{center}
 %		\includegraphics[width=5cm]{stonePine1.jpg}
 %	\end{center}
-%	\caption{The stone pine measured in \texttt{treeData}, crown not visible}
+%	\caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible}
 %	\label{fig:stonePine1}
 %\end{figure}
 

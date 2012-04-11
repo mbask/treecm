@@ -21,13 +21,13 @@
 }
 \examples{
 library(treecm)
-data(treeData)
-vectors <- treeVectors(treeData)
+data(stonePine1TreeData)
+vectors <- treeVectors(stonePine1TreeData)
 CM <- centreOfMass(object=vectors)
 print(centreOfMassModulus(CM))
 treeMoment <- buildTreeMomentObject(
  centreOfMassModulus(CM)
- , treeTotalBiomass(treeData)
+ , treeTotalBiomass(stonePine1TreeData)
  , centreOfMassAngle(CM)
  )
 }

@@ -38,8 +38,8 @@
 }
 \examples{
 library(treecm)
-data(treeData)
-logs <- logPathSelection(treeData)
+data(stonePine1TreeData)
+logs <- logPathSelection(stonePine1TreeData)
 }
 \seealso{
   \code{\link{importFieldData}}

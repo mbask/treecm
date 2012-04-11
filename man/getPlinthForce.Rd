@@ -51,16 +51,16 @@
 }
 \examples{
 library(treecm)
-data(treeData)
-vectors <- treeVectors(treeData)
+data(stonePine1TreeData)
+vectors <- treeVectors(stonePine1TreeData)
 CM <- centreOfMass(vectors)
 treeMoment <- buildTreeMomentObject(
   centreOfMassModulus(CM)
-  , treeTotalBiomass(treeData)
+  , treeTotalBiomass(stonePine1TreeData)
   , centreOfMassAngle(CM)
   )
 treeMoment <- calcMoment(treeMoment)
-logs <- logPathSelection(treeData)
+logs <- logPathSelection(stonePine1TreeData)
 plinth <- data.frame(getPlinthForce(10, 20, logs, getMoment(treeMoment), CM))
 }
 \seealso{

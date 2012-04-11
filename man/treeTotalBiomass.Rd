@@ -27,8 +27,8 @@
 }
 \examples{
 library(treecm)
-data(treeData)
-print(treeTotalBiomass(treeData))
+data(stonePine1TreeData)
+print(treeTotalBiomass(stonePine1TreeData))
 }
 \seealso{
   Other Biomass: \code{\link{allometryABDC}},

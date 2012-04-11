@@ -11,13 +11,13 @@
 #' @family Stabilization
 #' @examples 
 #' library(treecm)
-#' data(treeData)
-#' vectors <- treeVectors(treeData)
+#' data(stonePine1TreeData)
+#' vectors <- treeVectors(stonePine1TreeData)
 #' CM <- centreOfMass(object=vectors)
 #' print(centreOfMassModulus(CM))
 #' treeMoment <- buildTreeMomentObject(
 #'  centreOfMassModulus(CM)
-#'  , treeTotalBiomass(treeData)
+#'  , treeTotalBiomass(stonePine1TreeData)
 #'  , centreOfMassAngle(CM)
 #'  )
 centreOfMassModulus <- function(object) {
@@ -34,13 +34,13 @@ centreOfMassModulus <- function(object) {
 #' @family Stabilization
 #' @examples 
 #' library(treecm)
-#' data(treeData)
-#' vectors <- treeVectors(treeData)
+#' data(stonePine1TreeData)
+#' vectors <- treeVectors(stonePine1TreeData)
 #' CM <- centreOfMass(vectors)
 #' print(centreOfMassAngle(CM))
 #' treeMoment <- buildTreeMomentObject(
 #'  centreOfMassModulus(CM)
-#'  , treeTotalBiomass(treeData)
+#'  , treeTotalBiomass(stonePine1TreeData)
 #'  , centreOfMassAngle(CM)
 #'  )
 centreOfMassAngle <- function(object) {
@@ -61,8 +61,8 @@ centreOfMassAngle <- function(object) {
 #' @seealso \code{\link{importFieldData}}
 #' @examples 
 #' library(treecm)
-#' data(treeData)
-#' logs <- logPathSelection(treeData)
+#' data(stonePine1TreeData)
+#' logs <- logPathSelection(stonePine1TreeData)
 logPathSelection <- function(treeData) {
   rbind(0, with(treeData, fieldData[
     fieldData$pathToTip, c("azimuth", "length", "tilt")
@@ -101,10 +101,10 @@ toCartesianXYZ <- function(x) {
 #' @family Stabilization
 #' @examples 
 #' library(treecm)
-#' data(treeData)
-#' vectors <- treeVectors(treeData)
+#' data(stonePine1TreeData)
+#' vectors <- treeVectors(stonePine1TreeData)
 #' CM <- centreOfMass(vectors)
-#' logs <- logPathSelection(treeData)
+#' logs <- logPathSelection(stonePine1TreeData)
 #' anchorRange(logs, CM)
 anchorRange <- function(logs, CM) {
   c(CM["z"], hMax = cumsum(logs$length * sin(logs$tilt*pi/180))[nrow(logs)])
@@ -129,16 +129,16 @@ anchorRange <- function(logs, CM) {
 #' @family Stabilization
 #' @examples 
 #' library(treecm)
-#' data(treeData)
-#' vectors <- treeVectors(treeData)
+#' data(stonePine1TreeData)
+#' vectors <- treeVectors(stonePine1TreeData)
 #' CM <- centreOfMass(vectors)
 #' treeMoment <- buildTreeMomentObject(
 #'   centreOfMassModulus(CM)
-#'   , treeTotalBiomass(treeData)
+#'   , treeTotalBiomass(stonePine1TreeData)
 #'   , centreOfMassAngle(CM)
 #'   )
 #' treeMoment <- calcMoment(treeMoment)
-#' logs <- logPathSelection(treeData)
+#' logs <- logPathSelection(stonePine1TreeData)
 #' plinth <- data.frame(getPlinthForce(10, 20, logs, getMoment(treeMoment), CM))
 getPlinthForce <- function(l.stem, d, logs, treeMoment, CM) {
   ## Controllo congruenza dei dati definiti dall'utente

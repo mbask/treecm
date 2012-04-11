@@ -2,6 +2,8 @@
 Removed switchBranchPruningStatus as it can be expressed in a simple base statement
 Added feature to estimate the force on a ground plinth needed to stabilize a tree with a static steel cable
 Added stonePine2FieldData dataset
+Changed name of dataset fieldData to stonePine1FieldData
+Changed name of dataset treeData to stonePine1TreeData
 1.0.4
 Updated to R 2.15.0
 Updated to roxygen2
