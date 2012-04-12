@@ -21,7 +21,7 @@
 }
 \note{
   Use this function at you own risk, it has been validated
-  for trees (ie: >40 cm diameters).
+  for trees (ie: >24 cm diameters).
 
   The allometric equation takes the form of a pure
   quadratic equation
