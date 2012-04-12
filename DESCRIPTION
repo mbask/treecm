@@ -28,4 +28,5 @@ Date: 2012-04-05
 Imports:
     plyr
 Suggests:
-    ggplot2
+    ggplot2,
+    reshape2

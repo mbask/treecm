@@ -1,12 +1,12 @@
 \documentclass{article}
 
 \usepackage{natbib}
-
-\usepackage{fancyhdr}
-\usepackage{fancyvrb}
+\usepackage{sidecap, subfig}
+\usepackage{fancyhdr, fancyvrb}
 \usepackage{color}
 \usepackage{hyperref}
 \pagestyle{fancy}
+
 \pagenumbering{arabic}
 
 \lhead{\itshape \texttt{treecm}: an introduction}
@@ -56,14 +56,13 @@ data(stonePine1TreeData)
 print(stonePine1TreeData)
 @
 
+\begin{SCfigure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{stonePine1.jpg} % picture filename
+  \caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible. The tilted stem is clearly visible, as is the tree climber.}
+  \label{fig:stonePine1}
+\end{SCfigure}
 
-\begin{figure}
-	\begin{center}
-		\includegraphics[width=5cm]{stonePine1.jpg}
-	\end{center}
-	\caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible}
-	\label{fig:stonePine1}
-\end{figure}
 
 
 This dataset has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizontal plane).
@@ -383,22 +382,21 @@ ggplot(data = plinth,
 It looks like positioning the anchor $\approx 1.6$ times the height of the centre of mass, positioning the plinth 3 times the distance tree base-anchor, would expose the cable and the plith to $1/4$ of the weight of the tree itself. 
 
 
-%\begin{figure}
-%	\begin{center}
-%		\includegraphics[width=5cm]{stonePine1.jpg}
-%	\end{center}
-%	\caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible}
-%	\label{fig:stonePine1}
-%\end{figure}
-
-[ inserire foto collare pino ]
+\begin{figure}
+  \centering
+  \subfloat[Damage to a tree by a tight collar]{\label{fig:collarTree}\includegraphics[width=5cm]{collarTree.jpg}}
+  \quad
+  \subfloat[Close up to the weakness point, notice the marks of the anchor (righthand side) and of a wooden stick (lefthand side) left deep in the wood] {\label{fig:collarCloseUp}\includegraphics[width=5cm]{collarCloseUp.jpg}}
+  \caption{The anchor had been put into place too tight, the secondary tree growth had started to overgrow it. Luckily the anchor has been removed but the weakness point still remains}
+  \label{fig:collarDamage}
+\end{figure}
 
 
 \subsubsection{A word of caution}
 The cable system is engineered for the safety of people and their properties. Let's not forget that it should not add to the dangers of the tree breaking down! Practisioners should pay attention that:
 \begin{itemize}
 	\item in the case of the tree breaking down it should immediatly lean on the anchor
-	\item the anchor on the tree should not be strictly tightened to the trunk. The secondary growth of the trees would include the cable itself, resulting in a weakness point along the stem
+	\item the anchor on the tree should not be strictly tightened to the trunk. The secondary growth of the trees would include the cable itself, resulting in a weakness point along the stem (figure \ref{fig:collarDamage})
 	\item the anchor should be loose on the trunk, positioned just above a fork. The anchor should be loosened from time to time in order to avoid the previous effect
 	\item the cable must not be extremely tightened so as to constrain the tree in its position so as to enable it its natural movements under wind or snow. At the other end a loosened cable would enable the tree to gain speed, should it break, before leaning on the anchor. A compromise should be reached between a tight cable and a loose one
 	\item From time to time the cable must be checked for potential damages
@@ -494,7 +492,7 @@ The datasets for stone pine provided with the package have been built taking int
 
 \subsection{Choosing a correct allometric equation in order to estimate branch and foliage biomass}
 \label{sec:allequation}
-It is not possible to weight the branches of a living tree. As a result branch and foliage biomass is estimated using branch diameter at base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a sample of branches (eg during a pruning process).
+It is not possible to weight the branches of a living tree. As a result branch and foliage biomass has to be estimated, this is usually done using branch diameter at its base. Models relating size or biomass to diameter of trees or branches are known as allometric equations. They usually take the form of $Y = a \cdot X^b$ where $Y$ is branch biomass, $X$ is branch diameter, $a$ and $b$ are parameters estimated on a sample of branches (eg during a pruning process).
 
 When sampling is not possible one should rely on published allometric equations and feed them to \texttt{treecm}. Currently \texttt{treecm} ships with four allometric equations:
 \begin{itemize}
@@ -504,10 +502,111 @@ When sampling is not possible one should rely on published allometric equations 
   \item \texttt{allometryPorte2002}, tested on maritime pine branches, 10- cm diameter, returns biomass (dry weight), \cite{porte}, its results should be increased by the estimated amount of water present in the branches 
 \end{itemize}
 The proper allometric equation to be used must be fed to \texttt{treecm} when importing field data using function \texttt{importFieldData}, parameter \texttt{branchesAllometryFUN}.
+Please notice that:
+\begin{itemize}
+  \item one should pick an allometric equation that yields fresh mass of branches in order to get results as closer as possible to the real tree centre of mass
+  \item choosing the allometric equation is crucial to a correct estimation of masses. An allometric must be choosen according mainly to the tree species, and to the range of branch diameters it has been fitted on
+\end{itemize}
 
-We welcome contributions to increase the available list of allometric equations.
 
-Note that one should pick an allometric equation that yields fresh mass of branches in order to get results as closer as possible to the real tree centre of mass. 
+\subsubsection{A real example}
+Let's have a look at how the allometric equation may affect the estimate of branch masses in a stone pine. Dataset \texttt{stonePine2FieldData} holds field recorded value for a $\approx 11$m tall stone pine, having only a few very big branches. We will compare the estimate of whole tree mass carried out applying two allometric equations: \texttt{allometryCutini2009} ($Y=-198 + 0.620 \cdot X^2$) and \texttt{allometryABDC} ($Y=0.17 \cdot X^{2.4}$).
+
+
+<<allometryEx1>>=
+csvFile <- system.file("data/stonePine2FieldData.csv.gz", package = "treecm")
+
+sP.Cutini <- treeBiomass(importFieldData(csvFile, 650, allometryCutini2009))
+head(sP.Cutini$fieldData)
+sP.ABDC   <- treeBiomass(importFieldData(csvFile, 650, allometryABDC))
+head(sP.ABDC$fieldData)
+
+biomassRaw <- data.frame(
+  cutini = sP.Cutini$fieldData$biomass
+  , ABDC = sP.ABDC$fieldData$biomass
+  , code = rownames(sP.ABDC$fieldData)
+  , diameter = sP.ABDC$fieldData$dBase
+  )
+
+library(reshape2)
+
+biomass <- melt(
+  biomassRaw
+  , measure.vars = c("ABDC", "cutini")
+  , value.name = "biomass"
+  , variable.name = "allometry"
+)
+
+rm(biomassRaw)
+
+(treeBiomass <- with(biomass, tapply(biomass, allometry, sum)))
+@
+
+\texttt{allometryABDC} function estimate for the biomass of the tree is \Sexpr{round(treeBiomass[["ABDC"]]/treeBiomass[["cutini"]], 1)} times higher than \texttt{allometryCutini2009} function! This huge gap is accounted for by the way the allometric equations were designed:
+\begin{enumerate}
+  \item \texttt{allometryABDC} has been fitted on small-diameter branches, as a result it may predict unreliable mass figures for out of range branches
+  \item \texttt{allometryCutini2009} has been fitted on 24+ cm trees, as a result it properly describes the relationship between mass and diameter as far as diameter is concerned. We must assume that the relationship tree diameter-tree mass holds for branches as well, though. Further the equation yields biomass at 0\% moisture content, a figure much lower than fresh biomass.
+\end{enumerate}
+
+The difference in the estimates may be clearly appreciated in figure \ref{fig:stonePine2Plot}.
+
+\begin{figure}[ht]
+  \centering
+    \subfloat[Bar plot]{\label{fig:stonePine2BarPlot}
+    
+<<allometryBarPlot, fig=TRUE, echo=FALSE, include=FALSE>>=
+library(ggplot2)
+ggplot(biomass, aes(x = code, y = biomass)) + 
+  geom_bar(aes(fill = allometry), position = "dodge")
+@
+
+  \includegraphics[width=5cm]{treecm-allometryBarPlot}}
+  \quad
+  \subfloat[Dot plot biomass \emph{Vs.} diameter]{\label{fig:stonePine2DotPlot}
+
+<<allometryDotPlot, fig=TRUE, echo=FALSE, include=FALSE>>=
+library(ggplot2)
+ggplot(biomass, aes(x = diameter, y = biomass)) + 
+  geom_point(aes(shape = allometry), size = 5)
+@
+
+  \includegraphics[width=5cm]{treecm-allometryDotPlot}}
+  \caption{Bar plot and dot plot comparing biomass estimates of \texttt{allometryABDC} and \texttt{allometryCutini2009} functions to \texttt{stonePine2FieldData}}
+  \label{fig:stonePine2Plot}
+\end{figure}
+
+Notice that \texttt{cutini}'s biomass estimate for \texttt{B4} is unreasonably negative (figure \ref{fig:stonePine2BarPlot}. This is due to the small diameter branch (10 cm), far below the 24cm lower limit. Also notice consitently lower estimates from \texttt{cutini}'s function.
+
+Which function to use? The answer is constrained by the fact that \texttt{ABDC} function cannot be reasonably applied since it has not been fitted on the range of branch diameters our pine shows. How shall we adapt \texttt{cutini}'s estimates? First of all we need to fix the biomass estimate for \texttt{B4}, we shall use the \texttt{ABDC} biomass figure for it. Then we shall convert 0\% moisture biomass to fresh biomass. We will use a $1.5$ expansion factor assuming there's a 50\% decrease in mass from fresh to dry state.
+
+<<allometryEx2>>=
+biomass <- within(biomass, {
+  biomass[allometry == "cutini" & code != "L1"] <- biomass[allometry == "cutini" & code != "L1"] * 1.5
+  biomass[allometry == "cutini" & code == "B4"] <- biomass[allometry == "ABDC" & code == "B4"]
+})
+
+with(biomass, tapply(biomass, allometry, sum))
+@
+
+
+\begin{figure}[ht]
+  \centering
+<<allometryDotPlot2, fig=TRUE, echo=FALSE, include=FALSE>>=
+ggplot(biomass, aes(x = diameter, y = biomass)) + 
+  geom_point(aes(shape = allometry), size = 5)
+@
+  \includegraphics[width=5cm]{treecm-allometryDotPlot2}
+  \caption{Dot plot comparing biomass estimates of \texttt{allometryABDC} and \texttt{allometryCutini2009} functions to \texttt{stonePine2FieldData} after adjusting the latter}
+  \label{fig:stonePine2Plot2}
+\end{figure}
+
+This is just an attempt to raise awarness on the complexities of choosing a correct allometric equation. When we reckon our data are correct we just have to plug them into a proper \texttt{fieldData} data frame:
+
+<<allometryEx3>>=
+sP.Cutini$fieldData$biomass <- biomass$biomass[biomass$allometry == "cutini"]
+head(sP.Cutini$fieldData)
+@
+
 
 
 
@@ -526,7 +625,6 @@ CSV files are made up of 10 columns. The first row has to hold column headers. H
   \item \textbf{tilt} log or branch tilt from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, only useful to estimate $z$ coordinate of centre of mass) 
   \item \textbf{toBePruned} boolean to simulate branch pruning
   \item \textbf{pathToTip} boolean to point out the ``main stem''
-
 \end{enumerate}
 
 \subsection{Rules to layout a correct CSV file}
