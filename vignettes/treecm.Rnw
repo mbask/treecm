@@ -44,6 +44,19 @@
 \author{Marco Bascietto}
 \maketitle
 
+The centre of mass is a crucial data for arborists in order to consolidate a tree using static or dynamic cables. Given field-recorded data on branchiness of a tree, the package:
+\begin{itemize}
+   \item computes and plots the centre of mass of the tree itself
+   \item simulates the shift in CM position as branches are pruned
+   \item computes branches slenderness coefficient in order to aid the arborist identify potentially dangerous branches
+   \item computes the force acting on a ground plinth and its best position relating to the tree centre of mass, should the tree need to be stabilized by a steel cable
+\end{itemize}
+
+This vignette showcases some real-world cases where the package has been employed. Please notice that although the package is to be used as a quantitative aid to tree pruning and stabilization actions, the authors cannot take any responsability on the accuracy of the package results. 
+
+
+
+
 \section{Usage examples}
 
 \subsection{Plot centre of mass}
@@ -67,11 +80,17 @@ print(stonePine1TreeData)
 
 This dataset has been collected for a 17.1 metres tall stone pine whose stem was tilted approx. 20$^{\circ}$ from the vertical plane (or 80$^{\circ}$ from the horizontal plane).
 
-The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a final branch (\texttt{C}). These two logs and the final branch components have been defined in the field as the ``main stem'' of the tree, all the other components of the tree fall into the crown. The definition af the main stem is important only for the correct assessment of the position of the anchor on the tree, should the tree need stabilization with a steel cable. Main stem components get a \texttt{TRUE} value in the \texttt{pathToTip} column. 
+The stem has been sectioned in two logs (\texttt{L1} and \texttt{L2}), and a final branch (\texttt{C}). These two logs and the final branch components have been defined in the field as the ``main stem'' of the tree, all the other components of the tree fall into the crown. The definition of the main stem is important only for the correct assessment of the position of the anchor on the tree, should the tree need stabilization with a steel cable. Main stem components get a \texttt{TRUE} value in the \texttt{pathToTip} column. 
 
 A component with \texttt{FALSE} or missing value in the \texttt{pathToTip} column is treated as it belonging to the crown. The crown was made up of 23 branches (\texttt{B1-B23}), all of them horizontal (\emph{ie} tilted 0$^{\circ}$). 
 
-The  \texttt{stonePine1TreeData} dataset is a direct result of importing \texttt{stonePine1FieldData} with wood fresh density as \Sexpr{stonePine1TreeData$density} $\frac{kg}{m^3}$ and with  \texttt{allometryABDC} function as allometry function for branches. Log biomass is computed by Smalian's formula (\cite{laMarca}). It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
+The  \texttt{stonePine1TreeData} dataset is a direct result of importing \texttt{stonePine1FieldData} with:
+\begin{itemize}
+  \item wood fresh density: \Sexpr{stonePine1TreeData$density} $\frac{kg}{m^3}$
+  \item allometry function for branch mass: \texttt{allometryABDC}
+  \item position of the centre of mass: on the branch tip
+\end{itemize}
+Log biomass is computed by Smalian's formula (\cite{laMarca}). It is important to choose the most appropriate allometric equation in order to yield trustworthy biomass figures and, as a result, appropriate centre of mass coordinates. Allometry equations functions are discussed in section \ref{sec:allequation}, page \pageref{sec:allequation}.
 
 The package recognizes rows that represent branches because their diameter at tip (\texttt{tipD}) is 0 (see more at page \pageref{sec:rules}).
 
@@ -218,8 +237,14 @@ Estimating the coordinates of the centre of mass of a tree is crucial to judge i
 The more distant the centre of mass from tree base the higher the constrains the tree poses on the ground through its roots. When concerns about tree stability are raised and the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
 
 One or two static steel cables properly linking the tree to a plinth on the ground may effectively and easily lock the tree into place should its roots loose connection to the ground.
+Static steel cable systems include single cables and two cables systems:
+\begin{itemize}
+  \item \textbf{Single cable system}. A single cable is layed down just opposite of CM azimuth ($\pm 180^{\circ}$). Although cheaper a solution this system has a major drawback: it does not take into consideration that trees move under wind and snow pressures, thereby shifting their CM azimuth in unpredictable ways. A single cable would not counter act tree movements and, should it break down, it would not hold the tree in place. Furthermore, as the tree grows taller, its CM shifts and the ground plinth should be moved accordingly. This is clearly not a feasible solution.
+  \item \textbf{Double cable system} A system of two cables joined at the tree anchor is layed down at an even angle from the CM azimuth ($\pm 180^{\circ}$). This system holds in position a collapsed tree while allowing it some degrees of movement under snow or wind. Further, it decreases the force on the cables and on the plinth, thereby allowing for increased safety.
+\end{itemize}
+As version 1.1, \texttt{treecm} may be used to design single cable systems.
 
-Although putting in place the cable(s) and building an appropriate plinth on the ground are technically easy a correct assessment of the masses into play is mandatory to design a proper system:
+Although putting in place the cable(s) and building an appropriate plinth on the ground are technically easy, a correct assessment of the masses into play is mandatory to design a proper system:
 \label{sec:anchor}
 \begin{itemize}
 	\item The height of the anchor on the tree must be carefully chosen to be above its centre of mass (to prevent its turnover!)
