@@ -111,7 +111,7 @@ plot(vectors, main = "A stone pine centre of mass")
 plot(CM)
 @
 
-In a cartesian coordinate system whose origin lies at tree base, the masses of logs and branches are plotted as vectors pointing inwards, towards the ground. Each circle represent a branch or log mass whose radius is proportional to branch or log mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow approximates the direction the tree will follow should it break at its base.
+In a cartesian coordinate system whose origin lies at tree base, the masses of logs and branches are plotted as vectors pointing inwards, towards the ground. Each circle represents a branch or log mass whose radius is proportional to its mass. Likewise, the centre of mass is plotted as a vector pointing inwards, in red colour. Its height component is written alongside its label as $z$ coordinate. A red arrow approximates the direction the tree will follow should it break at its base.
 
 It is important that, should the tree break, it does not fall onto buildings or cause damage to people. We can add buildings and other important points to the CM plot provided that we measured the polar coordinates of their relevant points, from the the tree base, using the \texttt{plotPolarSegment} function. Let's add a building face facing the tree:
 
@@ -133,11 +133,11 @@ Let's model a snow load that doubles the biomass of branches higher than 12 m:
 
 <<exSnow>>=
 rows <- substr(row.names(stonePine1TreeData$fieldData), 1, 1)
-q1 <- subset(stonePine1TreeData$fieldData, subset=(height < 12 | rows == "L"))
-q2 <- subset(stonePine1TreeData$fieldData, subset=(height > 12 & rows != "L"))
-q2$biomass <- q2$biomass * 2
-stonePine1TreeData$fieldData <- rbind(q1, q2)
-rm(list = c("q1", "q2", "rows"))
+component <- substr(row.names(stonePine1TreeData$fieldData), 1, 1)
+stonePine1TreeData$fieldData <- within(stonePine1TreeData$fieldData,
+                                       biomass[height > 12 & component != "L"] <-  biomass[height > 12 & component != "L"] * 2
+                                       )
+rm("rows")
 @
 
 Let's recaltulate the vectors under snow load and plot the results:
@@ -155,7 +155,7 @@ plot(CM)
 plotPolarSegment(210, 10.6, 140, 14.4)
 @
 
-Tree centre of mass has clearly shifted upwards and towards the house...
+Tree centre of mass has clearly shifted upwards but the snow load would not increase the danger on the building, should the tree collapse.
 
 \subsection{Wind load}
 
@@ -181,7 +181,7 @@ Under a heavy southbound wind the CM of the tree will move considerably towards 
 
 \subsection{Effect of pruning on CM}
 
-As far as static forces are concerned, in an effort to move centre of mass toward tree base, we could prune a few heavy branches. Let's have a look how CM would move if we cut \texttt{B2} and \texttt{B4}:
+As far as static forces are concerned, in an effort to move centre of mass closer to tree base, we could prune a few heavy branches. Let's have a look how CM would move if we cut \texttt{B2} and \texttt{B4}:
 
 <<exPruning, fig=TRUE>>=
 library(treecm)
@@ -194,7 +194,8 @@ op <- par(mfrow = c(2, 1), mai = c(0.5,0.5,0.5,0.2))
 plot(vectors, main = "Centre of mass of a stone pine")
 plot(CM)
 
-stonePine1TreeData$fieldData$toBePruned[c(4, 6)] <- TRUE
+component <- row.names(stonePine1TreeData$fieldData)
+stonePine1TreeData$fieldData$toBePruned[component %in% c("B2", "B4")] <- TRUE
 vectors  <- treeVectors(stonePine1TreeData)
 CM       <- centreOfMass(vectors)
 plot(vectors, main = "Centre of mass of a stone pine, B2 and B4 removed")
@@ -234,7 +235,7 @@ The 2D plot charts branches azimuth as arrows whose length is $SR_c$. The longer
 \subsection{Tree stabilization}
 Estimating the coordinates of the centre of mass of a tree is crucial to judge its static stability. The centre of mass of a perfectly balanced tree lies in between its trunk, that is the $x$ and $y$ coordinates of the CM lie inside the $\pi \cdot r^2$ surface where $r$ is the radius of tree base.
 
-The more distant the centre of mass from tree base the higher the constrains the tree poses on the ground through its roots. When concerns about tree stability are raised and the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of breakage at its base is necessary to properly engineer the cabling system.
+The more distant the centre of mass from tree base the higher the constrains the tree poses on the ground through its roots. When concerns about tree stability are raised and the tree needs to be consolidated a proper cabling system has to be put in place. Knowing in advance the direction the tree would fall in case of overturning is necessary to properly engineer the cabling system.
 
 One or two static steel cables properly linking the tree to a plinth on the ground may effectively and easily lock the tree into place should its roots loose connection to the ground.
 Static steel cable systems include single cables and two cables systems:
@@ -383,7 +384,7 @@ ggplot(data = plinth, aes(x = cableLength, y = force)) +
   ylab('Force [N]') +
   xlab('Cable length [m]') +
   labs(colour = "Anchor\nstem\ndistance [m]") +
-  opts(title = "Force to the plinth (a stone pine)", 
+  opts(title = "Force on the plinth (a stone pine)", 
 	legend.position = c(.8, .7), 
 	legend.background = theme_rect(fill="white")
   )
@@ -424,8 +425,8 @@ The cable system is engineered for the safety of people and their properties. Le
 	\item the anchor on the tree should not be strictly tightened to the trunk. The secondary growth of the trees would include the cable itself, resulting in a weakness point along the stem (figure \ref{fig:collarDamage})
 	\item the anchor should be loose on the trunk, positioned just above a fork. The anchor should be loosened from time to time in order to avoid the previous effect
 	\item the cable must not be extremely tightened so as to constrain the tree in its position so as to enable it its natural movements under wind or snow. At the other end a loosened cable would enable the tree to gain speed, should it break, before leaning on the anchor. A compromise should be reached between a tight cable and a loose one
-	\item From time to time the cable must be checked for potential damages
-	\item As soon as the tree grows taller and changes its crown layout, or as soon as a pruning is carried out, the anchor-cable-plinth system must be modified accordingly. Rememeber that the plinth, being a quasi-permanent structure should be engineered to resist to potentially higher forces and that the anchor position should be raised as the tree get taller and heavier.
+	\item from time to time the cable must be checked for potential damages
+	\item as soon as the tree grows taller and changes its crown layout, or as soon as a pruning is carried out, the anchor-cable-plinth system must be modified accordingly. Rememeber that the plinth, being a quasi-permanent structure should be engineered to resist to potentially higher forces and that the anchor position should be raised as the tree get taller and heavier.
 \end{itemize}
 
 
@@ -442,7 +443,7 @@ Data collection to estimation of the centre of mass is carried out in three step
 
 
 \subsection{Field measurements}
-A few field measurements are needed to estimate centre of mass position at the stem level and at the branch level. Field data are easily recorded climbing the tree using tree-climbing techniques or by hydraulic platforms. A few instruments are needed including:
+A few field measurements are needed to estimate centre of mass position at the stem level and at the branch level. Field data are easily recorded by climbing the tree using tree-climbing techniques or by hydraulic platforms. A few instruments are needed including:
 \begin{itemize}
   \item A forestry caliper to measure diameter of logs and branches
   \item A clinometer, or ipsometer or any other instrument to measure height of branches or logs
@@ -456,7 +457,7 @@ The stem is ideally sectioned in logs in order to compute their volume and mass.
   \item Diameter at the base of the log, in cm (\texttt{dBase})
   \item Diameter at the top of the log, in cm (\texttt{dTip})
   \item Length of the log, in m (\texttt{length})
-  \item Azimuth of the log (\texttt{azimuth}), in case it is not vertical, in degrees from North (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Azimuth of the log (\texttt{azimuth}), in case it is not vertical, in degrees from North (0$^{\circ}$ North, 180$^{\circ}$ South)
   \item Distance between tree base and the projection of log tip on the ground (\texttt{tipD}), in m
   \item Height above ground of the base of the log, in m (\texttt{height})
   \item Log tilt (\texttt{tilt}) from the horizontal plane (eg a vertical log is tilted by 90$^{\circ}$, an horizontal log is tilted by 0$^{\circ}$), in degrees (optional, default to 0 if missing)
@@ -470,7 +471,7 @@ The measurements to be taken on each branch include:
   \item Diameter at the base of the branch, in cm (\texttt{dBase})
   \item Diameter at the top of the log must be 0
   \item Length of the branch, from its fork on the stem to its tip, in m (\texttt{length}), only if slenderness ratio (SR, page \pageref{sec:SR}) is to be computed
-  \item Azimuth of the branch (\texttt{azimuth}), in degrees, usually measured with a compass (O$^{\circ}$ North, 180$^{\circ}$ South)
+  \item Azimuth of the branch (\texttt{azimuth}), in degrees, usually measured with a compass (0$^{\circ}$ North, 180$^{\circ}$ South)
   \item Distance between tree base and the projection of branch tip on the ground (\texttt{tipD}), in m
   \item Height above ground of the branch insertion into the stem, in m (\texttt{height})
   \item Branch tilt (\texttt{tilt}) from the horizontal plane (eg a vertical branch is tilted by 90$^{\circ}$, an horizontal branch is tilted by 0$^{\circ}$), in degrees (optional, default to 0 if missing)
@@ -495,7 +496,7 @@ Since the package aims to help engineering a consolidation system, the centre of
 The package behaviour can be modified in order to let the position branches and logs centre of mass to get nearer to their base. 
 The relative position of the centre of mass of branches and logs can be set as a real number ranging from 0.01 (base) to 1 (tip, the default behaviour). Setting can be done during import of field data using function \texttt{importField} and its parameter \texttt{bCM} or by using the setter function \texttt{setBranchesCM}.
 
-\subsection{The density}
+\subsection{Wood density}
 Log mass is estimated by converting its volume (as measured in the field) to fresh mass. The conversion factor is usually referred to as fresh density. Wood density is usually quite conservative among individual of the same tree species. Density values are commonly found in published literature. The dataset \texttt{Dst} (\cite{niklas}) can be a useful starting point to assess wood density, should it be unavailable, (density in $\frac{kg}{m^3}$, measured at 50\% moisture content):
 
 <<dst>>=
@@ -530,7 +531,7 @@ The proper allometric equation to be used must be fed to \texttt{treecm} when im
 Please notice that:
 \begin{itemize}
   \item one should pick an allometric equation that yields fresh mass of branches in order to get results as closer as possible to the real tree centre of mass
-  \item choosing the allometric equation is crucial to a correct estimation of masses. An allometric must be choosen according mainly to the tree species, and to the range of branch diameters it has been fitted on
+  \item choosing the allometric equation is crucial to a correct estimation of masses. An allometric equation must be choosen according mainly to the tree species, and to the range of branch diameters it has been fitted on
 \end{itemize}
 
 
