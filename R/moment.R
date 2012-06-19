@@ -41,7 +41,7 @@ getCoordinatesAndMoment <- function (azimuth, dBase, dTip, length, tipD, height,
   # height (h) to be added to branch height (z), as a function of the 
   # angle of its tilt (0° = horiz., 90° = vert.), its distance (length of its 
   # projection on the ground, 
-  # from tree base to branch tip), and the estimated position of the centro of mass
+  # from tree base to branch tip), and the estimated position of the centre of mass
   h  <- tipD * sin(tilt * pi / 180) * branchesCM
   ## computes cartesian coordinates of centre of mass of branches and their moments (mx, my, mz).
   ## When branchesCM = 1, x and y are coordinates of branch tip
