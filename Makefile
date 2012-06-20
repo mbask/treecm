@@ -45,11 +45,14 @@ docs:
 	cd ..;\
 	"$(RBIN)/R" --no-restore --slave -e "library(roxygen2); roxygenize('$(PKGSRC)', '$(PKGSRC)', overwrite=TRUE, unlink.target=FALSE, copy.package=FALSE)"
 
-vignette:
+buildvignette:
 	cd vignettes;\
 	"$(RBIN)/R" CMD Sweave $(PKGNAME).Rnw;\
 	R CMD pdflatex $(PKGNAME).tex;\
-#	mv $(PKGNAME).pdf ../inst/doc/
+	R CMD pdflatex $(PKGNAME).tex;\
+
+vignette: buildvignette
+	mv vignettes/$(PKGNAME).pdf inst/doc/
 
 build: docs
 	cd ..;\
