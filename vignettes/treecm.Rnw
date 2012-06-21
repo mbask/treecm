@@ -71,7 +71,7 @@ print(stonePine1TreeData)
 
 \begin{SCfigure}
   \centering
-  \includegraphics[width=0.5\textwidth]{stonePine1-low.jpg} % picture filename
+  \includegraphics[width=0.5\textwidth]{stonePine1_low.jpg} % picture filename
   \caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible. The tilted stem is clearly visible, as is the tree climber.}
   \label{fig:stonePine1}
 \end{SCfigure}
@@ -410,9 +410,9 @@ It looks like positioning the anchor $\approx 1.6$ times the height of the centr
 
 \begin{figure}
   \centering
-  \subfloat[Damage to a tree by a tight collar]{\label{fig:collarTree}\includegraphics[width=5cm]{collarTree-low.jpg}}
+  \subfloat[Damage to a tree by a tight collar]{\label{fig:collarTree}\includegraphics[width=5cm]{collarTree_low.jpg}}
   \quad
-  \subfloat[Close up to the weakness point, notice the marks of the anchor (righthand side) and of a wooden stick (lefthand side) left deep in the wood] {\label{fig:collarCloseUp}\includegraphics[width=5cm]{collarCloseUp-low.jpg}}
+  \subfloat[Close up to the weakness point, notice the marks of the anchor (righthand side) and of a wooden stick (lefthand side) left deep in the wood] {\label{fig:collarCloseUp}\includegraphics[width=5cm]{collarCloseUp_low.jpg}}
   \caption{The anchor had been put into place too tight, the secondary tree growth had started to overgrow it. Luckily the anchor has been removed but the weakness point still remains}
   \label{fig:collarDamage}
 \end{figure}
