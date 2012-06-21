@@ -55,8 +55,12 @@ vignette: buildvignette
 	mv vignettes/$(PKGNAME).pdf inst/doc/
 
 build: docs
+	mv *.Rproj ../
+	mv README.md ../
 	cd ..;\
-	"$(RBIN)/R" CMD build --no-vignettes $(PKGSRC)
+	"$(RBIN)/R" CMD build --no-vignettes $(PKGSRC);\
+	mv $(PKGSRC).Rproj $(PKGSRC)/$(PKGSRC).Rproj;\
+	mv README.md $(PKGSRC)/
 
 install: build
 	cd ..;\
