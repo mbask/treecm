@@ -26,10 +26,6 @@ help:
 	@echo " install Invoke build and then install the result"
 	@echo " clean Remove tmp files (.aux, .log etc.)"
 	@echo ""
-	@echo "Packaging Tasks"
-	@echo "---------------"
-	@echo " release Cleans and builds package"
-	@echo ""
 	@echo "Using R in: $(RBIN)"
 	@echo "Set the RBIN environment variable to change this."
 	@echo ""
@@ -55,12 +51,8 @@ vignette: buildvignette
 	mv vignettes/$(PKGNAME).pdf inst/doc/
 
 build: docs
-	mv *.Rproj ../
-	mv README.md ../
 	cd ..;\
-	"$(RBIN)/R" CMD build --no-vignettes $(PKGSRC);\
-	mv $(PKGSRC).Rproj $(PKGSRC)/$(PKGSRC).Rproj;\
-	mv README.md $(PKGSRC)/
+	"$(RBIN)/R" CMD build --no-vignettes $(PKGSRC)
 
 install: build
 	cd ..;\
@@ -79,8 +71,3 @@ clean:
 	find . -type f -iname "Rplots.pdf" -exec rm {} \;
 
 cleanvignette: vignette clean
-
-#------------------------------------------------------------------------------
-# Packaging Tasks
-#------------------------------------------------------------------------------
-release: clean check

@@ -1,1 +1,11 @@
 ^\.Rproj\.user$
+.*.Rproj
+.gitignore
+tikzDictionary$
+aux$
+log$
+out$
+tex$
+vignettes/.*\.pdf
+vignettes/.*\.png
+README.md
