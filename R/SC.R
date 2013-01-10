@@ -15,8 +15,8 @@
 #' @return slenderness ratio
 #' @references Mattheck, C. and Breloer, H. \emph{The Body Language of Trees: A Handbook for Failure Analysis (Research for Amenity Trees)} 1995, HMSO (London)
 branchSR <- function(x, diameter, length, tilt) {
-  tiltRad <- as.real(x[tilt]) * pi / 180
-  SR <- as.real(x[length]) / as.real(x[diameter]) * 100
+  tiltRad <- as.double(x[tilt]) * pi / 180
+  SR <- as.double(x[length]) / as.double(x[diameter]) * 100
   round(SR * ( 1 + cos(tiltRad)), digits = 0)
 }
 

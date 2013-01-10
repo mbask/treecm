@@ -16,7 +16,7 @@
 allometryCutini2009 <- function(x, diameter) {
   a <- -198.236
   b <- 0.620
-  pureQuadraticEquation(a, b, as.real(x[diameter]))
+  pureQuadraticEquation(a, b, as.double(x[diameter]))
 }
 
 #' @title Returns the biomass of a maritime pine branch
@@ -36,7 +36,7 @@ allometryCutini2009 <- function(x, diameter) {
 allometryPorte2002 <- function(x, diameter) {
   a <- 21.228
   b <- 2.818
-  powerEquation(a, b, as.real(x[diameter])) / 1000
+  powerEquation(a, b, as.double(x[diameter])) / 1000
 }
 
 #' @title Returns the fresh weight of a stone pine branch
@@ -56,7 +56,7 @@ allometryPorte2002 <- function(x, diameter) {
 allometryAsca2011 <- function(x, diameter) {
   a <- 0.7201
   b <- 1.8882
-  powerEquation(a, b, as.real(x[diameter]))
+  powerEquation(a, b, as.double(x[diameter]))
 }
 
 #' @title Returns the fresh weight of a stone pine branch
@@ -79,7 +79,7 @@ allometryAsca2011 <- function(x, diameter) {
 allometryABDC <- function(x, diameter) {
   a <- 0.16843
   b <- 2.43523
-  powerEquation(a, b, as.real(x[diameter]))
+  powerEquation(a, b, as.double(x[diameter]))
 }
 
 #' @title Returns the result of a pure quadratic equation
@@ -131,9 +131,9 @@ powerEquation <- function(a, b, x) {
 #' @family Biomass
 #' @references la Marca, O. \emph{Elementi di dendrometria} 2004, Patron Editore (Bologna), p. 119
 logBiomass <- function(x, lowerD, higherD, logLength, density) {
-  lowerS   <- pi * (as.real(x[lowerD]) / 200)^2 
-  higherS  <- pi * (as.real(x[higherD]) / 200)^2
-  l        <- as.real(x[logLength])
+  lowerS   <- pi * (as.double(x[lowerD]) / 200)^2 
+  higherS  <- pi * (as.double(x[higherD]) / 200)^2
+  l        <- as.double(x[logLength])
   volume   <- (lowerS + higherS) / 2 * l
   volume * density
 }
