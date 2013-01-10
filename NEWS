@@ -1,3 +1,5 @@
+1.2
+Updated to provide compatibility with R 3.0
 1.1
 Removed switchBranchPruningStatus as it can be expressed in a simple base statement
 Added feature to estimate the force on a ground plinth needed to stabilize a tree with a static steel cable
