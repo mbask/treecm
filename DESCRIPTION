@@ -22,9 +22,9 @@ Collate:
     'treecm.R'
     'vectors.R'
     'stabilization.R'
-Version: 1.1
+Version: 1.2
 URL: https://github.com/mbask/treecm
-Date: 2012-04-05
+Date: 2013-01-10
 Imports:
     plyr
 Suggests:
