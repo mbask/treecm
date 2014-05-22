@@ -34,7 +34,7 @@
 #' @aliases treecm
 #' @docType package
 #' @import plyr
-#' @author Marco Bascietto \email{marco.bascietto@@ibaf.cnr.it}
+#' @author Marco Bascietto \email{marco.bascietto@@cnr.it}
 #' @keywords package
 #' @examples
 #' data(stonePine1TreeData)
