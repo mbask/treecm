@@ -30,7 +30,8 @@ The \code{.csv} file must contain all column headings listed in \code{\link{impo
 }
 \examples{
 library("treecm")
-  treeData <- importFieldData(system.file("data", "stonePine2FieldData.csv.gz", package = "treecm"), 650, allometryABDC)
+csvFileName <- system.file("data", "stonePine2FieldData.csv.gz", package = "treecm")
+treeData <- importFieldData(csvFileName, 650, allometryABDC)
 head(treeData$fieldData)
 }
 \keyword{datasets}
