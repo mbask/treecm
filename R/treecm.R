@@ -125,8 +125,9 @@ NULL
 #' @keywords datasets
 #' @examples
 #' library("treecm")
+#' csvFileName <- system.file("data", "stonePine1FieldData.csv.gz", package = "treecm")
 #' treeData <- importFieldData(
-#'   system.file("data", "stonePine1FieldData.csv.gz", package = "treecm"), 
+#'   csvFileName, 
 #'   650, 
 #'   allometryABDC
 #' )
@@ -177,7 +178,8 @@ NULL
 #' CM       <- centreOfMass(vectors)
 #' summary(CM)
 #' # The steps to recreate this dataset:
-#' treeData <- importFieldData(system.file("data", "stonePine1FieldData.csv.gz", package = "treecm"), 650, allometryABDC)
+#' csvFileName <- system.file("data", "stonePine1FieldData.csv.gz", package = "treecm")
+#' treeData <- importFieldData(csvFileName, 650, allometryABDC)
 #' treeData <- treeBiomass(treeData)
 NULL
 

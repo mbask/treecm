@@ -48,8 +48,9 @@ The \code{.csv} file must contain all column headings listed in \code{\link{impo
 }
 \examples{
 library("treecm")
+csvFileName <- system.file("data", "stonePine1FieldData.csv.gz", package = "treecm")
 treeData <- importFieldData(
-  system.file("data", "stonePine1FieldData.csv.gz", package = "treecm"),
+  csvFileName,
   650,
   allometryABDC
 )
