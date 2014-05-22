@@ -29,6 +29,7 @@
 % \VignetteKeyword{tree}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 % default size for the sweaved graphics
 \setkeys{Gin}{width=0.6\textwidth}
