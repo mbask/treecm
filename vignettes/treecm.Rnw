@@ -384,9 +384,10 @@ ggplot(data = plinth, aes(x = cableLength, y = force)) +
   ylab('Force [N]') +
   xlab('Cable length [m]') +
   labs(colour = "Anchor\nstem\ndistance [m]") +
-  opts(title = "Force on the plinth (a stone pine)", 
-	legend.position = c(.8, .7), 
-	legend.background = theme_rect(fill="white")
+  ggtitle("Force on the plinth (a stone pine)") +
+	theme(
+    legend.position = c(.8, .7), 
+	  legend.background = element_rect(fill="white")
   )
 @
 
@@ -540,31 +541,31 @@ Let's have a look at how the allometric equation may affect the estimate of bran
 
 
 <<allometryEx1>>=
-csvFile <- system.file("data/stonePine2FieldData.csv.gz", package = "treecm")
-
+csvFile <- system.file("doc", "CopyOfstonePine2FieldData.csv", package = "treecm")
+print(csvFile)
 sP.Cutini <- treeBiomass(importFieldData(csvFile, 650, allometryCutini2009))
 head(sP.Cutini$fieldData)
 sP.ABDC   <- treeBiomass(importFieldData(csvFile, 650, allometryABDC))
 head(sP.ABDC$fieldData)
 
 biomassRaw <- data.frame(
-  cutini = sP.Cutini$fieldData$biomass
-  , ABDC = sP.ABDC$fieldData$biomass
-  , code = rownames(sP.ABDC$fieldData)
-  , diameter = sP.ABDC$fieldData$dBase
-  )
-
+ cutini = sP.Cutini$fieldData$biomass
+ , ABDC = sP.ABDC$fieldData$biomass
+ , code = rownames(sP.ABDC$fieldData)
+ , diameter = sP.ABDC$fieldData$dBase
+ )
+ 
 library(reshape2)
-
+ 
 biomass <- melt(
-  biomassRaw
-  , measure.vars = c("ABDC", "cutini")
-  , value.name = "biomass"
-  , variable.name = "allometry"
+ biomassRaw
+ , measure.vars = c("ABDC", "cutini")
+ , value.name = "biomass"
+ , variable.name = "allometry"
 )
-
+ 
 rm(biomassRaw)
-
+ 
 (treeBiomass <- with(biomass, tapply(biomass, allometry, sum)))
 @
 
