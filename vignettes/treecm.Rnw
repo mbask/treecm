@@ -543,7 +543,6 @@ Let's have a look at how the allometric equation may affect the estimate of bran
 
 <<allometryEx1>>=
 csvFile <- system.file("doc", "CopyOfstonePine2FieldData.csv", package = "treecm")
-print(csvFile)
 sP.Cutini <- treeBiomass(importFieldData(csvFile, 650, allometryCutini2009))
 head(sP.Cutini$fieldData)
 sP.ABDC   <- treeBiomass(importFieldData(csvFile, 650, allometryABDC))
