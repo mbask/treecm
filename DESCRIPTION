@@ -3,8 +3,8 @@ Package: treecm
 LazyLoad: yes
 License: GPL-2
 Title: Centre of mass assessment and consolidation of trees.
-Author: Marco Bascietto <marco.bascietto@ibaf.cnr.it>
-Maintainer: Marco Bascietto <marco.bascietto@ibaf.cnr.it>
+Author: Marco Bascietto <marco.bascietto@cnr.it>
+Maintainer: Marco Bascietto <marco.bascietto@cnr.it>
 Description: The centre of mass is a crucial data for arborists in order to
     consolidate a tree using steel or dynamic cables. Given field-recorded data
     on branchiness of a tree, the package: (i) computes and plots the centre of
