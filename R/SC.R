@@ -36,7 +36,7 @@ branchSR <- function(x, diameter, length, tilt) {
 #' @export
 #' @seealso \code{\link{branchSR}}
 treeSR <- function(treeObject, vectorObject) {
-  SR <- subset(treeObject$fieldData, select = c(dBase, length, tilt))
+  SR <- treeObject$fieldData[, colnames(treeObject$fieldData) %in% c("dBase", "length", "tilt")]
   SR <- cbind(SR, vectorObject$Azimuth)
   SR <- cbind(SR, apply(SR, 1, branchSR, diameter = "dBase", length   = "length", tilt     = "tilt"))
   colnames(SR) <- c("diameter", "length", "tilt", "azimuth", "SR")
@@ -80,8 +80,8 @@ plot.SR <- function(x, y = NULL, safeSR = 70, ...) {
   
   xyCoord <- cbind(xyCoord, x$SR)
   colnames(xyCoord) <- c("x", "y", "SR")
-  safe   <- subset(xyCoord, SR <= safeSR, select = c(x, y))
-  unsafe <- subset(xyCoord, SR > safeSR,  select = c(x, y))
+  safe   <- xyCoord[xyCoord$SR <= safeSR, colnames(xyCoord) %in% c("x", "y")]
+  unsafe <- xyCoord[xyCoord$SR > safeSR, colnames(xyCoord) %in% c("x", "y")]
   
   if (nrow(safe) > 0) {
     arrows(0, 0, safe$x, safe$y, col = "green")

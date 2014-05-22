@@ -150,30 +150,28 @@ logBiomass <- function(x, lowerD, higherD, logLength, density) {
 #' @family Biomass
 #' @export
 treeBiomass <- function(object) {
-  object <- within(object, {
-    ## gets stem and cut branches (ie. diameter at tip > 0) biomass, by converting its fresh volume to dry weight
-    fieldData$biomass[(fieldData$dTip > 0)] <- as.vector(
+  ## gets stem and cut branches (ie. diameter at tip > 0) biomass, by converting its fresh volume to dry weight
+  object$fieldData$biomass[(object$fieldData$dTip > 0)] <- as.vector(
       apply(
-        fieldData[(fieldData$dTip > 0),], 
+        object$fieldData[(object$fieldData$dTip > 0),], 
         1, 
         logBiomass, 
         lowerD    = "dBase", 
         higherD   = "dTip", 
         logLength = "length",
-        density
+        object$density
       )
     )
     
     ## gets branches (ie. diameter at tip = 0) total biomass (wood + leaves) 
-    fieldData$biomass[(fieldData$dTip == 0)] <- as.vector(
+  object$fieldData$biomass[(object$fieldData$dTip == 0)] <- as.vector(
       apply(
-        fieldData[(fieldData$dTip == 0),], 
+        object$fieldData[(object$fieldData$dTip == 0),], 
         1, 
-        allometryFUN, 
+        object$allometryFUN, 
         diameter = "dBase"
       )
     )
-  })
   return(object)
 }
 

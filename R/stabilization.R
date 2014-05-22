@@ -148,11 +148,8 @@ getPlinthForce <- function(l.stem, d, logs, treeMoment, CM) {
   rm(aR)
   
   ## trasformo gli angoli in radianti
-  logs <- within(logs, { 
-    tiltRad <- tilt * pi / 180
-    azRad   <- azimuth * pi / 180
-    }
-  )
+  logs$tiltRad <- logs$tilt * pi / 180
+  logs$azRad   <- logs$azimuth * pi / 180
   
   ## costruisce una matrice con le lunghezze cumulate dei toppi e le coordinate z,x,y 
   ## delle cime dei toppi
@@ -160,12 +157,9 @@ getPlinthForce <- function(l.stem, d, logs, treeMoment, CM) {
   colnames(anchorData)[2:4] <- c("l.z", "l.x", "l.y")
 
   ## calcolo le risultanti del vettore piede-toppi
-  anchorData <- within(anchorData, {
-    lz.sum <- cumsum(l.z)
-    lx.sum <- cumsum(l.x)
-    ly.sum <- cumsum(l.y)
-    }
-  )
+  anchorData$lz.sum <- cumsum(anchorData$l.z)
+  anchorData$lx.sum <- cumsum(anchorData$l.x)
+  anchorData$ly.sum <- cumsum(anchorData$l.y)
 
   f.anchor <- vector(); d.x <- vector(); lz.sumV <- vector(); 
   for (i in seq_along(l.stem)) {

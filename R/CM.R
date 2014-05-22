@@ -8,7 +8,7 @@
 #' @export
 centreOfMass <- function(object) {
   # sums the masses of tree branches and their x and y moments
-  treeVectors <- subset(object, !toBePruned, select = c("Biomass", "mx", "my", "mz"))
+  treeVectors <- object[!object$toBePruned, colnames(object) %in% c("Biomass", "mx", "my", "mz")]
   col.sums    <- apply(treeVectors, 2, sum)
 
   # cartesian coordinates of centre of mass of the tree
@@ -31,8 +31,6 @@ centreOfMass <- function(object) {
 #' @method summary CM
 #' @export
 summary.CM <- function(object, ...) {
-  print(CM)
-
   polar <- toPolar(object$x, object$y)
   cat("Polar (angle/degrees, distance/m, height/m):", 
     polar[1], ",", 

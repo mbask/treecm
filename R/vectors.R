@@ -9,10 +9,11 @@
 #' @export
 treeVectors <- function(object) {
   ## vectors data frame is populated
-  vectors <- subset(object$fieldData, select = c(azimuth, tipD, biomass, height, tilt, toBePruned))
+  vectors <- object$fieldData[, colnames(object$fieldData) %in% c("azimuth", "tipD", "biomass", "height", "tilt", "toBePruned")]
+
   ## computes cartesian coordinates of branch tip and its x, y and z moments are added to vectors slot
   vectors <- mdply(vectors, getCoordinatesAndMoment, branchesCM = object$branchesCM)
-  colnames(vectors) <- c("Azimuth", "Distance", "Biomass", "Height", "Tilt", "toBePruned", "x", "y", "mx", "my", "mz")
+  colnames(vectors) <- c("Azimuth", "Distance", "Height", "Tilt", "toBePruned", "Biomass", "x", "y", "mx", "my", "mz")
   class(vectors) <- c("vector", class(vectors))
   return(vectors)
 }
