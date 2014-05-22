@@ -36,7 +36,7 @@ plot(CM)
 summary(CM)
 }
 \author{
-Marco Bascietto \email{marco.bascietto@ibaf.cnr.it}
+Marco Bascietto \email{marco.bascietto@cnr.it}
 }
 \references{
 Source code is hosted at GitHub (\url{http://mbask.github.com/treecm/})
