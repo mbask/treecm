@@ -68,6 +68,10 @@ print.CM <- function(x, ...) {
 #' @param ...    Arguments to be passed to plot.default
 #' @return \code{NULL}
 #' @method plot CM
+#' @importFrom graphics par
+#' @importFrom graphics points
+#' @importFrom graphics text
+#' @importFrom graphics arrows
 #' @export
 plot.CM <- function(x, y = NULL, ...) {
   chw <- par()$cxy[1] 

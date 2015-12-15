@@ -231,6 +231,8 @@ NULL
 #' @param d1 distance of second set of coordinates
 #' @return \code{NULL}
 #' @export
+#' @importFrom graphics points
+#' @importFrom graphics segments
 plotPolarSegment <- function(a0, d0, a1, d1) {
   xy0 <- toCartesianXY(a0, d0)
   xy1 <- toCartesianXY(a1, d1)
@@ -263,6 +265,7 @@ plotPolarSegment <- function(a0, d0, a1, d1) {
 #' @seealso \code{\link{getCoordinatesAndMoment}}
 #' @return a list of 4 elements: field data, wood fresh density, allometryFUN function and branches CM
 #' @export
+#' @importFrom utils read.csv
 importFieldData <- function(fileName, dst, branchesAllometryFUN, bCM = 1) {
   tree <- read.csv(fileName, row.names = 1)
   

@@ -32,6 +32,10 @@ treeVectors <- function(object) {
 #' @return \code{NULL}
 #' @method plot vector
 #' @export
+#' @importFrom graphics par
+#' @importFrom graphics abline
+#' @importFrom graphics text
+#' @importFrom graphics plot.default
 plot.vector <- function(x, y = NULL, txtcol = "grey80", ...) {
   treeVectors <- x[!x$toBePruned,]
 

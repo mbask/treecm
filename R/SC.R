@@ -63,6 +63,11 @@ treeSR <- function(treeObject, vectorObject) {
 #' @method plot SR
 #' @seealso \code{\link{treeSR}}
 #' @export
+#' @importFrom graphics par
+#' @importFrom graphics arrows
+#' @importFrom graphics text
+#' @importFrom graphics lines
+#' @importFrom graphics plot
 plot.SR <- function(x, y = NULL, safeSR = 70, ...) {
   
   Circle <- function(t, a) {

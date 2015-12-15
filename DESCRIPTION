@@ -2,7 +2,7 @@ Type: Package
 Package: treecm
 LazyLoad: yes
 License: GPL-2
-Title: Centre of mass assessment and consolidation of trees
+Title: Centre of Mass Assessment and Consolidation of Trees
 Author: Marco Bascietto <marco.bascietto@entecra.it>
 Maintainer: Marco Bascietto <marco.bascietto@entecra.it>
 Description: The centre of mass is a crucial data for arborists in order to

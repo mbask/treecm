@@ -39,7 +39,7 @@
 #' @note \eqn{z} coordinate of CM is not returned because it would be useless in a 2D plot. It is computed using \eqn{mz}, which is, as a matter of facts, returned
 getCoordinatesAndMoment <- function (azimuth, dBase, dTip, length, tipD, height, tilt, toBePruned, biomass, branchesCM) {
   # height (h) to be added to branch height (z), as a function of the 
-  # angle of its tilt (0° = horiz., 90° = vert.), its distance (length of its 
+  # angle of its tilt (0 degrees = horiz., 90 degrees = vert.), its distance (length of its 
   # projection on the ground, 
   # from tree base to branch tip), and the estimated position of the centre of mass
   h  <- tipD * sin(tilt * pi / 180) * branchesCM
