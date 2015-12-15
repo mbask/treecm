@@ -26,7 +26,7 @@ centreOfMassModulus <- function(object) {
 
 #' @title Returns the angle between CM modulus and the tree weight vector
 #'
-#' @note This function is mainly needed to compute the moment of the tree. The angle is need to compute the projection of the tree weight normal to the CM modulus
+#' @description This function is mainly needed to compute the moment of the tree. The angle is need to compute the projection of the tree weight normal to the CM modulus
 #'
 #' @param object an object of \code{CM} class
 #' @return a real number in radians

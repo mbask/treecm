@@ -1,7 +1,7 @@
 \documentclass{article}
 
 \usepackage{natbib}
-\usepackage{sidecap, subfig}
+%\usepackage{sidecap, subfig}
 \usepackage{fancyhdr, fancyvrb}
 \usepackage{color}
 \usepackage{hyperref}
@@ -70,12 +70,12 @@ data(stonePine1TreeData)
 print(stonePine1TreeData)
 @
 
-\begin{SCfigure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{stonePine1_low.jpg} % picture filename
+\begin{figure}[!ht]
   \caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible. The tilted stem is clearly visible, as is the tree climber.}
   \label{fig:stonePine1}
-\end{SCfigure}
+  \centering
+   \includegraphics[width=0.5\textwidth]{stonePine1_low.jpg} % picture filename
+\end{figure}
 
 
 
@@ -412,11 +412,12 @@ It looks like positioning the anchor $\approx 1.6$ times the height of the centr
 
 \begin{figure}
   \centering
-  \subfloat[Damage to a tree by a tight collar]{\label{fig:collarTree}\includegraphics[width=5cm]{collarTree_low.jpg}}
-  \quad
-  \subfloat[Close up to the weakness point, notice the marks of the anchor (righthand side) and of a wooden stick (lefthand side) left deep in the wood] {\label{fig:collarCloseUp}\includegraphics[width=5cm]{collarCloseUp_low.jpg}}
-  \caption{The anchor had been put into place too tight, the secondary tree growth had started to overgrow it. Luckily the anchor has been removed but the weakness point still remains}
-  \label{fig:collarDamage}
+  \label{fig:collarTree}\includegraphics[width=5cm]{collarTree_low.jpg}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \label{fig:collarCloseUp}\includegraphics[width=5cm]{collarCloseUp_low.jpg}
 \end{figure}
 
 
@@ -577,19 +578,29 @@ rm(biomassRaw)
 
 The difference in the estimates may be clearly appreciated in figure \ref{fig:stonePine2Plot}.
 
+\begin{figure}[!ht]
+  \caption{The stone pine measured in \texttt{stonePine1TreeData}, crown not visible. The tilted stem is clearly visible, as is the tree climber.}
+  \label{fig:stonePine1}
+  \centering
+   \includegraphics[width=0.5\textwidth]{stonePine1_low.jpg} % picture filename
+\end{figure}
+
+
 \begin{figure}[ht]
   \centering
-    \subfloat[Bar plot]{\label{fig:stonePine2BarPlot}
+    \label{fig:stonePine2BarPlot}
     
 <<allometryBarPlot, fig=TRUE, echo=FALSE, include=FALSE>>=
 library(ggplot2)
 ggplot(biomass, aes(x = code, y = biomass)) + 
-  geom_bar(aes(fill = allometry), position = "dodge")
+  geom_bar(aes(fill = allometry), position = "dodge", stat = "identity")
 @
 
-  \includegraphics[width=5cm]{treecm-allometryBarPlot}}
-  \quad
-  \subfloat[Dot plot biomass \emph{Vs.} diameter]{\label{fig:stonePine2DotPlot}
+  \includegraphics[width=5cm]{treecm-allometryBarPlot}
+\end{figure}
+  
+\begin{figure}[!ht]
+  \label{fig:stonePine2DotPlot}
 
 <<allometryDotPlot, fig=TRUE, echo=FALSE, include=FALSE>>=
 library(ggplot2)
@@ -597,9 +608,8 @@ ggplot(biomass, aes(x = diameter, y = biomass)) +
   geom_point(aes(shape = allometry), size = 5)
 @
 
-  \includegraphics[width=5cm]{treecm-allometryDotPlot}}
+  \includegraphics[width=5cm]{treecm-allometryDotPlot}
   \caption{Bar plot and dot plot comparing biomass estimates of \texttt{allometryABDC} and \texttt{allometryCutini2009} functions to \texttt{stonePine2FieldData}}
-  \label{fig:stonePine2Plot}
 \end{figure}
 
 Notice that \texttt{cutini}'s biomass estimate for \texttt{B4} is unreasonably negative (figure \ref{fig:stonePine2BarPlot}. This is due to the small diameter branch (10 cm), far below the 24cm lower limit. Also notice consitently lower estimates from \texttt{cutini}'s function.
