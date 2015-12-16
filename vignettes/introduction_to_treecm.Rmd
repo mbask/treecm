@@ -77,7 +77,7 @@ The `stonePine1TreeData` dataset is a direct result of importing
 
 -   position of the centre of mass: on the branch tip
 
-Log biomass is computed by Smalian's formula (@laMarca). It is important
+Log biomass is computed by Smalian's formula (la Marca, 2004). It is important
 to choose the most appropriate allometric equation in order to yield
 trustworthy biomass figures and, as a result, appropriate centre of mass
 coordinates. Allometry equations functions are discussed in section
@@ -155,7 +155,7 @@ Let's recaltulate the vectors under snow load and plot the results:
 vectors <- treeVectors(stonePine1TreeData)
 CM <- centreOfMass(vectors)
 summary(CM)
-plot(vectors, main = "A stone pine centre of mass under 2x snow load", xlim = c(-8,10), ylim =
+plot(vectors, main = "2x snow load", xlim = c(-8,10), ylim =
 c(-12,4))
 plot(CM)
 plotPolarSegment(210, 10.6, 140, 14.4)
@@ -222,7 +222,7 @@ Tree Assessment (VTA). $SR$ in the range $30 \leq SR \leq 70$ are
 considered optimal, whereas $SR > 70$ lead to consider the tree at risk
 of breaking due to its excessive slenderness. The authors have applied
 the same concept to tree branches as well. While $SR$ in vertical trees
-has a physical meaning @Matth, branches are not usually vertical. As the
+has a physical meaning (Mattheck and Breloer, 1995), branches are not usually vertical. As the
 branch starts to deviate from the verticality (as most of the branches
 do) the arm of the moment gets longer, reaching a maximum limit in
 horizontal branches. The longer the arm, the higher the stress on the
@@ -413,7 +413,7 @@ plinth <- getPlinthForce(
 print(plinth$force)
 ```
 
-There's almost a 30% decrease in the force to the plinth if we had the chance of setting the plinth 50m away from tree base. Let's now assess how force to the plinth varies when we move the anchor position along the stem. Remember that the tree centre of mass is m high, and that \texttt{l.stem} is the distance between tree base and the anchor, following the stem, not the anchor height on the ground:
+There's almost a 30% decrease in the force to the plinth if we had the chance of setting the plinth 50m away from tree base. Let's now assess how force to the plinth varies when we move the anchor position along the stem. Remember that the tree centre of mass is m high, and that `l.stem` is the distance between tree base and the anchor, following the stem, not the anchor height on the ground:
 
 ```{r}
 plinth <- getPlinthForce(
@@ -455,7 +455,7 @@ lengths [17..50]. Converting the list in a data frame let us plot it
 using `ggplot2` package:
 
 ```{r, fig.width=6}
-library(ggplot2) 
+library(ggplot2)
 ggplot(plinth, aes(x = cableLength, y = force)) +
   geom_line(aes(color = factor(anchorAlongStem), group = anchorAlongStem)) +
   scale_y_continuous('Force [N]') +
@@ -650,7 +650,7 @@ Log mass is estimated by converting its volume (as measured in the
 field) to fresh mass. The conversion factor is usually referred to as
 fresh density. Wood density is usually quite conservative among
 individual of the same tree species. Density values are commonly found
-in published literature. The dataset `Dst` (@niklas) can be a useful
+in published literature. The dataset `Dst` (Niklas *et al*, 2010) can be a useful
 starting point to assess wood density, should it be unavailable,
 (density in $\frac{kg}{m^3}$, measured at 50% moisture content):
 
@@ -697,12 +697,12 @@ allometric equations:
     must be considered as deprecated
 
 -   `allometryCutini2009`, tested on stone pine trees (not on branches),
-    24+ cm diameter, returns biomass, dry weight, @cutini, its results
+    24+ cm diameter, returns biomass, dry weight, (Cutini *et al*, 2009), its results
     should be increased by the estimated amount of water present in the
     branches
 
 -   `allometryPorte2002`, tested on maritime pine branches, 10- cm
-    diameter, returns biomass (dry weight), @porte, its results should
+    diameter, returns biomass (dry weight), (Porté *et al*, 2002), its results should
     be increased by the estimated amount of water present in the
     branches
 
@@ -766,10 +766,10 @@ rm(biomassRaw)
 The difference in the estimates may be clearly appreciated in the following figure.
 
 ```{r, fig.show='hold', fig.cap="Bar plot and dot plot comparing biomass estimates of `allometryABDC` and `allometryCutini2009` functions to `stonePine2FieldData`"}
-ggplot2::ggplot(biomass, aes(x = code, y = biomass)) + 
+ggplot(biomass, aes(x = code, y = biomass)) + 
   geom_bar(aes(fill = allometry), position = "dodge", stat = "identity")
 
-ggplot2::ggplot(biomass, aes(x = diameter, y = biomass)) + 
+ggplot(biomass, aes(x = diameter, y = biomass)) + 
   geom_point(aes(shape = allometry), size = 5)
 ```
 
@@ -787,7 +787,7 @@ with(biomass, tapply(biomass, allometry, sum))
 ```
 
 
-```{r, fig.cap="comparing biomass estimates of `allometryABDC` and `allometryCutini2009` functions to `stonePine2FieldData` after adjusting the latter"}
+```{r, fig.width = 6, fig.cap="Comparing biomass estimates of `allometryABDC` and `allometryCutini2009` functions to `stonePine2FieldData` after adjusting the latter"}
 ggplot(biomass, aes(x = diameter, y = biomass)) + 
   geom_point(aes(shape = allometry), size = 5)
 ```
