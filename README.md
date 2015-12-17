@@ -1,4 +1,7 @@
 # treecm
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/treecm)](http://cran.r-project.org/package=treecm)
+
 `treecm` is an R package to compute and plot the centre of mass of the tree itself. 
 
 ## Centre of mass
