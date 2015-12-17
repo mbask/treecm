@@ -13,9 +13,9 @@ Description: The centre of mass is a crucial data for arborists in order to
     (iii) computes the force acting on a ground plinth and its best position
     relating to the tree centre of mass, should the tree need to be stabilized
     by a steel cable.
-Version: 1.2.2
+Version: 1.2.3
 URL: https://github.com/mbask/treecm
-Date: 2015-12-15
+Date: 2015-12-17
 Imports: 
     plyr
 Suggests: 

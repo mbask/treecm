@@ -48,8 +48,7 @@ print(stonePine1TreeData)
 ```
 
 ![The stone pine measured in `stonePine1TreeData`, crown not visible.
-The tilted stem is clearly visible, as is the tree climber.<span
-data-label="fig:stonePine1"></span>](stonePine1_low.jpg)
+The tilted stem is clearly visible, as is the tree climber](stonePine1_low.jpg)
 
 This dataset has been collected for a 17.1 metres tall stone pine whose
 stem was tilted approx. 20$^{\circ}$ from the vertical plane (or
@@ -468,7 +467,7 @@ ggplot(plinth, aes(x = cableLength, y = force)) +
 Expressing force as a ratio to tree biomass and expressing distances
 relative to tree CM height or distance anchor-tree base:
 
-```{r}
+```{r, fig.width=6}
 plinth <- transform(
   plinth,
   distanceOverAnchorHeight = distanceOnGround / anchorAlongStem,
@@ -480,7 +479,8 @@ head(plinth[c("distanceOverAnchorHeight", "heightOverAnchorHeight",
 
 ggplot(plinth, aes(x = distanceOverAnchorHeight, y = forceOverTreeBiomass)) + 
   geom_line() +
-  facet_wrap(~heightOverAnchorHeight)
+  facet_wrap(~heightOverAnchorHeight) +
+  theme_light()
 ```
 
 It looks like positioning the anchor $\approx 1.6$ times the height of
@@ -656,7 +656,7 @@ starting point to assess wood density, should it be unavailable,
 
 ```{r}
 data(Dst)
-print(Dst)
+head(Dst)
 ```
 
 Please note that the dataset provides density figures for wood at 50%
@@ -760,17 +760,16 @@ rm(biomassRaw)
 1. `allometryABDC` has been fitted on small-diameter branches, as a result it may predict unreliable mass figures for out of range branches
 2. `allometryCutini2009` has been fitted on 24+ cm trees, as a result it properly describes the relationship between mass and diameter as far as diameter is concerned. We must assume that the relationship tree diameter-tree mass holds for branches as well, though. Further the equation yields biomass at 0% moisture content, a figure much lower than fresh biomass.
 
-
-[The stone pine measured in \texttt{stonePine1TreeData}, crown not visible. The tilted stem is clearly visible, as is the tree climber.}]![image](stonePine1_low.jpg)
-
 The difference in the estimates may be clearly appreciated in the following figure.
 
 ```{r, fig.show='hold', fig.cap="Bar plot and dot plot comparing biomass estimates of `allometryABDC` and `allometryCutini2009` functions to `stonePine2FieldData`"}
 ggplot(biomass, aes(x = code, y = biomass)) + 
-  geom_bar(aes(fill = allometry), position = "dodge", stat = "identity")
+  geom_bar(aes(fill = allometry), position = "dodge", stat = "identity") +
+  theme_light()
 
 ggplot(biomass, aes(x = diameter, y = biomass)) + 
-  geom_point(aes(shape = allometry), size = 5)
+  geom_point(aes(shape = allometry), size = 5) +
+  theme_light()
 ```
 
 Notice that `cutini`'s biomass estimate for `B4` is unreasonably negative. This is due to the small diameter branch (10 cm), far below the 24cm lower limit. Also notice consitently lower estimates from `cutini`'s function.
@@ -789,7 +788,8 @@ with(biomass, tapply(biomass, allometry, sum))
 
 ```{r, fig.width = 6, fig.cap="Comparing biomass estimates of `allometryABDC` and `allometryCutini2009` functions to `stonePine2FieldData` after adjusting the latter"}
 ggplot(biomass, aes(x = diameter, y = biomass)) + 
-  geom_point(aes(shape = allometry), size = 5)
+  geom_point(aes(shape = allometry), size = 5) +
+  theme_light()
 ```
 
 This is just an attempt to raise awarness on the complexities of choosing a correct allometric equation. When we reckon our data are correct we just have to plug them into a proper `fieldData` data frame:
