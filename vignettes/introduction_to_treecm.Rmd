@@ -39,12 +39,13 @@ Plot centre of mass
 
 We will make use of the data set bundled in the package to plot a basic
 view of masses of branches and logs of a stone pine (*Pinus pinea* L.)
-sampled by B. De Cinti and M. Bascietto:
+sampled in year 2010. `stonePine1TreeData` is a `list` holding a table of branch measurements, a numeric value for tree-wood density, a function for estimating branch weight, a numeric value for the position of centre of mass along branch length.
 
 ```{r}
 library(treecm) 
 data(stonePine1TreeData)
-print(stonePine1TreeData)
+stonePine1TreeData
+class(stonePine1TreeData)
 ```
 
 ![The stone pine measured in `stonePine1TreeData`, crown not visible.
